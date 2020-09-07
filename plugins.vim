@@ -1,4 +1,3 @@
-" plugins using https://github.com/junegunn/vim-plug
 call plug#begin(stdpath('data') . '/plugged')
 
 let g:config_plugin_file_list = [
@@ -8,6 +7,8 @@ let g:config_plugin_file_list = [
   \ 'LanguageClient',
   \ 'autocompletion',
   \ 'navigator',
+  \ 'indentation',
+  \ 'clang-format',
   \ ]
 
 for file in g:config_plugin_file_list
