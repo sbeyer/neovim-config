@@ -1,5 +1,6 @@
 call plug#begin(stdpath('data') . '/plugged')
 
+let g:clang_version_suffix = '-10'
 let g:config_plugin_file_list = [
   \ 'fugitive',
   \ 'statusline',
