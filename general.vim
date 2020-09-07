@@ -1,0 +1,14 @@
+" make whitespace visible
+set list
+set listchars=tab:^`,trail:~,extends:\\,precedes:»
+
+" make line numbers visible
+set number
+
+" make implicit linebreaks visible
+set showbreak=\ \ «
+set breakindent
+set breakindentopt=shift:2,sbr
+
+" completion behavior in command mode
+set wildmode=longest:full,full
