@@ -15,8 +15,9 @@ Then install [vim-plug](https://github.com/junegunn/vim-plug)
 
 Then do
 ```sh
-cd ~/.config/nvim/
-git clone https://github.com/sbeyer/neovim-config.git
+cd ~/.config/
+test -d nvim && mv nvim nvim~
+git clone https://github.com/sbeyer/neovim-config.git nvim
 nvim +PlugInstall +UpdateRemotePlugins +qa
 ```
 and you are set.
