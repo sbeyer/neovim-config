@@ -1,6 +1,7 @@
 let g:config_file_list = [
   \ 'general',
-  \ 'plugins'
+  \ 'plugins',
+  \ 'filespecific',
   \ ]
 
 for file in g:config_file_list
