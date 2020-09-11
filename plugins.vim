@@ -10,6 +10,7 @@ let g:config_plugin_file_list = [
   \ 'navigator',
   \ 'indentation',
   \ 'clang-format',
+  \ 'snippets',
   \ ]
 
 for file in g:config_plugin_file_list
