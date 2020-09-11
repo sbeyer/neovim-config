@@ -12,3 +12,7 @@ set breakindentopt=shift:2,sbr
 
 " completion behavior in command mode
 set wildmode=longest:full,full
+
+" find: ignore case when all letters are lower-case
+set smartcase
+set ignorecase
