@@ -12,7 +12,14 @@ let g:LanguageClient_serverCommands = {
   \ 'c': [g:clangd_path, '-background-index'],
   \ 'cpp': [g:clangd_path, '-background-index'],
   \ }
-nmap <F5> <Plug>(lcn-menu)
-nmap <silent>K <Plug>(lcn-hover)
-nmap <silent> gd <Plug>(lcn-definition)
-nmap <silent> <F2> <Plug>(lcn-rename)
+
+function LanguageClient_maps()
+  if has_key(g:LanguageClient_serverCommands, &filetype)
+    nmap <F5> <Plug>(lcn-menu)
+    nmap <silent>K <Plug>(lcn-hover)
+    nmap <silent> gd <Plug>(lcn-definition)
+    nmap <silent> <F2> <Plug>(lcn-rename)
+  endif
+endfunction
+
+autocmd FileType * call LanguageClient_maps()
