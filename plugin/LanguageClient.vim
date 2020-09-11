@@ -18,7 +18,6 @@ function LanguageClient_maps()
     nmap <F5> <Plug>(lcn-menu)
     nmap <silent>K <Plug>(lcn-hover)
     nmap <silent> gd <Plug>(lcn-definition)
-    nmap <silent> <F2> <Plug>(lcn-rename)
   endif
 endfunction
 

@@ -9,4 +9,4 @@ endif
 let g:clang_format#detect_style_file = 1
 let g:clang_format#enable_fallback_style = 0
 
-" TODO: map to keys?
+nmap <silent> <F2> :%ClangFormat<CR>
