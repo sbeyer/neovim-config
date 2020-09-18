@@ -17,7 +17,8 @@ function LanguageClient_maps()
   if has_key(g:LanguageClient_serverCommands, &filetype)
     nmap <F5> <Plug>(lcn-menu)
     nmap <silent>K <Plug>(lcn-hover)
-    nmap <silent> gd <Plug>(lcn-definition)
+    nmap <silent>gD <Plug>(lcn-definition)
+    nmap <silent>gd :split<CR>gD
   endif
 endfunction
 
