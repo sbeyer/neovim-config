@@ -17,6 +17,7 @@ let g:LanguageClient_serverCommands = {
 function LanguageClient_maps()
   if has_key(g:LanguageClient_serverCommands, &filetype)
     nmap <F5> <Plug>(lcn-menu)
+    nmap <silent><F2> <Plug>(lcn-format)
     nmap <silent>K <Plug>(lcn-hover)
     nmap <silent>gD <Plug>(lcn-definition)
     nmap <silent>gd :split<CR>gD

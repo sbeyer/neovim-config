@@ -9,4 +9,5 @@ endif
 let g:clang_format#detect_style_file = 1
 let g:clang_format#enable_fallback_style = 0
 
-nmap <silent> <F2> :%ClangFormat<CR>
+autocmd FileType cpp nnoremap <buffer> <silent> <F2> :%ClangFormat<CR>
+autocmd FileType c   nnoremap <buffer> <silent> <F2> :%ClangFormat<CR>
