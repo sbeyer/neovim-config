@@ -11,6 +11,7 @@ endif
 let g:LanguageClient_serverCommands = {
   \ 'c': [g:clangd_path, '-background-index'],
   \ 'cpp': [g:clangd_path, '-background-index'],
+  \ 'rust': ['rls'],
   \ }
 
 function LanguageClient_maps()
