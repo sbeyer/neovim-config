@@ -16,3 +16,6 @@ set wildmode=longest:full,full
 " find: ignore case when all letters are lower-case
 set smartcase
 set ignorecase
+
+" workaround nvim crash (older versions)
+imap <F2> <ESC><F2>
