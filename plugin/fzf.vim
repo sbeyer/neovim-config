@@ -16,3 +16,4 @@ function! RipgrepFzf(query, fullscreen)
 endfunction
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+command! Rw call RipgrepFzf(expand('<cword>'), 0)
