@@ -19,3 +19,6 @@ set ignorecase
 
 " workaround nvim crash (older versions)
 imap <F2> <ESC><F2>
+
+" disable weird completion behavior
+set suffixes=
