@@ -4,14 +4,30 @@ This is work in progress.
 
 # Installation
 
-Install using `apt` or `pacman`:
- * `neovim`
+## neovim
+
+```sh
+# download nvim v0.5.1 (or replace v0.5.1 by stable or latest)
+wget https://github.com/neovim/neovim/releases/download/v0.5.1/nvim.appimage
+
+# make executable
+chmod +x nvim.appimage
+
+# move executable to a location in your $PATH
+mv nvim.appimage ~/.local/bin/nvim
+```
+
+## recommended tools
+
+Install nice-to-haves using `apt` or `pacman`:
  * `fzf`
  * `ripgrep`
  * clang (`clang-format` and `clangd`)
  * `bat` (very optional)
 
-Then install [vim-plug](https://github.com/junegunn/vim-plug)
+## package manager
+
+Install [vim-plug](https://github.com/junegunn/vim-plug)
 
 Then do
 ```sh
