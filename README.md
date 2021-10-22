@@ -27,9 +27,9 @@ mv nvim.appimage ~/.local/bin/nvim
 ## recommended tools
 
 Install nice-to-haves using `apt` or `pacman`:
- * `fzf`
+ * `fzf` (note: will also be installed by plugin at first use)
  * `ripgrep`
- * clang (`clang-format` and `clangd`)
+ * LSP servers: `clangd`, `rls`, `pyright`
  * `bat` (very optional)
 
 ## package manager
