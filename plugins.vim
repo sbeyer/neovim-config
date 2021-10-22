@@ -45,6 +45,13 @@ require "paq" {
   -- Snippets are separated from the engine. Add this if you want them:
   'honza/vim-snippets';
 
+  -- autocompletion
+  'hrsh7th/cmp-nvim-lsp';
+  'hrsh7th/cmp-buffer';
+  'hrsh7th/nvim-cmp';
+  -- ...for ultisnips
+  'quangnguyen30192/cmp-nvim-ultisnips';
+
   -- nice statusline
   'vim-airline/vim-airline';
 }
