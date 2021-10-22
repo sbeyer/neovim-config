@@ -13,6 +13,9 @@ require "paq" {
   -- Git support like :Git :Gw :GRemove ...
   'tpope/vim-fugitive';
 
+  -- nicer git commit
+  'rhysd/committia.vim';
+
   -- easy LSP configuration
   'neovim/nvim-lspconfig';
 
