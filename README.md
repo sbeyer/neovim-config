@@ -41,7 +41,7 @@ Then do
 cd ~/.config/
 test -d nvim && mv nvim nvim~
 git clone https://github.com/sbeyer/neovim-config.git nvim
-nvim +PaqInstall +qa
+nvim +PaqSync +qa
 nvim +PlugInstall +UpdateRemotePlugins +qa
 ```
 and you are set.
