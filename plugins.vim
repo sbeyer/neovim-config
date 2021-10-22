@@ -6,9 +6,9 @@ require "paq" {
   -- better tree-sitter support,
   -- don't forget :TSInstall cpp, rust, etc
   -- and :TSUpdate
-  'nvim-treesitter/nvim-treesitter';
-  -- :TSPlaygroundToggle just for fun
-  'nvim-treesitter/playground';
+  {'nvim-treesitter/nvim-treesitter', branch="0.5-compat"};
+  -- :TSPlaygroundToggle just for fun, but not really necessary
+  -- 'nvim-treesitter/playground';
 
   -- Git support like :Git :Gw :GRemove ...
   'tpope/vim-fugitive';

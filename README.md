@@ -17,6 +17,13 @@ chmod +x nvim.appimage
 mv nvim.appimage ~/.local/bin/nvim
 ```
 
+## requirements
+
+ * `git`
+ * `tar`
+ * `curl`
+ * C/C++ compiler with standard library
+
 ## recommended tools
 
 Install nice-to-haves using `apt` or `pacman`:
