@@ -3,6 +3,9 @@ require "paq" {
   -- Paq manages itself
   "savq/paq-nvim";
 
+  -- file:line:col support
+  'wsdjeg/vim-fetch';
+
   -- better tree-sitter support,
   -- don't forget :TSInstall cpp, rust, etc
   -- and :TSUpdate
