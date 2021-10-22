@@ -27,6 +27,13 @@ Install nice-to-haves using `apt` or `pacman`:
 
 ## package manager
 
+Install [paq-nvim](https://github.com/savq/paq-nvim)
+
+```sh
+git clone --depth=1 https://github.com/savq/paq-nvim.git \
+    "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/start/paq-nvim
+```
+
 Install [vim-plug](https://github.com/junegunn/vim-plug)
 
 Then do
@@ -34,6 +41,7 @@ Then do
 cd ~/.config/
 test -d nvim && mv nvim nvim~
 git clone https://github.com/sbeyer/neovim-config.git nvim
+nvim +PaqInstall +qa
 nvim +PlugInstall +UpdateRemotePlugins +qa
 ```
 and you are set.
