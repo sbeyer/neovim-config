@@ -1,7 +1,3 @@
-require "paq" {
-  'neovim/nvim-lspconfig';
-}
-
 local nvim_lsp = require('lspconfig')
 
 -- Use an on_attach function to only map the following keys
