@@ -39,7 +39,7 @@ git clone --depth=1 https://github.com/savq/paq-nvim.git \
 Do
 ```sh
 cd ~/.config/
-test -d nvim && mv nvim nvim~
+test -d nvim && mv nvim nvim.bak-"$(date -I)"
 git clone https://github.com/sbeyer/neovim-config.git nvim
 nvim +PaqSync +qa
 ```
