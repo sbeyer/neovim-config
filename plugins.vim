@@ -16,9 +16,6 @@ require "paq" {
   -- easy LSP configuration
   'neovim/nvim-lspconfig';
 
-  -- clang-format, because LSP's format doesn't always do nicely
-  'rhysd/vim-clang-format';
-
   -- CamelCase motions (like word motions but in CamelCase)
   'bkad/CamelCaseMotion';
 
