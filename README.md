@@ -34,14 +34,13 @@ git clone --depth=1 https://github.com/savq/paq-nvim.git \
     "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/start/paq-nvim
 ```
 
-Install [vim-plug](https://github.com/junegunn/vim-plug)
+## this configuration
 
-Then do
+Do
 ```sh
 cd ~/.config/
 test -d nvim && mv nvim nvim~
 git clone https://github.com/sbeyer/neovim-config.git nvim
 nvim +PaqSync +qa
-nvim +PlugInstall +UpdateRemotePlugins +qa
 ```
 and you are set.

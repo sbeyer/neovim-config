@@ -1,9 +1,3 @@
-" Multi-entry selection UI.
-" :Files, <F1>, :Rg, :RG etc
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-" install fzf and ripgrep on your system! And maybe bat (for syntax highlighting in previews)
-
 " get :Files quick
 nnoremap <F1> :Files<Cr>
 

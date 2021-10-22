@@ -1,6 +1,4 @@
-" for :ClangFormat
-Plug 'rhysd/vim-clang-format'
-
+let g:clang_version_suffix = '-10'
 let g:clang_format#command = "clang-format"
 if executable(g:clang_format#command . g:clang_version_suffix)
   let g:clang_format#command .= g:clang_version_suffix
