@@ -41,6 +41,6 @@ Do
 cd ~/.config/
 test -d nvim && mv nvim nvim.bak-"$(date -I)"
 git clone https://github.com/sbeyer/neovim-config.git nvim
-nvim +PaqSync +qa
+nvim +UpdateFeatures +qa
 ```
 and you are set.

@@ -57,6 +57,13 @@ require "paq" {
 }
 EOF
 
+function! s:update_features()
+  PaqSync
+  TSUpdate
+endfunction
+
+command! UpdateFeatures call <SID>update_features()
+
 for file in split(globpath(stdpath('config') . '/plugin/', '*.vim'), '\n')
   exec 'source' file
 endfor
