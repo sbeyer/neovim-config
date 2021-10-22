@@ -7,3 +7,7 @@ for file in split(globpath(stdpath('config') . '/plugin/', '*.vim'), '\n')
 endfor
 
 call plug#end()
+
+for file in split(globpath(stdpath('config') . '/plugin/', '*.lua'), '\n')
+  exec 'luafile' file
+endfor
