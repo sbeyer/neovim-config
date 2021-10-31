@@ -1,5 +1,5 @@
 lua packs = {}
-for file in split(globpath(stdpath('config') . '/paq/', '*.lua'), '\n')
+for file in split(globpath(stdpath('config') . '/enabled/', '*.lua'), '\n')
   lua table.insert(packs, dofile(vim.g.file))
 endfor
 
@@ -24,11 +24,3 @@ function! s:update_features()
 endfunction
 
 command! UpdateFeatures call <SID>update_features()
-
-for file in split(globpath(stdpath('config') . '/plugin/', '*.vim'), '\n')
-  exec 'source' file
-endfor
-
-for file in split(globpath(stdpath('config') . '/plugin/', '*.lua'), '\n')
-  exec 'luafile' file
-endfor
