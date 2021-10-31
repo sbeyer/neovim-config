@@ -12,13 +12,23 @@ return require('packer').startup(function(use)
   -- Iterate over the "enabled" directory and use their package declarations
   local decl_path = fn.stdpath('config') .. '/enabled/'
   local decl_files = fn.split(fn.globpath(decl_path, '*.lua'), '\n')
+  local declarations = {}
   for _, decl_file in pairs(decl_files) do
-    use(dofile(decl_file))
+    table.insert(declarations, dofile(decl_file))
+  end
+  for _, decl in pairs(declarations) do
+    use(decl)
   end
 
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Keep this at the end after all plugins
-  if packer_bootstrap then
+  -- Get old declarations of packer-decls.txt to check if we need to sync
+  local old_decl_file = fn.stdpath('config') .. '/plugin/packer-decls.txt'
+  local old_declaration_string = table.concat(vim.fn.readfile(old_decl_file), '\n')
+  local new_declaration_string = vim.inspect(declarations)
+
+  -- Set up your configuration after cloning packer.nvim or changing declarations
+  if packer_bootstrap or new_declaration_string ~= old_declaration_string then
     require('packer').sync()
+
+    vim.fn.writefile({ new_declaration_string }, old_decl_file)
   end
 end)
