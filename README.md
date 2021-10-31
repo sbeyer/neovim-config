@@ -15,6 +15,9 @@ chmod +x nvim.appimage
 
 # move executable to a location in your $PATH
 mv nvim.appimage ~/.local/bin/nvim
+
+# also override vim
+ln -s ~/.local/bin/nvim ~/.local/bin/vim
 ```
 
 ## requirements
@@ -43,10 +46,15 @@ git clone --depth=1 https://github.com/savq/paq-nvim.git \
 
 ## this configuration
 
-Do
+Move away old stuff
+```sh
+test -d ~/.local/share/nvim && mv ~/.local/share/nvim ~/.local/share/nvim.bak-"$(date -I)"
+test -d ~/.config/nvim && mv ~/.config/nvim ~/.config/nvim.bak-"$(date -I)"
+```
+
+Then do
 ```sh
 cd ~/.config/
-test -d nvim && mv nvim nvim.bak-"$(date -I)"
 git clone https://github.com/sbeyer/neovim-config.git nvim
 nvim +UpdateFeatures +qa
 ```
