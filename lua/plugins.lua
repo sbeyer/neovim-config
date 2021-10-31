@@ -9,9 +9,12 @@ return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  use(dofile 'enabled/directory.lua')
-
-  use(dofile 'enabled/git.lua')
+  -- Iterate over the "enabled" directory and use their package declarations
+  local decl_path = fn.stdpath('config') .. '/enabled/'
+  local decl_files = fn.split(fn.globpath(decl_path, '*.lua'), '\n')
+  for _, decl_file in pairs(decl_files) do
+    use(dofile(decl_file))
+  end
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Keep this at the end after all plugins
