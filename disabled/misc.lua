@@ -25,11 +25,6 @@ return {
     -- CamelCase motions (like word motions but in CamelCase)
     'bkad/CamelCaseMotion';
 
-    -- Path navigator
-    'justinmk/vim-dirvish';
-    --  ..with git support
-    'kristijanhusak/vim-dirvish-git';
-
     -- Multi-entry selection UI.
     -- :Files, <F1>, :Rg, :RG etc
     'junegunn/fzf';
