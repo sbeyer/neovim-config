@@ -2,8 +2,8 @@
 set list
 set listchars=tab:^`,trail:~,extends:\\,precedes:»
 
-" make line numbers visible
-set number
+" make line numbers visible: current line absolute, other lines relative
+set number relativenumber
 
 " make implicit linebreaks visible
 set showbreak=\ \ «
