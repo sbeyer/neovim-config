@@ -13,12 +13,6 @@ return {
     -- :TSPlaygroundToggle just for fun, but not really necessary
     -- 'nvim-treesitter/playground';
 
-    -- Git support like :Git :Gw :GRemove ...
-    'tpope/vim-fugitive';
-
-    -- nicer git commit
-    'rhysd/committia.vim';
-
     -- easy LSP configuration
     'neovim/nvim-lspconfig';
 
