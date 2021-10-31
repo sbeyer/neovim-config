@@ -35,18 +35,9 @@ Install nice-to-haves using `apt` or `pacman`:
  * LSP servers: `clangd`, `rls`, `pyright`
  * `bat` (very optional)
 
-## package manager
-
-Install [paq-nvim](https://github.com/savq/paq-nvim)
-
-```sh
-git clone --depth=1 https://github.com/savq/paq-nvim.git \
-    "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/start/paq-nvim
-```
-
 ## this configuration
 
-Move away old stuff
+Move away old stuff because it could interfere with the new configuration.
 ```sh
 test -d ~/.local/share/nvim && mv ~/.local/share/nvim ~/.local/share/nvim.bak-"$(date -I)"
 test -d ~/.config/nvim && mv ~/.config/nvim ~/.config/nvim.bak-"$(date -I)"
@@ -56,6 +47,5 @@ Then do
 ```sh
 cd ~/.config/
 git clone https://github.com/sbeyer/neovim-config.git nvim
-nvim +UpdateFeatures +qa
 ```
 and you are set.
