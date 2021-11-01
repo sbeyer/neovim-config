@@ -1,8 +1,5 @@
 return {
   plugins = {
-    -- Paq manages itself
-    "savq/paq-nvim";
-
     -- better tree-sitter support,
     -- don't forget :TSInstall cpp, rust, etc
     -- and :TSUpdate
