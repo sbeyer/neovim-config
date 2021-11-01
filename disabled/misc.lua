@@ -3,9 +3,6 @@ return {
     -- Paq manages itself
     "savq/paq-nvim";
 
-    -- file:line:col support
-    'wsdjeg/vim-fetch';
-
     -- better tree-sitter support,
     -- don't forget :TSInstall cpp, rust, etc
     -- and :TSUpdate
@@ -24,9 +21,6 @@ return {
     'junegunn/fzf';
     'junegunn/fzf.vim';
     -- install fzf and ripgrep on your system! And maybe bat (for syntax highlighting in previews)
-
-    -- run a heuristic to guess indentation settings
-    'tpope/vim-sleuth';
 
     -- make space-based indentations visible
     'Yggdroot/indentLine';
