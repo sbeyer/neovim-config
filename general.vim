@@ -22,3 +22,6 @@ imap <F2> <ESC><F2>
 
 " disable weird completion behavior
 set suffixes=
+
+" define , as our leader key
+let mapleader = ','

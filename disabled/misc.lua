@@ -10,9 +10,6 @@ return {
     -- easy LSP configuration
     'neovim/nvim-lspconfig';
 
-    -- CamelCase motions (like word motions but in CamelCase)
-    'bkad/CamelCaseMotion';
-
     -- Multi-entry selection UI.
     -- :Files, <F1>, :Rg, :RG etc
     'junegunn/fzf';
