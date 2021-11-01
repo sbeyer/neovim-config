@@ -43,9 +43,6 @@ return {
     'hrsh7th/nvim-cmp';
     -- ...for ultisnips
     'quangnguyen30192/cmp-nvim-ultisnips';
-
-    -- nice statusline
-    'vim-airline/vim-airline';
   };
 
   config = function() end
