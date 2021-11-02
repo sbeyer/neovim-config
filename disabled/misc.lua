@@ -7,9 +7,6 @@ return {
     -- :TSPlaygroundToggle just for fun, but not really necessary
     -- 'nvim-treesitter/playground';
 
-    -- easy LSP configuration
-    'neovim/nvim-lspconfig';
-
     -- Multi-entry selection UI.
     -- :Files, <F1>, :Rg, :RG etc
     'junegunn/fzf';
