@@ -1,9 +1,15 @@
 return {
-  -- easy LSP configuration
-  'neovim/nvim-lspconfig',
+  -- easy LSP server installation
+  'williamboman/nvim-lsp-installer',
+
+  requires = {
+    -- easy LSP configuration
+    'neovim/nvim-lspconfig',
+  },
 
   config = function()
-    local lspcfg = require('lspconfig')
+    local lsp_config = require('lspconfig')
+    local lsp_installer = require("nvim-lsp-installer")
 
     -- Use an on_attach function to only map the following keys
     -- after the language server attaches to the current buffer
@@ -37,22 +43,15 @@ return {
       buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
     end
 
-    -- Use a loop to conveniently call 'setup' on multiple servers and
-    -- map buffer local keybindings when the language server attaches
-    local servers = {
-      'clangd', -- C, C++
-      'rls', -- rust
-      'pyright',-- python
-    }
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    for _, lsp in ipairs(servers) do
-      lspcfg[lsp].setup {
+    lsp_installer.on_server_ready(function(server)
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- later: capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+      local opts = {
         on_attach = on_attach,
-        flags = {
-          debounce_text_changes = 150,
-        },
-        capabilities = capabilities
+        capabilities = capabilities,
       }
-    end
+
+      server:setup(opts)
+    end)
   end
 }
