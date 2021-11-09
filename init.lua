@@ -23,6 +23,10 @@ vim.o.ignorecase = true
 -- disable weird completion behavior
 vim.o.suffixes = ''
 
+-- always keep some rows/columns when scrolling
+vim.o.scrolloff = 5
+vim.o.sidescrolloff = 8
+
 -- define , as our leader key
 vim.g.mapleader = ','
 
