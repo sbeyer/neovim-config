@@ -11,7 +11,8 @@ return {
     lualine.get_config()
     lualine.setup {
       options = {
-        theme = 'dracula'
+        -- theme = 'dracula'
+        theme = 'nightfly' -- assumes that nightfly is loaded in colorscheme.lua
       }
     }
   end
