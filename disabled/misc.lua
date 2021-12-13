@@ -3,7 +3,7 @@ return {
     -- better tree-sitter support,
     -- don't forget :TSInstall cpp, rust, etc
     -- and :TSUpdate
-    {'nvim-treesitter/nvim-treesitter', branch="0.5-compat"};
+    'nvim-treesitter/nvim-treesitter';
     -- :TSPlaygroundToggle just for fun, but not really necessary
     -- 'nvim-treesitter/playground';
 
