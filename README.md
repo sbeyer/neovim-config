@@ -30,9 +30,8 @@ ln -s ~/.local/bin/nvim ~/.local/bin/vim
 ## recommended tools
 
 Install nice-to-haves using `apt` or `pacman`:
- * `fzf` (note: will also be installed by plugin at first use)
- * `ripgrep`
- * `bat` (very optional)
+ * [`ripgrep`](https://github.com/BurntSushi/ripgrep)
+ * [`fd-find`](https://github.com/sharkdp/fd)
  * Note that LSP servers will be installed nvim-local on demand
 
 ## this configuration
