@@ -7,8 +7,8 @@ This is work in progress.
 ## neovim
 
 ```sh
-# download nvim v0.5.1 (or replace v0.5.1 by stable or latest)
-wget https://github.com/neovim/neovim/releases/download/v0.5.1/nvim.appimage
+# download nvim v0.6.0 (or replace v0.6.0 by stable or latest)
+wget https://github.com/neovim/neovim/releases/download/v0.6.0/nvim.appimage
 
 # make executable
 chmod +x nvim.appimage
@@ -32,8 +32,8 @@ ln -s ~/.local/bin/nvim ~/.local/bin/vim
 Install nice-to-haves using `apt` or `pacman`:
  * `fzf` (note: will also be installed by plugin at first use)
  * `ripgrep`
- * LSP servers: `clangd`, `rls`, `pyright`
  * `bat` (very optional)
+ * Note that LSP servers will be installed nvim-local on demand
 
 ## this configuration
 
