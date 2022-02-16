@@ -30,6 +30,9 @@ vim.o.sidescrolloff = 8
 -- define , as our leader key
 vim.g.mapleader = ','
 
+-- disable netrw (because we use plugins)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 ----- File-type specific configuration
 
