@@ -7,8 +7,8 @@ This is work in progress.
 ## neovim
 
 ```sh
-# download nvim v0.6.0 (or replace v0.6.0 by stable or latest)
-wget https://github.com/neovim/neovim/releases/download/v0.6.0/nvim.appimage
+# download nvim v0.6.1 (or replace v0.6.1 by stable or latest)
+wget https://github.com/neovim/neovim/releases/download/v0.6.1/nvim.appimage
 
 # make executable
 chmod +x nvim.appimage
