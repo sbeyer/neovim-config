@@ -1,7 +1,9 @@
 return {
-  -- support for file:line:col format
-  'wsdjeg/vim-fetch',
+  plug = {
+    -- support for file:line:col format
+    'wsdjeg/vim-fetch',
 
-  -- guess indentation settings
-  'tpope/vim-sleuth',
+    -- guess indentation settings
+    'tpope/vim-sleuth',
+  },
 }

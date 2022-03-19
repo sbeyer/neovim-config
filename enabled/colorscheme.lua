@@ -1,7 +1,9 @@
 return {
-  'bluz71/vim-nightfly-guicolors',
+  plug = {
+    'bluz71/vim-nightfly-guicolors'
+  },
 
-  config = function()
+  post = function()
     vim.o.termguicolors = true
     vim.cmd('colorscheme nightfly')
   end

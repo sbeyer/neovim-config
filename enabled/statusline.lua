@@ -1,12 +1,14 @@
 return {
-  'nvim-lualine/lualine.nvim',
+  plug = {
+    'nvim-lualine/lualine.nvim',
 
-  requires = {
-    'kyazdani42/nvim-web-devicons',
-    opt = true,
+    requires = {
+      'kyazdani42/nvim-web-devicons',
+      opt = true,
+    },
   },
 
-  config = function()
+  post = function()
     local lualine = require('lualine')
     lualine.get_config()
     lualine.setup {

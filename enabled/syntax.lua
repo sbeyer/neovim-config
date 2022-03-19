@@ -1,5 +1,7 @@
 return {
-  'cespare/vim-toml',
+  plug = {
+    'cespare/vim-toml',
 
-  'peterhoeg/vim-qml',
+    'peterhoeg/vim-qml',
+  },
 }

@@ -1,13 +1,15 @@
 return {
-  -- easy LSP server installation
-  'williamboman/nvim-lsp-installer',
+  plug = {
+    -- easy LSP server installation
+    'williamboman/nvim-lsp-installer',
 
-  requires = {
-    -- easy LSP configuration
-    'neovim/nvim-lspconfig',
+    requires = {
+      -- easy LSP configuration
+      'neovim/nvim-lspconfig',
+    },
   },
 
-  config = function()
+  post = function()
     local lsp_config = require('lspconfig')
     local lsp_installer = require("nvim-lsp-installer")
 

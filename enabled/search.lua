@@ -1,4 +1,6 @@
 return {
-  -- search highlighting only when search is active
-  'romainl/vim-cool',
+  plug = {
+    -- search highlighting only when search is active
+    'romainl/vim-cool',
+  },
 }

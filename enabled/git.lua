@@ -1,7 +1,9 @@
 return {
-  -- Git support like :Git :Gw :GRemove :GRename ...
-  'tpope/vim-fugitive',
+  plug = {
+    -- Git support like :Git :Gw :GRemove :GRename ...
+    'tpope/vim-fugitive',
 
-  -- nicer git commit
-  'rhysd/committia.vim',
+    -- nicer git commit
+    'rhysd/committia.vim',
+  },
 }
