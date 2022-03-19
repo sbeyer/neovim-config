@@ -31,13 +31,6 @@ return require('packer').startup(function(use)
     end
   end
 
-  -- Perform post actions
-  for _, decl in pairs(declarations) do
-    if decl.post ~= nil then
-      decl.post()
-    end
-  end
-
   -- Get old declarations of packer-decls.txt to check if we need to sync
   local old_decl_file = fn.stdpath('config') .. '/plugin/packer-decls.txt'
   local old_declaration_string = table.concat(vim.fn.readfile(old_decl_file), '\n')
@@ -48,5 +41,12 @@ return require('packer').startup(function(use)
     require('packer').sync()
 
     vim.fn.writefile({ new_declaration_string }, old_decl_file)
+  end
+
+  -- Perform post actions
+  for _, decl in pairs(declarations) do
+    if decl.post ~= nil then
+      decl.post()
+    end
   end
 end)
