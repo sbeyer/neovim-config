@@ -21,6 +21,9 @@ local config = {
     -- define , as our leader key
     -- vim.g.mapleader = ','
 
+    -- enable mouse only for Normal and Visual mode only
+    vim.o.mouse = 'nv'
+
     ----- File-type specific configuration
 
     -- I never deal with plain tex, always LaTeX... respect that!
