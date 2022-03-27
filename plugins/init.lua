@@ -10,4 +10,7 @@ return {
 
   -- guess indentation settings
   'tpope/vim-sleuth',
+
+  -- nicer git commit
+  'rhysd/committia.vim',
 }
