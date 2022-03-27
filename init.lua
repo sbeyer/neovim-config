@@ -14,10 +14,6 @@ local config = {
     -- completion behavior in command mode
     vim.o.wildmode = 'longest:full,full'
 
-    -- find: ignore case when all letters are lower-case
-    vim.o.smartcase = true
-    vim.o.ignorecase = true
-
     -- disable weird completion behavior
     vim.o.suffixes = ''
 
