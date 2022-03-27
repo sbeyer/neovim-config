@@ -6,10 +6,6 @@ local config = {
     vim.wo.list = true
     vim.o.listchars = 'tab:^`,trail:~,extends:\\,precedes:»'
 
-    -- make line numbers visible: current line absolute, other lines relative
-    vim.wo.number = true
-    vim.wo.relativenumber = true
-
     -- make implicit linebreaks visible
     vim.o.showbreak = '  «'
     vim.wo.breakindent = true
