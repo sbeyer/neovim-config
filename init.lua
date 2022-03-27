@@ -7,6 +7,7 @@ local config = {
     vim.o.listchars = 'tab:^`,trail:~,extends:\\,precedes:»'
 
     -- make implicit linebreaks visible
+    vim.wo.wrap = true
     vim.o.showbreak = '  «'
     vim.wo.breakindent = true
     vim.wo.breakindentopt = 'shift:2,sbr'
