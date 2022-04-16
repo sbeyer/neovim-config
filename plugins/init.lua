@@ -14,6 +14,25 @@ return {
   -- nicer git commit
   'rhysd/committia.vim',
 
+  -- a few themes to test:
+  'NLKNguyen/papercolor-theme',
+  {
+    'marko-cerovac/material.nvim',
+
+    setup = function()
+      vim.g.material_style = 'darker'
+    end,
+
+    config = function()
+      require('material').setup{
+        high_visibility = {
+          darker = true
+        }
+      }
+      vim.cmd 'colorscheme material'
+    end
+  },
+
   {
     -- make w/b/e consider camelCase and snake_case
     'chaoren/vim-wordmotion',
