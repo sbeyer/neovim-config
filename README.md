@@ -21,12 +21,11 @@ Make sure these things are installed on your system:
 
 ## Step 2: recommended tools
 
-For a better experience, make sure these things are installed:
+For the best experience, make sure [the stuff mentioned here](https://astronvim.github.io/#-requirements)
+is installed.
 
- * [Nerd Fonts](https://www.nerdfonts.com/font-downloads)
- * [`ripgrep`](https://github.com/BurntSushi/ripgrep)
- * [`fd-find`](https://github.com/sharkdp/fd)
- * [`lazygit`](https://github.com/jesseduffield/lazygit)
+As [Nerd Font](https://www.nerdfonts.com/font-downloads), I am fond of the
+[Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hack.zip).
 
 LSP servers will be installed nvim-local on demand, however, some LSP servers need
 additional tools like `node` to be able to install them.
@@ -34,8 +33,8 @@ additional tools like `node` to be able to install them.
 ## Step 3: get neovim
 
 ```sh
-# download nvim v0.6.1 (or replace v0.6.1 by stable or latest)
-wget https://github.com/neovim/neovim/releases/download/v0.6.1/nvim.appimage
+# download nvim v0.7.0 (or replace the version by stable or latest)
+wget https://github.com/neovim/neovim/releases/download/v0.7.0/nvim.appimage
 
 # make executable
 chmod +x nvim.appimage
@@ -60,7 +59,7 @@ test -d ~/.cache/nvim && mv ~/.cache/nvim ~/.cache/nvim.bak-"$(date -I)"
 
 Do
 ```sh
-git clone https://github.com/kabinspace/AstroVim ~/.config/nvim
+git clone https://github.com/AstroNvim/AstroNvim.git ~/.config/nvim
 git clone https://github.com/sbeyer/neovim-config.git ~/.config/nvim/lua/user
 nvim +PackerSync
 ```
