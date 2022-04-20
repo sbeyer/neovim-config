@@ -24,6 +24,10 @@ local config = {
     -- enable mouse only for Normal and Visual mode only
     vim.o.mouse = 'nv'
 
+    -- status line everywhere
+    vim.o.laststatus = 2
+    vim.api.nvim_del_augroup_by_name("dashboard_settings")
+
     ----- File-type specific configuration
 
     -- I never deal with plain tex, always LaTeX... respect that!
