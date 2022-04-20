@@ -3,6 +3,7 @@ When I switched to neovim, I decided to configure it from scratch.
 And I failed terribly, at least, at my perfectionism.
 
 So I decided to depend on the work and perfectionism of others and use a pre-configured neovim distribution.
+**Kudos goes to [AstroNvim](https://github.com/AstroNvim/AstroNvim)**.
 My flavor is added with this repository.
 
 # Installation
@@ -18,6 +19,8 @@ Make sure these things are installed on your system:
  * `tar`
  * `curl`
  * C/C++ compiler with standard library
+
+Yes, it's all pretty basic.
 
 ## Step 2: recommended tools
 
@@ -86,6 +89,12 @@ To get better syntax highlighting and semantical grouping, type
 ```
 where `rust` should be replaced by the name of the language you are using.
 Unfortunately, TSInstall does not yet recognize it based on the current buffer.
+
+Moreover, a strong recommendation is to do
+```
+:TSInstall comment
+```
+for highlighting inside code comments.
 You can also type
 ```
 :TSInstallInfo
