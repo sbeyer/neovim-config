@@ -1,33 +1,31 @@
 local config = {
+  options = {
+    opt = {
+      -- status line everywhere
+      laststatus = 2,
+
+      -- completion behavior in command mode
+      wildmode = 'longest:full,full',
+
+      -- disable weird completion behavior regarding suffixes
+      suffixes = '',
+
+      -- enable mouse only for Normal and Visual mode only
+      mouse = 'nv',
+
+      -- make whitespace visible
+      list = true,
+      listchars = 'tab:^`,trail:~,extends:\\,precedes:»',
+
+      -- make implicit linebreaks visible
+      wrap = true,
+      showbreak = '  «',
+      breakindent = true,
+      breakindentopt = 'shift:2,sbr',
+    }
+  },
+
   polish = function()
-    ----- General configuration
-
-    -- make whitespace visible
-    vim.wo.list = true
-    vim.o.listchars = 'tab:^`,trail:~,extends:\\,precedes:»'
-
-    -- make implicit linebreaks visible
-    vim.wo.wrap = true
-    vim.o.showbreak = '  «'
-    vim.wo.breakindent = true
-    vim.wo.breakindentopt = 'shift:2,sbr'
-
-    -- completion behavior in command mode
-    vim.o.wildmode = 'longest:full,full'
-
-    -- disable weird completion behavior
-    vim.o.suffixes = ''
-
-    -- define , as our leader key
-    -- vim.g.mapleader = ','
-
-    -- enable mouse only for Normal and Visual mode only
-    vim.o.mouse = 'nv'
-
-    -- status line everywhere
-    vim.o.laststatus = 2
-    vim.api.nvim_del_augroup_by_name("dashboard_settings")
-
     ----- File-type specific configuration
 
     -- I never deal with plain tex, always LaTeX... respect that!
