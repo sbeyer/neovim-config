@@ -1,6 +1,4 @@
 local config = {
-  colorscheme = "material",
-
   polish = function()
     ----- File-type specific configuration
 
