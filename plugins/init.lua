@@ -9,15 +9,15 @@ return {
   'rhysd/committia.vim',
 
   -- Rust goodies
-  {
-    'simrat39/rust-tools.nvim',
-
-    requires = {
-      "nvim-lspconfig",
-      "nvim-lsp-installer",
-      -- "nvim-dap",
-    }
-  },
+  -- {
+  --   'simrat39/rust-tools.nvim',
+  --
+  --   requires = {
+  --     "nvim-lspconfig",
+  --     "nvim-lsp-installer",
+  --     -- "nvim-dap",
+  --   }
+  -- },
 
   -- a few themes to test:
   'NLKNguyen/papercolor-theme',
