@@ -16,51 +16,14 @@ return {
   'rhysd/committia.vim',
 
   -- Rust goodies
-  {
-    "simrat39/rust-tools.nvim",
-    after = "mason-lspconfig.nvim",
-    config = function()
-      require("rust-tools").setup {
-        -- get the server settings and built in capabilities/on_attach
-        server = astronvim.lsp.server_settings "rust_analyzer",
-      }
-    end,
-  },
+  ["simrat39/rust-tools.nvim"] = require "user.plugins.rust-tools",
 
   -- C/C++ goodies
-  {
-    "p00f/clangd_extensions.nvim",
-    after = "mason-lspconfig.nvim",
-    config = function()
-      require("clangd_extensions").setup {
-        server = astronvim.lsp.server_settings "clangd",
-      }
-    end,
-  },
+  ["p00f/clangd_extensions.nvim"] = require "user.plugins.clangd_extensions",
 
   -- Colorscheme
-  {
-    'marko-cerovac/material.nvim',
+  ['marko-cerovac/material.nvim'] = require "user.plugins.material",
 
-    setup = function()
-      vim.g.material_style = 'darker'
-    end,
-
-    config = function()
-      require('material').setup{
-        high_visibility = {
-          darker = true
-        }
-      }
-    end
-  },
-
-  {
-    -- make w/b/e consider camelCase and snake_case
-    'chaoren/vim-wordmotion',
-
-    setup = function()
-      vim.g.wordmotion_prefix = ','
-    end
-  },
+  -- make w/b/e consider camelCase and snake_case
+  ['chaoren/vim-wordmotion'] = require "user.plugins.wordmotion",
 }
