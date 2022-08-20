@@ -1,3 +1,4 @@
 return {
-  "rust_analyzer", -- skip because rust-tools will do it itself
+  "clangd", --> clangd_extensions
+  "rust_analyzer", --> rust-tools
 }

@@ -20,6 +20,17 @@ return {
     end,
   },
 
+  -- C/C++ goodies
+  {
+    "p00f/clangd_extensions.nvim",
+    after = "mason-lspconfig.nvim",
+    config = function()
+      require("clangd_extensions").setup {
+        server = astronvim.lsp.server_settings "clangd",
+      }
+    end,
+  },
+
   -- a few themes to test:
   'NLKNguyen/papercolor-theme',
   {
