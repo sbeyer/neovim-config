@@ -39,8 +39,6 @@ local config = {
     local map = vim.api.nvim_set_keymap
     map("n", "<leader>gR", "<cmd>!git rm -f %<cr>", opts)
     map("n", "<leader>gw", "<cmd>!git add %<cr>", opts)
-
-    map("n", "<leader>fW", "<cmd>Telescope grep_string search=<cword><cr>", opts)
   end
 }
 
