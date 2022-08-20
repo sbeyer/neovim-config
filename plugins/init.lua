@@ -1,9 +1,10 @@
 return {
-  -- Path navigator (minimalistic netrw alternative)
-  'justinmk/vim-dirvish',
+  -- disable AstroNvim's smooth scrolling
+  ["declancm/cinnamon.nvim"] = { disable = true },
 
-  -- ...with git support
-  'kristijanhusak/vim-dirvish-git',
+  -- disable plugins I do not use
+  ["famiu/bufdelete.nvim"] = { disable = true },
+  ["goolord/alpha-nvim"] = { disable = true },
 
   -- support for file:line:col format
   'wsdjeg/vim-fetch',
@@ -15,41 +16,14 @@ return {
   'rhysd/committia.vim',
 
   -- Rust goodies
-  {
-    'simrat39/rust-tools.nvim',
+  ["simrat39/rust-tools.nvim"] = require "user.plugins.rust-tools",
 
-    requires = {
-      "nvim-lspconfig",
-      "nvim-lsp-installer",
-      -- "nvim-dap",
-    }
-  },
+  -- C/C++ goodies
+  ["p00f/clangd_extensions.nvim"] = require "user.plugins.clangd_extensions",
 
-  -- a few themes to test:
-  'NLKNguyen/papercolor-theme',
-  {
-    'marko-cerovac/material.nvim',
+  -- Colorscheme
+  ['marko-cerovac/material.nvim'] = require "user.plugins.material",
 
-    setup = function()
-      vim.g.material_style = 'darker'
-    end,
-
-    config = function()
-      require('material').setup{
-        high_visibility = {
-          darker = true
-        }
-      }
-      vim.cmd 'colorscheme material'
-    end
-  },
-
-  {
-    -- make w/b/e consider camelCase and snake_case
-    'chaoren/vim-wordmotion',
-
-    setup = function()
-      vim.g.wordmotion_prefix = ','
-    end
-  },
+  -- make w/b/e consider camelCase and snake_case
+  ['chaoren/vim-wordmotion'] = require "user.plugins.wordmotion",
 }

@@ -36,8 +36,8 @@ additional tools like `node` to be able to install them.
 ## Step 3: get neovim
 
 ```sh
-# download nvim v0.7.0 (or replace the version by stable or latest)
-wget https://github.com/neovim/neovim/releases/download/v0.7.0/nvim.appimage
+# download nvim v0.7.2 (or replace the version by stable or latest)
+wget https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage
 
 # make executable
 chmod +x nvim.appimage
@@ -62,7 +62,7 @@ test -d ~/.cache/nvim && mv ~/.cache/nvim ~/.cache/nvim.bak-"$(date -I)"
 
 Do
 ```sh
-git clone https://github.com/AstroNvim/AstroNvim.git ~/.config/nvim
+git clone --branch v1.9.0 https://github.com/AstroNvim/AstroNvim.git ~/.config/nvim
 git clone https://github.com/sbeyer/neovim-config.git ~/.config/nvim/lua/user
 nvim +PackerSync
 ```
@@ -75,6 +75,9 @@ When editing code and some other files with specific syntax, type
 :LspInstall
 ```
 to select and install a corresponding LSP server.
+
+LSP servers for Rust and C/C++ will be installed automatically.
+
 Type
 ```
 :LspInstallInfo
@@ -110,8 +113,7 @@ To upgrade AstroVim, type
 ```
 :AstroUpdate
 ```
-Since it is actively developed, things may break after doing so.
-The same can happen when updating plugins, which you can do by
+and to upgrade plugins, type
 ```
 :PackerSync
 ```
