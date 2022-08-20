@@ -75,6 +75,9 @@ When editing code and some other files with specific syntax, type
 :LspInstall
 ```
 to select and install a corresponding LSP server.
+
+LSP servers for Rust and C/C++ will be installed automatically.
+
 Type
 ```
 :LspInstallInfo
@@ -110,8 +113,7 @@ To upgrade AstroVim, type
 ```
 :AstroUpdate
 ```
-Since it is actively developed, things may break after doing so.
-The same can happen when updating plugins, which you can do by
+and to upgrade plugins, type
 ```
 :PackerSync
 ```
