@@ -4,6 +4,13 @@ local config = {
   polish = function()
     ----- File-type specific configuration
 
+    -- Recognize qml
+    vim.filetype.add {
+      extension = {
+        qml = "qmljs",
+      }
+    }
+
     -- I never deal with plain tex, always LaTeX... respect that!
     vim.cmd('autocmd FileType plaintex set ft=tex')
 
