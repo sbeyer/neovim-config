@@ -38,8 +38,7 @@ return {
     end,
   },
 
-  -- a few themes to test:
-  'NLKNguyen/papercolor-theme',
+  -- Colorscheme
   {
     'marko-cerovac/material.nvim',
 
