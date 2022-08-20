@@ -4,6 +4,7 @@ return {
 
   -- disable plugins I do not use
   ["famiu/bufdelete.nvim"] = { disable = true },
+  ["goolord/alpha-nvim"] = { disable = true },
 
   -- support for file:line:col format
   'wsdjeg/vim-fetch',
