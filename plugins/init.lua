@@ -1,4 +1,7 @@
 return {
+  -- disable AstroNvim's smooth scrolling
+  ["declancm/cinnamon.nvim"] = { disable = true },
+
   -- support for file:line:col format
   'wsdjeg/vim-fetch',
 
