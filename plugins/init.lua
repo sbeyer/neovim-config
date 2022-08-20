@@ -9,15 +9,16 @@ return {
   'rhysd/committia.vim',
 
   -- Rust goodies
-  -- {
-  --   'simrat39/rust-tools.nvim',
-  --
-  --   requires = {
-  --     "nvim-lspconfig",
-  --     "nvim-lsp-installer",
-  --     -- "nvim-dap",
-  --   }
-  -- },
+  {
+    "simrat39/rust-tools.nvim",
+    after = "mason-lspconfig.nvim",
+    config = function()
+      require("rust-tools").setup {
+        -- get the server settings and built in capabilities/on_attach
+        server = astronvim.lsp.server_settings "rust_analyzer",
+      }
+    end,
+  },
 
   -- a few themes to test:
   'NLKNguyen/papercolor-theme',
