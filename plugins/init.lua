@@ -2,6 +2,9 @@ return {
   -- disable AstroNvim's smooth scrolling
   ["declancm/cinnamon.nvim"] = { disable = true },
 
+  -- disable plugins I do not use
+  ["famiu/bufdelete.nvim"] = { disable = true },
+
   -- support for file:line:col format
   'wsdjeg/vim-fetch',
 
