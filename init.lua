@@ -1,4 +1,6 @@
 local config = {
+  colorscheme = "material",
+
   options = {
     opt = {
       -- status line everywhere

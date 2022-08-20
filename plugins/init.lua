@@ -40,7 +40,6 @@ return {
           darker = true
         }
       }
-      vim.cmd 'colorscheme material'
     end
   },
 
