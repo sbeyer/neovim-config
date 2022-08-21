@@ -85,25 +85,12 @@ Type
 to get an overview of installed servers and interactively install/uninstall/upgrade
 LSP servers.
 
-
-To get better syntax highlighting and semantical grouping, type
-```
-:TSInstall rust
-```
-where `rust` should be replaced by the name of the language you are using.
-Unfortunately, TSInstall does not yet recognize it based on the current buffer.
-
-Moreover, a strong recommendation is to do
-```
-:TSInstall comment
-```
-for highlighting inside code comments.
-You can also type
+Note that treesitter parsers are installed automatically when necessary.
+You can type
 ```
 :TSInstallInfo
 ```
-to get an overview.
-Finally,
+to get an overview, and
 ```
 :TSUpdate
 ```
