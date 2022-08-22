@@ -9,8 +9,9 @@ return {
   -- support for file:line:col format
   'wsdjeg/vim-fetch',
 
-  -- guess indentation settings
-  'tpope/vim-sleuth',
+  -- guess indentation settings (disable unused AstoNvim choice)
+  ['NMAC427/guess-indent.nvim'] = require 'user.plugins.guess-indent',
+  ["Darazaki/indent-o-matic"] = { disable = true },
 
   -- nicer git commit
   'rhysd/committia.vim',
