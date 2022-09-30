@@ -27,4 +27,7 @@ return {
 
   -- make w/b/e consider camelCase and snake_case
   ['chaoren/vim-wordmotion'] = require "user.plugins.wordmotion",
+
+  -- navigate on matching text using %
+  'andymass/vim-matchup',
 }
