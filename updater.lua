@@ -1,4 +1,4 @@
 return {
   channel = "stable",
-  version = "v1\\.9\\.*",
+  version = "v1\\.10\\.*",
 }
