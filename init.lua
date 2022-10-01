@@ -1,14 +1,10 @@
 return {
-  -- add new user interface icon
-  icons = {
-    VimIcon = "",
-  },
   -- modify variables used by heirline but not defined in the setup call directly
   heirline = {
     -- define the separators between each section
     separators = {
       left = { "", " " }, -- separator for the left side of the statusline
-      right = { " ", "" }, -- separator for the right side of the statusline
+      right = { "  ", "" }, -- separator for the right side of the statusline
     },
     -- add new colors that can be used by heirline
     colors = {
@@ -30,7 +26,7 @@ return {
         -- add the vim mode component
         astronvim.status.component.mode {
           -- enable mode text with padding as well as an icon before it
-          mode_text = { icon = { kind = "VimIcon", padding = { right = 1, left = 1 } } },
+          mode_text = { padding = { right = 0, left = 1 } },
           -- define the highlight color for the text
           hl = { fg = "bg" },
           -- surround the component with a separators
@@ -73,47 +69,8 @@ return {
         astronvim.status.component.diagnostics { surround = { separator = "right" } },
         -- add a component to display LSP clients, disable showing LSP progress, and use the right separator
         astronvim.status.component.lsp { lsp_progress = false, surround = { separator = "right" } },
-        -- NvChad has some nice icons to go along with information, so we can create a parent component to do this
-        -- all of the children of this table will be treated together as a single component
+        -- navigation section
         {
-          -- define a simple component where the provider is just a folder icon
-          astronvim.status.component.builder {
-            -- astronvim.get_icon gets the user interface icon for a closed folder with a space after it
-            { provider = astronvim.get_icon "FolderClosed" },
-            -- add padding after icon
-            padding = { right = 1 },
-            -- set the foreground color to be used for the icon
-            hl = { fg = "bg" },
-            -- use the right separator and define the background color
-            surround = { separator = "right", color = "folder_icon_bg" },
-          },
-          -- add a file information component and only show the current working directory name
-          astronvim.status.component.file_info {
-            -- we only want filename to be used and we can change the fname
-            -- function to get the current working directory name
-            filename = { fname = function() return vim.fn.getcwd() end, padding = { left = 1 } },
-            -- disable all other elements of the file_info component
-            file_icon = false,
-            file_modified = false,
-            file_read_only = false,
-            -- use no separator for this part but define a background color
-            surround = { separator = "none", color = "file_bg" },
-          },
-        },
-        -- the final component of the NvChad statusline is the navigation section
-        -- this is very similar to the previous current working directory section with the icon
-        { -- make nav section with icon border
-          -- define a custom component with just a file icon
-          astronvim.status.component.builder {
-            { provider = astronvim.get_icon "DefaultFile" },
-            -- add padding after icon
-            padding = { right = 1 },
-            -- set the icon foreground
-            hl = { fg = "bg" },
-            -- use the right separator and define the background color
-            -- as well as the color to the left of the separator
-            surround = { separator = "right", color = { main = "nav_icon_bg", left = "file_bg" } },
-          },
           -- add a navigation component and just display the percentage of progress in the file
           astronvim.status.component.nav {
             -- add some padding for the percentage provider
