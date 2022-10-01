@@ -1,7 +1,7 @@
 return {
   opt = {
     -- status line everywhere
-    laststatus = 2,
+    -- laststatus = 2,
 
     -- completion behavior in command mode
     wildmode = 'longest:full,full',

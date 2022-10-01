@@ -36,8 +36,8 @@ additional tools like `node` to be able to install them.
 ## Step 3: get neovim
 
 ```sh
-# download nvim v0.7.2 (or replace the version by stable or latest)
-wget https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage
+# download nvim v0.8.0 (or replace the version by stable or latest)
+wget https://github.com/neovim/neovim/releases/download/v0.8.0/nvim.appimage
 
 # make executable
 chmod +x nvim.appimage
