@@ -1,5 +1,8 @@
 return {
   opt = {
+    -- keep statusline when in command mode
+    cmdheight = 1,
+
     -- status line everywhere
     -- laststatus = 2,
 
