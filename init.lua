@@ -3,8 +3,8 @@ return {
   heirline = {
     -- define the separators between each section
     separators = {
-      left = { "", " " }, -- separator for the left side of the statusline
-      right = { "  ", "" }, -- separator for the right side of the statusline
+      left = { "", " " }, -- separator for the left side of the statusline
+      right = { " ", " " }, -- separator for the right side of the statusline
     },
     -- add new colors that can be used by heirline
     colors = {
@@ -26,7 +26,7 @@ return {
         -- add the vim mode component
         astronvim.status.component.mode {
           -- enable mode text with padding as well as an icon before it
-          mode_text = { padding = { right = 0, left = 1 } },
+          mode_text = { padding = { right = 1, left = 1 } },
           -- define the highlight color for the text
           hl = { fg = "bg" },
           -- surround the component with a separators
@@ -70,20 +70,7 @@ return {
         -- add a component to display LSP clients, disable showing LSP progress, and use the right separator
         astronvim.status.component.lsp { lsp_progress = false, surround = { separator = "right" } },
         -- navigation section
-        {
-          -- add a navigation component and just display the percentage of progress in the file
-          astronvim.status.component.nav {
-            -- add some padding for the percentage provider
-            percentage = { padding = { left = 1, right = 1 } },
-            -- disable all other providers
-            ruler = false,
-            scrollbar = false,
-            -- define the foreground color
-            hl = { fg = "nav_icon_bg" },
-            -- use no separator and define the background color
-            surround = { separator = "none", color = "file_bg" },
-          },
-        },
+        astronvim.status.component.nav {},
       }
 
       -- a second element in the heirline setup would override the winbar
