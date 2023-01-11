@@ -26,5 +26,5 @@ return {
   ['chaoren/vim-wordmotion'] = require "user.plugins.wordmotion",
 
   -- navigate on matching text using %
-  'andymass/vim-matchup',
+  ['andymass/vim-matchup'] = require "user.plugins.matchup",
 }
