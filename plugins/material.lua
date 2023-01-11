@@ -4,7 +4,7 @@ return {
   end,
 
   config = function()
-    require('material').setup{
+    require('material').setup {
       high_visibility = {
         darker = true
       }

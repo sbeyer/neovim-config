@@ -29,6 +29,7 @@ is installed.
 
 As [Nerd Font](https://www.nerdfonts.com/font-downloads), I am fond of the
 [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hack.zip).
+You might also want to check [getnf](https://github.com/ronniedroid/getnf).
 
 LSP servers will be installed nvim-local on demand, however, some LSP servers need
 additional tools like `node` to be able to install them.
@@ -36,14 +37,11 @@ additional tools like `node` to be able to install them.
 ## Step 3: get neovim
 
 ```sh
-# download nvim v0.7.2 (or replace the version by stable or latest)
-wget https://github.com/neovim/neovim/releases/download/v0.7.2/nvim.appimage
+# download nvim v0.8.2 (or replace the version by stable or latest) to a location in your $PATH
+curl -L --output ~/.local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.8.2/nvim.appimage
 
 # make executable
-chmod +x nvim.appimage
-
-# move executable to a location in your $PATH
-mv nvim.appimage ~/.local/bin/nvim
+chmod +x ~/.local/bin/nvim
 
 # also override vim
 ln -s ~/.local/bin/nvim ~/.local/bin/vim
@@ -62,7 +60,7 @@ test -d ~/.cache/nvim && mv ~/.cache/nvim ~/.cache/nvim.bak-"$(date -I)"
 
 Do
 ```sh
-git clone --branch v1.10.0 https://github.com/AstroNvim/AstroNvim.git ~/.config/nvim
+git clone --branch v2.11.8 https://github.com/AstroNvim/AstroNvim.git ~/.config/nvim
 git clone https://github.com/sbeyer/neovim-config.git ~/.config/nvim/lua/user
 nvim +PackerSync
 ```
