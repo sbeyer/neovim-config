@@ -29,6 +29,7 @@ is installed.
 
 As [Nerd Font](https://www.nerdfonts.com/font-downloads), I am fond of the
 [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hack.zip).
+You might also want to check [getnf](https://github.com/ronniedroid/getnf).
 
 LSP servers will be installed nvim-local on demand, however, some LSP servers need
 additional tools like `node` to be able to install them.
