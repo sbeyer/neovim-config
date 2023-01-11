@@ -3,9 +3,6 @@ return {
     -- keep statusline when in command mode
     cmdheight = 1,
 
-    -- status line everywhere
-    -- laststatus = 2,
-
     -- completion behavior in command mode
     wildmode = 'longest:full,full',
 
