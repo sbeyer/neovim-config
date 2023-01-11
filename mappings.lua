@@ -11,5 +11,22 @@ return {
       "<cmd>!git rm -f %<cr>",
       desc = "git rm current file"
     },
+
+    ["s"] = {
+      "<cmd>Pounce<CR>"
+    },
+
+    ["S"] = {
+      "<cmd>PounceRepeat<CR>"
+    },
+  },
+  v = {
+    ["s"] = {
+      "<cmd>Pounce<CR>"
+    },
+
+    ["S"] = {
+      "<cmd>PounceRepeat<CR>"
+    },
   }
 }
