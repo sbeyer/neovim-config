@@ -27,4 +27,7 @@ return {
 
   -- navigate on matching text using %
   ['andymass/vim-matchup'] = require "user.plugins.matchup",
+
+  -- fast motion
+  'rlane/pounce.nvim',
 }
