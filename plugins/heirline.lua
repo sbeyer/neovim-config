@@ -23,6 +23,9 @@ return function(config)
       unique_path = {},
       file_modified = {},
       file_read_only = {},
+      filetype = {
+        separator = { left = " [", right = "]" },
+      },
       -- update = "BufEnter" -- seems not to be necessary
     },
     astronvim.status.component.breadcrumbs { hl = astronvim.status.hl.get_attributes("winbar", true) },
