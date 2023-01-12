@@ -6,8 +6,8 @@ return {
     -- completion behavior in command mode
     wildmode = 'longest:full,full',
 
-    -- show tabline only if there is more than one tab open
-    showtabline = 1,
+    -- never show tabline (we show tab information in statusline)
+    showtabline = 0,
 
     -- disable weird completion behavior regarding suffixes
     suffixes = '',

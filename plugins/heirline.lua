@@ -13,6 +13,19 @@ return function(config)
   table.remove(status, 4)
   table.insert(status, 7, diag)
 
+  -- insert tab information into statusline (we don't want a tabline)
+  local tablist = astronvim.status.component.builder {
+    -- condition = function() return #vim.api.nvim_list_tabpages() >= 2 end,
+    surround = { separator = "left" },
+    astronvim.status.heirline.make_tablist { -- component for each tab
+      provider = astronvim.status.provider.tabnr(),
+      hl = function(self)
+        return astronvim.status.hl.get_attributes(astronvim.status.heirline.tab_type(self, "tab"), true)
+      end,
+    },
+  }
+  table.insert(status, 2, tablist)
+
   -- adapt winbar: filename please!
   local winbar = config[2]
 
