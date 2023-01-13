@@ -1,5 +1,10 @@
 return {
   n = {
+    ["<leader>Q"] = {
+      "<cmd>qa<cr>",
+      desc = "Quit all",
+    },
+
     ["<leader>gS"] = {
       function()
         require("gitsigns").stage_buffer()
