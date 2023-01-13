@@ -6,6 +6,9 @@ return {
     -- completion behavior in command mode
     wildmode = 'longest:full,full',
 
+    -- never show tabline (we show tab information in statusline)
+    showtabline = 0,
+
     -- disable weird completion behavior regarding suffixes
     suffixes = '',
 

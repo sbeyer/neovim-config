@@ -5,13 +5,26 @@ return function(config)
   -- add mode text
   status[1] = astronvim.status.component.mode { mode_text = { padding = { left = 1, right = 1 } } }
 
-  -- swap file info and git branch to have git stuff together
-  status[2], status[3] = status[3], status[2]
+  -- remove file info
+  table.remove(status, 3)
 
   -- move diagnostics (index 5) before lsp info (index 9)
-  local diag = status[5]
-  table.remove(status, 5)
-  table.insert(status, 8, diag)
+  local diag = status[4]
+  table.remove(status, 4)
+  table.insert(status, 7, diag)
+
+  -- insert tab information into statusline (we don't want a tabline)
+  local tablist = astronvim.status.component.builder {
+    -- condition = function() return #vim.api.nvim_list_tabpages() >= 2 end,
+    surround = { separator = "left" },
+    astronvim.status.heirline.make_tablist { -- component for each tab
+      provider = astronvim.status.provider.tabnr(),
+      hl = function(self)
+        return astronvim.status.hl.get_attributes(astronvim.status.heirline.tab_type(self, "tab"), true)
+      end,
+    },
+  }
+  table.insert(status, 2, tablist)
 
   -- adapt winbar: filename please!
   local winbar = config[2]
@@ -23,6 +36,9 @@ return function(config)
       unique_path = {},
       file_modified = {},
       file_read_only = {},
+      filetype = {
+        separator = { left = " [", right = "]" },
+      },
       -- update = "BufEnter" -- seems not to be necessary
     },
     astronvim.status.component.breadcrumbs { hl = astronvim.status.hl.get_attributes("winbar", true) },
