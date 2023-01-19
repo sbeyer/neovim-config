@@ -37,4 +37,7 @@ return {
 
   -- completions that do calculations for me
   ["hrsh7th/cmp-calc"] = require "user.plugins.cmp-calc",
+
+  -- LaTeX symbol completions
+  ["kdheepak/cmp-latex-symbols"] = require "user.plugins.cmp-latex-symbols",
 }
