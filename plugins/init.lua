@@ -43,4 +43,7 @@ return {
 
   -- BibTeX finder in telescope
   ["nvim-telescope/telescope-bibtex.nvim"] = require "user.plugins.telescope-bibtex",
+
+  -- File browser via telescope
+  ["nvim-telescope/telescope-file-browser.nvim"] = require "user.plugins.telescope-file-browser",
 }

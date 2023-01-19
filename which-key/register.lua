@@ -13,6 +13,7 @@ return {
       f = {
         name = "Find",
         B = { "<cmd>Telescope bibtex<cr>", "Search bibliography" },
+        e = { "<cmd>Telescope file_browser<cr>", "File explorer" },
       },
     }
   },
