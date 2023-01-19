@@ -31,4 +31,7 @@ return {
 
   -- fast motion
   'rlane/pounce.nvim',
+
+  -- annotation generation
+  ['danymat/neogen'] = require "user.plugins.neogen",
 }
