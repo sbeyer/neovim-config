@@ -34,4 +34,7 @@ return {
 
   -- annotation generation
   ['danymat/neogen'] = require "user.plugins.neogen",
+
+  -- completions that do calculations for me
+  ["hrsh7th/cmp-calc"] = require "user.plugins.cmp-calc",
 }
