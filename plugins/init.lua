@@ -46,4 +46,7 @@ return {
 
   -- File browser via telescope
   ["nvim-telescope/telescope-file-browser.nvim"] = require "user.plugins.telescope-file-browser",
+
+  -- git goodies for diffs, conflicts and history
+  ["sindrets/diffview.nvim"] = require "user.plugins.diffview",
 }
