@@ -40,4 +40,7 @@ return {
 
   -- LaTeX symbol completions
   ["kdheepak/cmp-latex-symbols"] = require "user.plugins.cmp-latex-symbols",
+
+  -- BibTeX finder in telescope
+  ["nvim-telescope/telescope-bibtex.nvim"] = require "user.plugins.telescope-bibtex",
 }
