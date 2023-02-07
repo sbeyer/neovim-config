@@ -28,8 +28,8 @@ return {
         ["<leader>gq"] = { "<cmd>DiffviewClose<cr>", desc = "Quit Diffview" }, -- Toggle the file panel.
         ["]D"] = { actions.select_next_entry, desc = "Next Difference" }, -- Open the diff for the next file
         ["[D"] = { actions.select_prev_entry, desc = "Previous Difference" }, -- Open the diff for the previous file
-        ["[C"] = { actions.prev_conflict, desc = "Next Conflict" }, -- In the merge_tool: jump to the previous conflict
-        ["]C"] = { actions.next_conflict, desc = "Previous Conflict" }, -- In the merge_tool: jump to the next conflict
+        ["[C"] = { actions.prev_conflict, desc = "Previous Conflict" }, -- In the merge_tool: jump to the previous conflict
+        ["]C"] = { actions.next_conflict, desc = "Next Conflict" }, -- In the merge_tool: jump to the next conflict
         ["Cl"] = { actions.cycle_layout, desc = "Cycle Diff Layout" }, -- Cycle through available layouts.
         ["Ct"] = { actions.listing_style, desc = "Cycle Tree Style" }, -- Cycle through available layouts.
         ["<leader>e"] = { actions.toggle_files, desc = "Toggle Explorer" }, -- Toggle the file panel.
