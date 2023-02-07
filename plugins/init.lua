@@ -20,6 +20,9 @@ return {
   -- C/C++ goodies
   ["p00f/clangd_extensions.nvim"] = require "user.plugins.clangd_extensions",
 
+  -- LSP function signature awesomeness
+  ["ray-x/lsp_signature.nvim"] = require "user.plugins.lsp_signature",
+
   -- Colorscheme
   ['marko-cerovac/material.nvim'] = require "user.plugins.material",
 
