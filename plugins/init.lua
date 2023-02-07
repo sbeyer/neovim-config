@@ -31,4 +31,22 @@ return {
 
   -- fast motion
   'rlane/pounce.nvim',
+
+  -- annotation generation
+  ['danymat/neogen'] = require "user.plugins.neogen",
+
+  -- completions that do calculations for me
+  ["hrsh7th/cmp-calc"] = require "user.plugins.cmp-calc",
+
+  -- LaTeX symbol completions
+  ["kdheepak/cmp-latex-symbols"] = require "user.plugins.cmp-latex-symbols",
+
+  -- BibTeX finder in telescope
+  ["nvim-telescope/telescope-bibtex.nvim"] = require "user.plugins.telescope-bibtex",
+
+  -- File browser via telescope
+  ["nvim-telescope/telescope-file-browser.nvim"] = require "user.plugins.telescope-file-browser",
+
+  -- git goodies for diffs, conflicts and history
+  ["sindrets/diffview.nvim"] = require "user.plugins.diffview",
 }
