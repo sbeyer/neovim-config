@@ -12,7 +12,6 @@ return {
 
       f = {
         name = "Find",
-        B = { "<cmd>Telescope bibtex<cr>", "Search bibliography" },
         e = { "<cmd>Telescope file_browser<cr>", "File explorer" },
         M = { "<cmd>Telescope man_pages<cr>", "Search man pages" },
         k = { "<cmd>Telescope keymaps<cr>", "Search vim keymaps" },
