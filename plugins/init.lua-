@@ -15,9 +15,6 @@ return {
   -- LSP function signature awesomeness
   ["ray-x/lsp_signature.nvim"] = require "user.plugins.lsp_signature",
 
-  -- Colorscheme
-  ['marko-cerovac/material.nvim'] = require "user.plugins.material",
-
   -- make w/b/e consider camelCase and snake_case
   ['chaoren/vim-wordmotion'] = require "user.plugins.wordmotion",
 
