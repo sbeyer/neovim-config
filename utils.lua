@@ -28,4 +28,18 @@ M.ensure_lsps = function(lsps)
   }
 end
 
+M.add_cmp_source = function(plugin, source_config)
+  return {
+    "hrsh7th/nvim-cmp",
+    dependencies = { plugin },
+    opts = function(_, opts)
+      if not opts.sources then
+        opts.sources = {}
+      end
+
+      table.insert(opts.sources, source_config)
+    end,
+  }
+end
+
 return M

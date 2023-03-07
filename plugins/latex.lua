@@ -1,23 +1,15 @@
 return {
   require('user.utils').ensure_treesitter_parsers({ "latex", "bibtex" }),
   require('user.utils').ensure_lsps({ "texlab" }),
-
-  -- cmp source for latex symbols
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = { "kdheepak/cmp-latex-symbols" },
-    opts = function(_, opts)
-      if not opts.sources then
-        opts.sources = {}
-      end
-
-      table.insert(opts.sources, {
-        name = "latex_symbols",
-        option = { strategy = 2 }, -- show and insert the command
-        priority = 700
-      })
-    end,
-  },
+  require('user.utils').add_cmp_source(
+    "kdheepak/cmp-latex-symbols",
+    {
+      name = "latex_symbols",
+      option = { strategy = 2 }, -- show and insert the command
+      priority = 700
+      -- TODO: restrict to tex filetype
+    }
+  ),
 
   -- BibTeX finder in telescope
   {
