@@ -1,7 +1,4 @@
 return {
-  -- nicer git commit
-  'rhysd/committia.vim',
-
   -- Rust goodies
   ["simrat39/rust-tools.nvim"] = require "user.plugins.rust-tools",
 
@@ -25,7 +22,4 @@ return {
 
   -- File browser via telescope
   ["nvim-telescope/telescope-file-browser.nvim"] = require "user.plugins.telescope-file-browser",
-
-  -- git goodies for diffs, conflicts and history
-  ["sindrets/diffview.nvim"] = require "user.plugins.diffview",
 }
