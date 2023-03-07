@@ -1,4 +1,22 @@
 return {
+  -- Ensure git-related treesitter parsers are installed
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      if not opts.ensure_installed then
+        opts.ensure_installed = {}
+      elseif opts.ensure_installed == "all" then
+        return
+      end
+
+      vim.list_extend(opts.ensure_installed, {
+        "gitcommit",
+        "gitattributes",
+        "git_rebase"
+      })
+    end,
+  },
+
   -- nicer git commit
   'rhysd/committia.vim',
 
