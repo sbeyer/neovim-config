@@ -1,7 +1,4 @@
 return {
-  -- Rust goodies
-  ["simrat39/rust-tools.nvim"] = require "user.plugins.rust-tools",
-
   -- C/C++ goodies
   ["p00f/clangd_extensions.nvim"] = require "user.plugins.clangd_extensions",
 
