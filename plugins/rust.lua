@@ -1,17 +1,6 @@
 return {
   require('user.utils').ensure_treesitter_parsers({ "rust", "toml" }),
-
-  -- Ensure LSPs for Rust and TOML are installed
-  {
-    "williamboman/mason-lspconfig.nvim",
-    opts = function(_, opts)
-      if not opts.ensure_installed then
-        opts.ensure_installed = {}
-      end
-
-      vim.list_extend(opts.ensure_installed, { "rust_analyzer", "taplo" })
-    end,
-  },
+  require('user.utils').ensure_lsps({ "rust_analyzer", "taplo" }),
 
   -- Rust goodies
   {

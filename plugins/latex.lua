@@ -1,17 +1,6 @@
 return {
   require('user.utils').ensure_treesitter_parsers({ "latex", "bibtex" }),
-
-  -- Ensure texlab LSP is installed
-  {
-    "williamboman/mason-lspconfig.nvim",
-    opts = function(_, opts)
-      if not opts.ensure_installed then
-        opts.ensure_installed = {}
-      end
-
-      vim.list_extend(opts.ensure_installed, { "texlab" })
-    end,
-  },
+  require('user.utils').ensure_lsps({ "texlab" }),
 
   -- cmp source for latex symbols
   {

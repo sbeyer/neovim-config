@@ -15,4 +15,17 @@ M.ensure_treesitter_parsers = function(parsers)
   }
 end
 
+M.ensure_lsps = function(lsps)
+  return {
+    "williamboman/mason-lspconfig.nvim",
+    opts = function(_, opts)
+      if not opts.ensure_installed then
+        opts.ensure_installed = {}
+      end
+
+      vim.list_extend(opts.ensure_installed, lsps)
+    end,
+  }
+end
+
 return M
