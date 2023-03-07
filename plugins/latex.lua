@@ -1,17 +1,5 @@
 return {
-  -- Ensure latex-related treesitter parsers are installed
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = function(_, opts)
-      if not opts.ensure_installed then
-        opts.ensure_installed = {}
-      elseif opts.ensure_installed == "all" then
-        return
-      end
-
-      vim.list_extend(opts.ensure_installed, { "latex", "bibtex" })
-    end,
-  },
+  require('user.utils').ensure_treesitter_parsers({ "latex", "bibtex" }),
 
   -- Ensure texlab LSP is installed
   {
