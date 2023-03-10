@@ -25,5 +25,14 @@ return {
         mode = { "n", "v" },
       },
     }
-  }
+  },
+
+  -- navigate on matching text using '%'
+  {
+    'andymass/vim-matchup',
+    event = 'BufRead',
+    init = function()
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end,
+  },
 }
