@@ -1,7 +1,4 @@
 return {
-  -- C/C++ goodies
-  ["p00f/clangd_extensions.nvim"] = require "user.plugins.clangd_extensions",
-
   -- navigate on matching text using %
   ['andymass/vim-matchup'] = require "user.plugins.matchup",
 

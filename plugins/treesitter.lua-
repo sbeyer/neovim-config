@@ -2,10 +2,6 @@ return {
   auto_install = true,
   ensure_installed = {
     "bash",
-    "c",
-    "cmake",
-    "comment",
-    "cpp",
     "css",
     "elm",
     "go",
@@ -13,7 +9,6 @@ return {
     "javascript",
     "json",
     "lua",
-    "make",
     "markdown",
     "php",
     "python",
