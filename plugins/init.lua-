@@ -8,9 +8,6 @@ return {
   -- navigate on matching text using %
   ['andymass/vim-matchup'] = require "user.plugins.matchup",
 
-  -- annotation generation
-  ['danymat/neogen'] = require "user.plugins.neogen",
-
   -- File browser via telescope
   ["nvim-telescope/telescope-file-browser.nvim"] = require "user.plugins.telescope-file-browser",
 }
