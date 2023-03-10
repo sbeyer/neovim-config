@@ -1,7 +1,4 @@
 return {
   -- navigate on matching text using %
   ['andymass/vim-matchup'] = require "user.plugins.matchup",
-
-  -- File browser via telescope
-  ["nvim-telescope/telescope-file-browser.nvim"] = require "user.plugins.telescope-file-browser",
 }
