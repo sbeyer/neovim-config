@@ -1,16 +1,16 @@
 return {
   -- make w/b/e consider camelCase and snake_case
   {
-    'chaoren/vim-wordmotion',
+    "chaoren/vim-wordmotion",
     lazy = false,
     init = function()
-      vim.g.wordmotion_prefix = ','
-    end
+      vim.g.wordmotion_prefix = ","
+    end,
   },
 
   -- fast motion
   {
-    'rlane/pounce.nvim',
+    "rlane/pounce.nvim",
     keys = {
       {
         "s",
@@ -24,13 +24,13 @@ return {
         desc = "Repeat 'Jump to'",
         mode = { "n", "v" },
       },
-    }
+    },
   },
 
   -- navigate on matching text using '%'
   {
-    'andymass/vim-matchup',
-    event = 'BufRead',
+    "andymass/vim-matchup",
+    event = "BufRead",
     init = function()
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
     end,

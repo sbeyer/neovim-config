@@ -7,9 +7,9 @@ return {
       "nvim-lua/plenary.nvim",
     },
     config = function()
-      local actions = require "telescope.actions"
+      local actions = require("telescope.actions")
       local fb_actions = require("telescope").extensions.file_browser.actions
-      require("telescope").setup {
+      require("telescope").setup({
         extensions = {
           file_browser = {
             path = "%:p:h", -- run from directory of current buffer
@@ -25,8 +25,8 @@ return {
             },
           },
         },
-      }
-      require("telescope").load_extension "file_browser"
+      })
+      require("telescope").load_extension("file_browser")
     end,
     keys = {
       {

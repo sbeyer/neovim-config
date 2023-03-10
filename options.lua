@@ -2,27 +2,21 @@ return {
   opt = {
     -- keep statusline when in command mode
     cmdheight = 1,
-
     -- completion behavior in command mode
-    wildmode = 'longest:full,full',
-
+    wildmode = "longest:full,full",
     -- never show tabline (we show tab information in statusline)
     showtabline = 0,
-
     -- disable weird completion behavior regarding suffixes
-    suffixes = '',
-
+    suffixes = "",
     -- enable mouse only for Normal and Visual mode only
-    mouse = 'nv',
-
+    mouse = "nv",
     -- make whitespace visible
     list = true,
-    listchars = 'tab:^`,trail:~,extends:\\,precedes:»',
-
+    listchars = "tab:^`,trail:~,extends:\\,precedes:»",
     -- make implicit linebreaks visible
     wrap = true,
-    showbreak = '  «',
+    showbreak = "  «",
     breakindent = true,
-    breakindentopt = 'shift:2,sbr',
-  }
+    breakindentopt = "shift:2,sbr",
+  },
 }

@@ -1,6 +1,6 @@
 return {
-  require('user.utils').ensure_treesitter_parsers({ "rust", "toml" }),
-  require('user.utils').ensure_lsps({ "rust_analyzer", "taplo" }),
+  require("user.utils").ensure_treesitter_parsers({ "rust", "toml" }),
+  require("user.utils").ensure_lsps({ "rust_analyzer", "taplo" }),
 
   -- Rust goodies
   {
@@ -8,7 +8,7 @@ return {
     ft = { "rust" },
     opts = function()
       return {
-        server = require("astronvim.utils.lsp").config "rust_analyzer"
+        server = require("astronvim.utils.lsp").config("rust_analyzer"),
       }
     end,
     dependencies = {
@@ -41,8 +41,8 @@ return {
         group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
         pattern = "Cargo.toml",
         callback = function()
-          require("cmp").setup.buffer { sources = { { name = "crates" } } }
-          require "crates"
+          require("cmp").setup.buffer({ sources = { { name = "crates" } } })
+          require("crates")
         end,
       })
     end,
@@ -50,5 +50,4 @@ return {
     -- require('user.utils').add_cmp_source("Saecki/crates.nvim", { name = "crates", priority = 700 }),
     -- but none seems to work
   },
-
 }

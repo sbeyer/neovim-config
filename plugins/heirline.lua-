@@ -3,7 +3,7 @@ return function(config)
   local status = config[1]
 
   -- add mode text
-  status[1] = astronvim.status.component.mode { mode_text = { padding = { left = 1, right = 1 } } }
+  status[1] = astronvim.status.component.mode({ mode_text = { padding = { left = 1, right = 1 } } })
 
   -- remove file info
   table.remove(status, 3)
@@ -14,16 +14,16 @@ return function(config)
   table.insert(status, 7, diag)
 
   -- insert tab information into statusline (we don't want a tabline)
-  local tablist = astronvim.status.component.builder {
+  local tablist = astronvim.status.component.builder({
     -- condition = function() return #vim.api.nvim_list_tabpages() >= 2 end,
     surround = { separator = "left" },
-    astronvim.status.heirline.make_tablist { -- component for each tab
+    astronvim.status.heirline.make_tablist({ -- component for each tab
       provider = astronvim.status.provider.tabnr(),
       hl = function(self)
         return astronvim.status.hl.get_attributes(astronvim.status.heirline.tab_type(self, "tab"), true)
       end,
-    },
-  }
+    }),
+  })
   table.insert(status, 2, tablist)
 
   -- adapt winbar: filename please!
@@ -31,7 +31,7 @@ return function(config)
 
   winbar[1] = {
     condition = astronvim.status.condition.is_active,
-    astronvim.status.component.file_info {
+    astronvim.status.component.file_info({
       padding = { right = 1 },
       unique_path = {},
       file_modified = {},
@@ -40,8 +40,8 @@ return function(config)
         separator = { left = " [", right = "]" },
       },
       -- update = "BufEnter" -- seems not to be necessary
-    },
-    astronvim.status.component.breadcrumbs { hl = astronvim.status.hl.get_attributes("winbar", true) },
+    }),
+    astronvim.status.component.breadcrumbs({ hl = astronvim.status.hl.get_attributes("winbar", true) }),
   }
 
   return config

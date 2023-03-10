@@ -1,3 +1,3 @@
 return {
-    channel = "nightly",
+  channel = "nightly",
 }
