@@ -35,6 +35,7 @@ return {
         name = "crates.nvim",
       },
     },
+    -- The next code is to make the cmp source for crates work, but it does not work unfortunately :(
     init = function()
       vim.api.nvim_create_autocmd("BufRead", {
         group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
@@ -45,5 +46,9 @@ return {
         end,
       })
     end,
+    -- Alternatively, try:
+    -- require('user.utils').add_cmp_source("Saecki/crates.nvim", { name = "crates", priority = 700 }),
+    -- but none seems to work
   },
+
 }
