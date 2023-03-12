@@ -6,7 +6,11 @@ return {
   }),
 
   -- nicer git commit
-  "rhysd/committia.vim",
+  {
+    "rhysd/committia.vim",
+    ft = "gitcommit",
+    event = "BufReadPre COMMIT_EDITMSG,MERGE_MSG",
+  },
 
   -- git goodies for diffs, conflicts and history
   {
