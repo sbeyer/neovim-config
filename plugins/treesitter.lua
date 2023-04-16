@@ -13,6 +13,7 @@ return {
       "qmljs",
       "ruby",
       "vim",
+      "vimdoc",
     }
 
     -- TODO: move this into motion.lua
