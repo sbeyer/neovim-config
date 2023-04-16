@@ -25,7 +25,7 @@ return {
       {
         pNeogen .. "<cr>",
         function()
-          require("neogen").generate()
+          require("neogen").generate({})
         end,
         desc = "Current",
       },
