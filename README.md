@@ -20,12 +20,10 @@ Make sure these things are installed on your system:
  * `curl`
  * C/C++ compiler with standard library
 
-Yes, it's all pretty basic.
-
 ## Step 2: recommended tools
 
 For the best experience, make sure [the stuff mentioned here](https://astronvim.github.io/#-requirements)
-is installed.
+is installed, especially `fzf`, `rg`, and `xclip`.
 
 As [Nerd Font](https://www.nerdfonts.com/font-downloads), I am fond of the
 [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hack.zip).
@@ -37,6 +35,9 @@ additional tools like `node` to be able to install them.
 ## Step 3: get neovim
 
 ```sh
+# create bin directory if it does not exist (we assume it exists in the PATH)
+mkdir -p ~/.local/bin
+
 # download nvim v0.9.0 (or replace the version by stable or latest) to a location in your $PATH
 curl -L --output ~/.local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.9.0/nvim.appimage
 
