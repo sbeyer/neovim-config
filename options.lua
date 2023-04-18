@@ -18,5 +18,7 @@ return {
     showbreak = "  «",
     breakindent = true,
     breakindentopt = "shift:2,sbr",
+    -- some reasonable formatoptions defaults (may be overwritten by filetype.lua)
+    formatoptions = "cjlqr/",
   },
 }

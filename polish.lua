@@ -1,4 +1,10 @@
 return function()
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    callback = function()
+      vim.opt.formatoptions:remove({ "o" })
+    end,
+  })
+
   -- File-type specific configuration
   vim.filetype.add({
     extension = {
