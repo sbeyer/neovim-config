@@ -15,10 +15,5 @@ return {
       "vim",
       "vimdoc",
     }
-
-    -- TODO: move this into motion.lua
-    opts.matchup = {
-      enable = true,
-    }
   end,
 }
