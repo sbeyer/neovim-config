@@ -1,10 +1,17 @@
 return function()
-  ----- File-type specific configuration
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    callback = function()
+      vim.opt.formatoptions:append("r")
+      vim.opt.formatoptions:append("/")
+      vim.opt.formatoptions:remove("o")
+    end,
+  })
 
-  vim.filetype.add {
+  -- File-type specific configuration
+  vim.filetype.add({
     extension = {
       qml = "qmljs", -- recognize qml
-      tex = "tex", -- always ft=tex (LaTeX), never ft=plaintex (TeX)
-    }
-  }
+      tex = "tex",   -- always ft=tex (LaTeX), never ft=plaintex (TeX)
+    },
+  })
 end

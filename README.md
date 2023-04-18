@@ -20,12 +20,10 @@ Make sure these things are installed on your system:
  * `curl`
  * C/C++ compiler with standard library
 
-Yes, it's all pretty basic.
-
 ## Step 2: recommended tools
 
 For the best experience, make sure [the stuff mentioned here](https://astronvim.github.io/#-requirements)
-is installed.
+is installed, especially `fzf`, `rg`, and `xclip`.
 
 As [Nerd Font](https://www.nerdfonts.com/font-downloads), I am fond of the
 [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Hack.zip).
@@ -37,8 +35,11 @@ additional tools like `node` to be able to install them.
 ## Step 3: get neovim
 
 ```sh
-# download nvim v0.8.2 (or replace the version by stable or latest) to a location in your $PATH
-curl -L --output ~/.local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.8.2/nvim.appimage
+# create bin directory if it does not exist (we assume it exists in the PATH)
+mkdir -p ~/.local/bin
+
+# download nvim v0.9.0 (or replace the version by stable or latest) to a location in your $PATH
+curl -L --output ~/.local/bin/nvim https://github.com/neovim/neovim/releases/download/v0.9.0/nvim.appimage
 
 # make executable
 chmod +x ~/.local/bin/nvim
@@ -60,9 +61,9 @@ test -d ~/.cache/nvim && mv ~/.cache/nvim ~/.cache/nvim.bak-"$(date -I)"
 
 Do
 ```sh
-git clone --branch v2.11.8 https://github.com/AstroNvim/AstroNvim.git ~/.config/nvim
+git clone --branch v3.10.3 https://github.com/AstroNvim/AstroNvim.git ~/.config/nvim
 git clone https://github.com/sbeyer/neovim-config.git ~/.config/nvim/lua/user
-nvim +PackerSync
+nvim
 ```
 and you are set.
 
@@ -74,14 +75,9 @@ When editing code and some other files with specific syntax, type
 ```
 to select and install a corresponding LSP server.
 
-LSP servers for Rust and C/C++ will be installed automatically.
+LSP servers for, e.g., Rust and C/C++ will be installed automatically.
 
-Type
-```
-:LspInstallInfo
-```
-to get an overview of installed servers and interactively install/uninstall/upgrade
-LSP servers.
+Type `<leader>pm` to get an overview of installed servers and interactively install/uninstall/upgrade LSP servers.
 
 Note that treesitter parsers are installed automatically when necessary.
 You can type
@@ -94,11 +90,5 @@ to get an overview, and
 ```
 upgrades all the installed parsers.
 
-To upgrade AstroVim, type
-```
-:AstroUpdate
-```
-and to upgrade plugins, type
-```
-:PackerSync
-```
+To upgrade AstroNvim, type `<leader>pA`
+and to upgrade plugins, type `<leader>pU`.

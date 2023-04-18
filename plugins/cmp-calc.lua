@@ -1,6 +1,3 @@
 return {
-  after = "nvim-cmp",
-  config = function()
-    astronvim.add_user_cmp_source "calc"
-  end
+  require("user.utils").add_cmp_source("hrsh7th/cmp-calc", { name = "calc" }),
 }

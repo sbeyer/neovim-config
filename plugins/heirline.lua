@@ -1,48 +1,97 @@
-return function(config)
-  -- adapt statusline, AstroNvim's default is ordered weirdly and lacks mode information
-  local status = config[1]
+return {
+  "rebelot/heirline.nvim",
+  opts = function(_, opts)
+    local status = require("astronvim.utils.status")
 
-  -- add mode text
-  status[1] = astronvim.status.component.mode { mode_text = { padding = { left = 1, right = 1 } } }
+    -- remove tabline
+    opts.tabline = {}
 
-  -- remove file info
-  table.remove(status, 3)
+    -- tab information in statusline
+    local tablist = status.component.builder({
+      -- condition = function() return #vim.api.nvim_list_tabpages() >= 2 end,
+      surround = { separator = "left" },
+      status.heirline.make_tablist({
+        -- component for each tab
+        provider = status.provider.tabnr(),
+        hl = function(self)
+          return status.hl.get_attributes(status.heirline.tab_type(self, "tab"), true)
+        end,
+      }),
+    })
 
-  -- move diagnostics (index 5) before lsp info (index 9)
-  local diag = status[4]
-  table.remove(status, 4)
-  table.insert(status, 7, diag)
+    opts.statusline = {
+      hl = { fg = "fg", bg = "bg" },
+      -- show mode text
+      status.component.mode({
+        hl = { bold = true },
+        mode_text = { padding = { left = 1, right = 1 } },
+      }),
+      -- tabs
+      tablist,
+      -- git info
+      status.component.git_branch(),
+      status.component.git_diff(),
+      status.component.fill(),
+      -- cmd info
+      status.component.cmd_info(),
+      status.component.fill(),
+      -- now LSP and TS info
+      status.component.diagnostics(),
+      status.component.lsp(),
+      status.component.treesitter(),
+      -- file navigation
+      status.component.nav(),
+      -- mode color for the symmetry
+      status.component.mode({ surround = { separator = "right" } }),
+    }
 
-  -- insert tab information into statusline (we don't want a tabline)
-  local tablist = astronvim.status.component.builder {
-    -- condition = function() return #vim.api.nvim_list_tabpages() >= 2 end,
-    surround = { separator = "left" },
-    astronvim.status.heirline.make_tablist { -- component for each tab
-      provider = astronvim.status.provider.tabnr(),
-      hl = function(self)
-        return astronvim.status.hl.get_attributes(astronvim.status.heirline.tab_type(self, "tab"), true)
-      end,
-    },
-  }
-  table.insert(status, 2, tablist)
-
-  -- adapt winbar: filename please!
-  local winbar = config[2]
-
-  winbar[1] = {
-    condition = astronvim.status.condition.is_active,
-    astronvim.status.component.file_info {
-      padding = { right = 1 },
-      unique_path = {},
+    local file_info = {
+      padding = { right = 1 }, -- this is not symmetric, but I like it
+      file_icon = {
+        hl = status.hl.file_icon("winbar"),
+        padding = { left = 0 },
+      },
       file_modified = {},
       file_read_only = {},
       filetype = {
         separator = { left = " [", right = "]" },
       },
-      -- update = "BufEnter" -- seems not to be necessary
-    },
-    astronvim.status.component.breadcrumbs { hl = astronvim.status.hl.get_attributes("winbar", true) },
-  }
+      unique_path = {},
+      surround = false,
+      hl = { bold = true, bg = "tabline_bg" },
+      -- hl = status.hl.get_attributes("winbar", true),
+    }
+    local winbar_active = {
+      condition = status.condition.is_active,
+      status.component.separated_path(),
+      status.component.file_info(file_info),
+      status.component.breadcrumbs({ hl = status.hl.get_attributes("winbar", true) }),
+    }
 
-  return config
-end
+    file_info.file_icon.hl = status.hl.file_icon("winbarnc")
+    file_info.hl = status.hl.get_attributes("winbarnc", true)
+    local winbar_inactive = {
+      status.component.separated_path(),
+      status.component.file_info(file_info),
+    }
+
+    opts.winbar = {
+      init = function(self)
+        self.bufnr = vim.api.nvim_get_current_buf()
+      end,
+      fallthrough = false,
+      winbar_active,
+      winbar_inactive,
+    }
+
+    opts.statuscolumn = {
+      status.component.foldcolumn(),
+      status.component.signcolumn(),
+      status.component.fill(),
+      status.component.numbercolumn(),
+    }
+
+    -- return the final configuration table
+    return opts
+  end,
+}

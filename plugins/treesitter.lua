@@ -1,32 +1,24 @@
 return {
-  auto_install = true,
-  ensure_installed = {
-    "bash",
-    "bibtex",
-    "c",
-    "cmake",
-    "comment",
-    "cpp",
-    "css",
-    "elm",
-    "go",
-    "html",
-    "javascript",
-    "json",
-    "latex",
-    "lua",
-    "make",
-    "markdown",
-    "php",
-    "python",
-    "qmljs",
-    "ruby",
-    "rust",
-    "toml",
-    "vim",
-    "yaml",
-  },
-  matchup = {
-    enable = true
-  },
+  "nvim-treesitter/nvim-treesitter",
+  opts = function(_, opts)
+    opts.auto_install = true
+
+    -- some general parsers not contained in our other configs
+    opts.ensure_installed = {
+      "bash",
+      "go",
+      "lua",
+      "markdown",
+      "python",
+      "qmljs",
+      "ruby",
+      "vim",
+      "vimdoc",
+    }
+
+    -- TODO: move this into motion.lua
+    opts.matchup = {
+      enable = true,
+    }
+  end,
 }
