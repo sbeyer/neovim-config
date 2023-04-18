@@ -29,10 +29,13 @@ return {
 
   -- navigate on matching text using '%'
   {
-    "andymass/vim-matchup",
-    event = "BufRead",
-    init = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    end,
+    "AstroNvim/astrocommunity",
+    { import = "astrocommunity.motion.vim-matchup" },
+    {
+      "vim-matchup",
+      init = function()
+        vim.g.matchup_matchparen_offscreen = { method = "popup" }
+      end,
+    },
   },
 }
