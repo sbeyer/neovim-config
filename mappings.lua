@@ -1,9 +1,6 @@
 return {
   n = {
-    ["<leader>q"] = { -- TODO: remove from here and keep it in plugins/buffers.lua
-      "<cmd>Sayonara<cr>",
-      desc = "Close window / quit",
-    },
+    ["<leader>q"] = false, -- overwritten in plugins/buffers.lua
     ["<leader>Q"] = {
       "<cmd>qa<cr>",
       desc = "Quit all",
