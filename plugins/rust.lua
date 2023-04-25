@@ -6,4 +6,14 @@ return {
     "AstroNvim/astrocommunity",
     { import = "astrocommunity.pack.rust" },
   },
+  {
+    "simrat39/rust-tools.nvim",
+    opts = {
+      tools = {
+        inlay_hints = {
+          highlight = "DiagnosticVirtualTextOk",
+        },
+      },
+    },
+  },
 }
