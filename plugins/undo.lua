@@ -1,19 +1,18 @@
 return {
   -- undo tree via telescope
   {
-    "nvim-telescope/telescope.nvim",
+    "debugloop/telescope-undo.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "debugloop/telescope-undo.nvim",
+      "nvim-telescope/telescope.nvim",
     },
     config = function()
-      -- require("telescope").setup({
-      --   extensions = {
-      --     undo = {
-      --       -- keep defaults
-      --     },
-      --   },
-      -- })
+      require("telescope").setup({
+        extensions = {
+          undo = {
+            entry_format = "#$ID - $TIME: $STAT",
+          },
+        },
+      })
       require("telescope").load_extension("undo")
     end,
     keys = {

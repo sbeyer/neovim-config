@@ -7,7 +7,17 @@ return {
     "p00f/clangd_extensions.nvim",
     ft = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
     opts = function()
-      return { server = require("astronvim.utils.lsp").config("clangd") }
+      return {
+        extensions = {
+          inlay_hints = {
+            highlight = "DiagnosticVirtualTextOk",
+          },
+          ast = {
+            highlight = "DiagnosticVirtualTextOk",
+          },
+        },
+        server = require("astronvim.utils.lsp").config("clangd"),
+      }
     end,
   },
 }
