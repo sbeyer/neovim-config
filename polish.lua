@@ -10,8 +10,19 @@ return function()
   -- File-type specific configuration
   vim.filetype.add({
     extension = {
-      qml = "qmljs", -- recognize qml
-      tex = "tex",   -- always ft=tex (LaTeX), never ft=plaintex (TeX)
+      -- recognize qml
+      qml = "qmljs",
+
+      -- always ft=tex (LaTeX), never ft=plaintex (TeX)
+      tex = "tex",
+
+      -- html support is much better than XML, so this is a workaround
+      xml = "html",
+      xsd = "html",
+      schema = "html",
     },
+    filename = {
+      Jenkinsfile = "groovy",
+    }
   })
 end
