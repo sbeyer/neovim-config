@@ -15,6 +15,7 @@ return {
     listchars = "tab:^`,trail:~,extends:\\,precedes:»",
     -- make implicit linebreaks visible
     wrap = true,
+    linebreak = false,
     showbreak = "  «",
     breakindent = true,
     breakindentopt = "shift:2,sbr",
