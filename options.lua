@@ -19,5 +19,8 @@ return {
     showbreak = "  «",
     breakindent = true,
     breakindentopt = "shift:2,sbr",
+    -- scrolloffs
+    scrolloff = 5,
+    sidescrolloff = 8,
   },
 }
