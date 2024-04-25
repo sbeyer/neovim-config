@@ -4,6 +4,7 @@ return {
 
   {
     "AstroNvim/astrocommunity",
+    version = "^6",
     { import = "astrocommunity.pack.rust" },
   },
   {

@@ -31,6 +31,7 @@ return {
   -- navigate on matching text using '%'
   -- {
   --   "AstroNvim/astrocommunity",
+  --   version = "^6",
   --   { import = "astrocommunity.motion.vim-matchup" },
   --   {
   --     "vim-matchup",
