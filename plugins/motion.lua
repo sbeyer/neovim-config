@@ -16,13 +16,13 @@ return {
         "s",
         "<cmd>Pounce<CR>",
         desc = "Jump to ...",
-        mode = { "n", "v" },
+        mode = { "n", "x" },
       },
       {
         "S",
         "<cmd>PounceRepeat<CR>",
         desc = "Repeat 'Jump to'",
-        mode = { "n", "v" },
+        mode = { "n", "x" },
       },
     },
   },
@@ -31,6 +31,7 @@ return {
   -- navigate on matching text using '%'
   -- {
   --   "AstroNvim/astrocommunity",
+  --   version = "^6",
   --   { import = "astrocommunity.motion.vim-matchup" },
   --   {
   --     "vim-matchup",

@@ -61,7 +61,7 @@ test -d ~/.cache/nvim && mv ~/.cache/nvim ~/.cache/nvim.bak-"$(date -I)"
 
 Do
 ```sh
-git clone --branch v3.10.3 https://github.com/AstroNvim/AstroNvim.git ~/.config/nvim
+git clone --branch v3.45.3 https://github.com/AstroNvim/AstroNvim.git ~/.config/nvim
 git clone https://github.com/sbeyer/neovim-config.git ~/.config/nvim/lua/user
 nvim
 ```
