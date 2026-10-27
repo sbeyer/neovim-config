@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -29,9 +27,18 @@ return {
       -- see `:h vim.filetype.add` for usage
       extension = {
         foo = "fooscript",
+        -- recognize qml
+        qml = "qmljs",
+        -- always ft=tex (LaTeX), never ft=plaintex (TeX)
+        tex = "tex",
+        -- html support is much better than XML, so this is a workaround
+        xml = "html",
+        xsd = "html",
+        schema = "html",
       },
       filename = {
         [".foorc"] = "fooscript",
+        Jenkinsfile = "groovy",
       },
       pattern = {
         [".*/etc/foo/.*"] = "fooscript",
@@ -44,12 +51,46 @@ return {
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn to yes
-        wrap = false, -- sets vim.opt.wrap
+        -- keep statusline when in command mode
+        cmdheight = 1,
+        -- completion behavior in command mode
+        wildmode = "longest:full,full",
+        -- never show tabline (we show tab information in statusline)
+        showtabline = 0,
+        -- disable weird completion behavior regarding suffixes
+        suffixes = "",
+        -- enable mouse only for Normal and Visual mode only
+        mouse = "nv",
+        -- make whitespace visible
+        list = true,
+        listchars = "tab:^`,trail:~,extends:\\,precedes:»",
+        -- make implicit linebreaks visible
+        wrap = true, -- sets vim.opt.wrap
+        linebreak = false,
+        showbreak = "  «",
+        breakindent = true,
+        breakindentopt = "shift:2,sbr",
+        -- scrolloffs
+        scrolloff = 5,
+        sidescrolloff = 8,
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
+      },
+    },
+    autocmds = {
+      user_formatoptions = {
+        {
+          event = "FileType",
+          desc = "Continue comments on Enter, but not with o or O",
+          callback = function()
+            vim.opt_local.formatoptions:append "r"
+            vim.opt_local.formatoptions:append "/"
+            vim.opt_local.formatoptions:remove "o"
+          end,
+        },
       },
     },
     -- Mappings can be configured through AstroCore as well.
@@ -58,6 +99,13 @@ return {
       -- first key is the mode
       n = {
         -- second key is the lefthand side of the map
+
+        -- Keep the v6 <Leader>q mapping: the old replacement requires vim-sayonara.
+        ["<Leader>Q"] = { "<Cmd>qa<CR>", desc = "Quit all" },
+        ["<Leader>gR"] = {
+          function() vim.cmd("!git rm -f -- " .. vim.fn.shellescape(vim.fn.expand "%", true)) end,
+          desc = "git rm current file",
+        },
 
         -- navigate buffer tabs
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
