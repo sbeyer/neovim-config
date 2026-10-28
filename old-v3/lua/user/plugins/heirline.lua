@@ -38,6 +38,7 @@ return {
       status.component.cmd_info(),
       status.component.fill(),
       -- now LSP and TS info
+      -- PORTED to v6: lua/plugins/heirline.lua groups diagnostics, LSP, and Treesitter on the right.
       status.component.diagnostics(),
       status.component.lsp(),
       status.component.treesitter(),

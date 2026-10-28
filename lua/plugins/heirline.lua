@@ -24,6 +24,8 @@ return {
     }
     -- Keep Git changes beside the branch, moving file information after both.
     opts.statusline[3], opts.statusline[4] = opts.statusline[4], opts.statusline[3]
+    -- Group diagnostics, LSP, and Treesitter on the right.
+    table.insert(opts.statusline, 8, table.remove(opts.statusline, 5))
     -- Remove the default virtual environment indicator.
     table.remove(opts.statusline, 10)
     -- Show the current tab number and total only when multiple tabs are open.
