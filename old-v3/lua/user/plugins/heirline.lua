@@ -56,6 +56,7 @@ return {
         hl = status.hl.file_icon("winbar"),
         padding = { left = 0 },
       },
+      -- PORTED to v6: lua/plugins/heirline.lua shows an unsaved-change dot in both winbar variants.
       file_modified = {},
       file_read_only = {},
       filetype = {

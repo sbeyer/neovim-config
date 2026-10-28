@@ -4,13 +4,13 @@ return {
   ---@param opts table
   opts = function(_, opts)
     local status = require "astroui.status"
-    -- Add a mode label and tab count, and move the file icon to the winbar.
+    -- Add a mode label and tab count, and move the file icon and modified marker to the winbar.
     opts.statusline[1] = status.component.mode {
       -- Use the theme's statusline background as contrasting text on the mode color.
       hl = { fg = "bg", bold = true },
       mode_text = { padding = { left = 1, right = 1 } },
     }
-    opts.statusline[3] = status.component.file_info { file_icon = false }
+    opts.statusline[3] = status.component.file_info { file_icon = false, file_modified = false }
     table.insert(opts.statusline, 2, {
       condition = function() return #vim.api.nvim_list_tabpages() > 1 end,
       provider = function() return ("%d/%d "):format(vim.fn.tabpagenr(), #vim.api.nvim_list_tabpages()) end,
@@ -34,6 +34,14 @@ return {
         },
         { provider = "%<" },
         { provider = status.provider.filename { padding = { left = 1 } }, hl = { bold = true } },
+        {
+          provider = status.provider.file_modified {
+            str = "●",
+            icon = { kind = "NONE" },
+            show_empty = false,
+            padding = { left = 1 },
+          },
+        },
         status.component.breadcrumbs { prefix = true, padding = { left = 0 } },
       },
       {
@@ -51,6 +59,14 @@ return {
         {
           provider = status.provider.filename { modify = ":.", padding = { left = 1 } },
           hl = function() return { bold = status.condition.is_active() } end,
+        },
+        {
+          provider = status.provider.file_modified {
+            str = "●",
+            icon = { kind = "NONE" },
+            show_empty = false,
+            padding = { left = 1 },
+          },
         },
       },
     }
