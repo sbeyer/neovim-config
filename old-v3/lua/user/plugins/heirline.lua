@@ -7,6 +7,7 @@ return {
     opts.tabline = {}
 
     -- tab information in statusline
+    -- PORTED to v6: lua/plugins/heirline.lua uses current/total, hidden with only one tab.
     local tablist = status.component.builder({
       -- condition = function() return #vim.api.nvim_list_tabpages() >= 2 end,
       surround = { separator = "left" },
