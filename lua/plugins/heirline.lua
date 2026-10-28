@@ -33,8 +33,6 @@ return {
         surround = { separator = { "", " " } },
       },
 
-      -- Keep the read-only indicator here; the other file details are in the winbar.
-      status.component.file_info { file_icon = false, file_modified = false, filetype = false },
       status.component.fill(),
 
       -- Command information.
@@ -60,6 +58,25 @@ return {
         and not vim.endswith(vim.api.nvim_buf_get_name(self.bufnr), "." .. filetype)
     end
 
+    local file_state = status.component.builder {
+      {
+        provider = status.provider.file_read_only {
+          str = "[RO]",
+          icon = { kind = "NONE" },
+          show_empty = false,
+          padding = { left = 1 },
+        },
+      },
+      {
+        provider = status.provider.file_modified {
+          str = "●",
+          icon = { kind = "NONE" },
+          show_empty = false,
+          padding = { left = 1 },
+        },
+      },
+    }
+
     opts.winbar = {
       init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
       fallthrough = false,
@@ -78,14 +95,7 @@ return {
         },
         { provider = "%<" },
         { provider = status.provider.filename { padding = { left = 1 } }, hl = { bold = true } },
-        {
-          provider = status.provider.file_modified {
-            str = "●",
-            icon = { kind = "NONE" },
-            show_empty = false,
-            padding = { left = 1 },
-          },
-        },
+        file_state,
         {
           condition = show_filetype,
           provider = status.provider.filetype { separator = { left = " [", right = "]" } },
@@ -108,14 +118,7 @@ return {
           provider = status.provider.filename { modify = ":.", padding = { left = 1 } },
           hl = function() return { bold = status.condition.is_active() } end,
         },
-        {
-          provider = status.provider.file_modified {
-            str = "●",
-            icon = { kind = "NONE" },
-            show_empty = false,
-            padding = { left = 1 },
-          },
-        },
+        file_state,
         {
           condition = show_filetype,
           provider = status.provider.filetype { separator = { left = " [", right = "]" } },

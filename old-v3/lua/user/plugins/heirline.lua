@@ -59,6 +59,7 @@ return {
       },
       -- PORTED to v6: lua/plugins/heirline.lua shows an unsaved-change dot in both winbar variants.
       file_modified = {},
+      -- PORTED to v6: lua/plugins/heirline.lua shows [RO] in both winbar variants.
       file_read_only = {},
       -- PORTED to v6: lua/plugins/heirline.lua shows [filetype] only in the active winbar.
       filetype = {
