@@ -4,6 +4,9 @@ return {
   ---@param opts table
   opts = function(_, opts)
     local status = require "astroui.status"
+    -- Tab information is shown in the statusline instead.
+    opts.tabline = {}
+
     opts.statusline = {
       hl = { fg = "fg", bg = "bg" },
 

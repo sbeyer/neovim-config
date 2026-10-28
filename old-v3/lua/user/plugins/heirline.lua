@@ -4,6 +4,7 @@ return {
     local status = require("astronvim.utils.status")
 
     -- remove tabline
+    -- PORTED to v6: lua/plugins/heirline.lua disables the Heirline tabline.
     opts.tabline = {}
 
     -- tab information in statusline
