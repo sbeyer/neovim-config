@@ -51,6 +51,7 @@ return {
     -- and a CWD-relative path when inactive or without breadcrumbs (left-truncated as needed).
     local file_info = {
       padding = { right = 1 }, -- this is not symmetric, but I like it
+      -- PORTED to v6: lua/plugins/heirline.lua displays the file icon in the winbar.
       file_icon = {
         hl = status.hl.file_icon("winbar"),
         padding = { left = 0 },

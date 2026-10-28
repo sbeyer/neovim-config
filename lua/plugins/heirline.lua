@@ -4,12 +4,13 @@ return {
   ---@param opts table
   opts = function(_, opts)
     local status = require "astroui.status"
-    -- Add a mode label and tab count to the left; keep the other v6 components unchanged.
+    -- Add a mode label and tab count, and move the file icon to the winbar.
     opts.statusline[1] = status.component.mode {
       -- Use the theme's statusline background as contrasting text on the mode color.
       hl = { fg = "bg", bold = true },
       mode_text = { padding = { left = 1, right = 1 } },
     }
+    opts.statusline[3] = status.component.file_info { file_icon = false }
     table.insert(opts.statusline, 2, {
       condition = function() return #vim.api.nvim_list_tabpages() > 1 end,
       provider = function() return ("%d/%d "):format(vim.fn.tabpagenr(), #vim.api.nvim_list_tabpages()) end,
@@ -27,6 +28,10 @@ return {
             and not vim.tbl_isempty(require("aerial").get_location(true) or {})
         end,
         hl = function() return status.hl.get_attributes("winbar", true) end,
+        {
+          provider = status.provider.file_icon { padding = { left = 1 } },
+          hl = status.hl.filetype_color,
+        },
         { provider = "%<" },
         { provider = status.provider.filename { padding = { left = 1 } }, hl = { bold = true } },
         status.component.breadcrumbs { prefix = true, padding = { left = 0 } },
@@ -35,6 +40,12 @@ return {
         hl = function()
           return status.hl.get_attributes(status.condition.is_active() and "winbar" or "winbarnc", true)
         end,
+        {
+          provider = status.provider.file_icon { padding = { left = 1 } },
+          hl = function(self)
+            return status.condition.is_active() and status.hl.filetype_color(self) or {}
+          end,
+        },
         -- Use a CWD-relative path, truncating from the left when it does not fit.
         { provider = "%<" },
         {
