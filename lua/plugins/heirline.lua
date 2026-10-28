@@ -4,7 +4,7 @@ return {
   ---@param opts table
   opts = function(_, opts)
     local status = require "astroui.status"
-    -- Add a mode label and tab count, and move the file icon and modified marker to the winbar.
+    -- Add a mode label and tab count, and move file details to the winbar.
     opts.statusline[1] = status.component.mode {
       -- Use the theme's statusline background as contrasting text on the mode color.
       hl = { fg = "bg", bold = true },
@@ -15,7 +15,7 @@ return {
       git_branch = { icon = { kind = "NONE" } },
       surround = { separator = { "", " " } },
     }
-    opts.statusline[3] = status.component.file_info { file_icon = false, file_modified = false }
+    opts.statusline[3] = status.component.file_info { file_icon = false, file_modified = false, filetype = false }
     opts.statusline[4] = status.component.git_diff {
       added = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
       changed = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
@@ -28,6 +28,14 @@ return {
       condition = function() return #vim.api.nvim_list_tabpages() > 1 end,
       provider = function() return ("%d/%d "):format(vim.fn.tabpagenr(), #vim.api.nvim_list_tabpages()) end,
     })
+
+    local function show_filetype(self)
+      local filetype = vim.bo[self.bufnr].filetype
+      -- Only label active files when their name does not already end in .<filetype>.
+      return status.condition.is_active()
+        and filetype ~= ""
+        and not vim.endswith(vim.api.nvim_buf_get_name(self.bufnr), "." .. filetype)
+    end
 
     opts.winbar = {
       init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
@@ -55,6 +63,10 @@ return {
             padding = { left = 1 },
           },
         },
+        {
+          condition = show_filetype,
+          provider = status.provider.filetype { separator = { left = " [", right = "]" } },
+        },
         status.component.breadcrumbs { prefix = true, padding = { left = 0 } },
       },
       {
@@ -80,6 +92,10 @@ return {
             show_empty = false,
             padding = { left = 1 },
           },
+        },
+        {
+          condition = show_filetype,
+          provider = status.provider.filetype { separator = { left = " [", right = "]" } },
         },
       },
     }
