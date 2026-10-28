@@ -47,6 +47,8 @@ return {
       status.component.mode({ surround = { separator = "right" } }),
     }
 
+    -- PORTED to v6: lua/plugins/heirline.lua shows filename + breadcrumbs when active,
+    -- and a CWD-relative path when inactive or without breadcrumbs (left-truncated as needed).
     local file_info = {
       padding = { right = 1 }, -- this is not symmetric, but I like it
       file_icon = {

@@ -3,8 +3,9 @@ return {
   "rebelot/heirline.nvim",
   ---@param opts table
   opts = function(_, opts)
+    local status = require "astroui.status"
     -- Add a mode label and tab count to the left; keep the other v6 components unchanged.
-    opts.statusline[1] = require("astroui.status").component.mode {
+    opts.statusline[1] = status.component.mode {
       -- Use the theme's statusline background as contrasting text on the mode color.
       hl = { fg = "bg", bold = true },
       mode_text = { padding = { left = 1, right = 1 } },
@@ -13,5 +14,34 @@ return {
       condition = function() return #vim.api.nvim_list_tabpages() > 1 end,
       provider = function() return ("%d/%d "):format(vim.fn.tabpagenr(), #vim.api.nvim_list_tabpages()) end,
     })
+
+    opts.winbar = {
+      init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
+      fallthrough = false,
+      {
+        -- Show filename + breadcrumbs only in the active window with a nonempty Aerial location;
+        -- otherwise fall back to the relative path below, including when Aerial is not loaded.
+        condition = function()
+          return status.condition.is_active()
+            and status.condition.aerial_available()
+            and not vim.tbl_isempty(require("aerial").get_location(true) or {})
+        end,
+        hl = function() return status.hl.get_attributes("winbar", true) end,
+        { provider = "%<" },
+        { provider = status.provider.filename { padding = { left = 1 } }, hl = { bold = true } },
+        status.component.breadcrumbs { prefix = true, padding = { left = 0 } },
+      },
+      {
+        hl = function()
+          return status.hl.get_attributes(status.condition.is_active() and "winbar" or "winbarnc", true)
+        end,
+        -- Use a CWD-relative path, truncating from the left when it does not fit.
+        { provider = "%<" },
+        {
+          provider = status.provider.filename { modify = ":.", padding = { left = 1 } },
+          hl = function() return { bold = status.condition.is_active() } end,
+        },
+      },
+    }
   end,
 }
