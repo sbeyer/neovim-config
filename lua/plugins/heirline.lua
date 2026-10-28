@@ -4,35 +4,53 @@ return {
   ---@param opts table
   opts = function(_, opts)
     local status = require "astroui.status"
-    -- Add a mode label and tab count, and move file details to the winbar.
-    opts.statusline[1] = status.component.mode {
-      -- Use the theme's statusline background as contrasting text on the mode color.
-      hl = { fg = "bg", bold = true },
-      mode_text = { padding = { left = 1, right = 1 } },
-      surround = { separator = { "", " " } },
+    opts.statusline = {
+      hl = { fg = "fg", bg = "bg" },
+
+      -- Mode information.
+      status.component.mode {
+        -- Use the theme's statusline background as contrasting text on the mode color.
+        hl = { fg = "bg", bold = true },
+        mode_text = { padding = { left = 1, right = 1 } },
+        surround = { separator = { "", " " } },
+      },
+
+      -- Show the current tab number and total only when multiple tabs are open.
+      {
+        condition = function() return #vim.api.nvim_list_tabpages() > 1 end,
+        provider = function() return ("%d/%d "):format(vim.fn.tabpagenr(), #vim.api.nvim_list_tabpages()) end,
+      },
+
+      -- Git information.
+      status.component.git_branch {
+        git_branch = { icon = { kind = "NONE" } },
+        surround = { separator = { "", " " } },
+      },
+      status.component.git_diff {
+        added = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
+        changed = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
+        removed = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
+        surround = { separator = { "", " " } },
+      },
+
+      -- Keep the read-only indicator here; the other file details are in the winbar.
+      status.component.file_info { file_icon = false, file_modified = false, filetype = false },
+      status.component.fill(),
+
+      -- Command information.
+      status.component.cmd_info(),
+      status.component.fill(),
+
+      -- Language tooling, without the default virtual environment indicator.
+      status.component.diagnostics(),
+      status.component.lsp(),
+      status.component.treesitter(),
+
+      -- File navigation and a matching mode color on the right.
+      status.component.nav(),
+
+      status.component.mode { surround = { separator = "right" } },
     }
-    opts.statusline[2] = status.component.git_branch {
-      git_branch = { icon = { kind = "NONE" } },
-      surround = { separator = { "", " " } },
-    }
-    opts.statusline[3] = status.component.file_info { file_icon = false, file_modified = false, filetype = false }
-    opts.statusline[4] = status.component.git_diff {
-      added = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
-      changed = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
-      removed = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
-      surround = { separator = { "", " " } },
-    }
-    -- Keep Git changes beside the branch, moving file information after both.
-    opts.statusline[3], opts.statusline[4] = opts.statusline[4], opts.statusline[3]
-    -- Group diagnostics, LSP, and Treesitter on the right.
-    table.insert(opts.statusline, 8, table.remove(opts.statusline, 5))
-    -- Remove the default virtual environment indicator.
-    table.remove(opts.statusline, 10)
-    -- Show the current tab number and total only when multiple tabs are open.
-    table.insert(opts.statusline, 2, {
-      condition = function() return #vim.api.nvim_list_tabpages() > 1 end,
-      provider = function() return ("%d/%d "):format(vim.fn.tabpagenr(), #vim.api.nvim_list_tabpages()) end,
-    })
 
     local function show_filetype(self)
       local filetype = vim.bo[self.bufnr].filetype
