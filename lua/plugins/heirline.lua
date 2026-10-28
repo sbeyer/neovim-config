@@ -24,6 +24,9 @@ return {
     }
     -- Keep Git changes beside the branch, moving file information after both.
     opts.statusline[3], opts.statusline[4] = opts.statusline[4], opts.statusline[3]
+    -- Remove the default virtual environment indicator.
+    table.remove(opts.statusline, 10)
+    -- Show the current tab number and total only when multiple tabs are open.
     table.insert(opts.statusline, 2, {
       condition = function() return #vim.api.nvim_list_tabpages() > 1 end,
       provider = function() return ("%d/%d "):format(vim.fn.tabpagenr(), #vim.api.nvim_list_tabpages()) end,
