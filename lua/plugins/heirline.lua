@@ -7,6 +7,16 @@ return {
     -- Tab information is shown in the statusline instead.
     opts.tabline = {}
 
+    -- Left gutter: fold markers, signs, then right-aligned line numbers.
+    opts.statuscolumn = {
+      init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
+      status.component.foldcolumn(),
+      status.component.signcolumn(),
+      status.component.fill { update = false },
+      status.component.numbercolumn(),
+    }
+
+    -- Bottom bar: mode, tabs, Git, language tooling, and navigation.
     opts.statusline = {
       hl = { fg = "fg", bg = "bg" },
 
@@ -80,6 +90,7 @@ return {
       },
     }
 
+    -- Window header: file details and breadcrumbs for the active window.
     opts.winbar = {
       init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
       fallthrough = false,

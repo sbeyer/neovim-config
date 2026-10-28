@@ -50,7 +50,8 @@ return {
         relativenumber = true, -- sets vim.opt.relativenumber
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
-        signcolumn = "yes", -- sets vim.opt.signcolumn to yes
+        -- Allow Git and diagnostic signs to appear side by side.
+        signcolumn = "yes:2",
         -- keep statusline when in command mode
         cmdheight = 1,
         -- completion behavior in command mode

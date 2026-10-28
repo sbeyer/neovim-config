@@ -94,6 +94,7 @@ return {
       winbar_inactive,
     }
 
+    -- PORTED to v6: lua/plugins/heirline.lua preserves the fold/sign/number gutter order.
     opts.statuscolumn = {
       status.component.foldcolumn(),
       status.component.signcolumn(),
