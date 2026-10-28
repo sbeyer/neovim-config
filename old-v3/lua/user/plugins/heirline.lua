@@ -22,6 +22,7 @@ return {
     opts.statusline = {
       hl = { fg = "fg", bg = "bg" },
       -- show mode text
+      -- PORTED to v6: lua/plugins/heirline.lua (left mode label only).
       status.component.mode({
         hl = { bold = true },
         mode_text = { padding = { left = 1, right = 1 } },
