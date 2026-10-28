@@ -9,8 +9,21 @@ return {
       -- Use the theme's statusline background as contrasting text on the mode color.
       hl = { fg = "bg", bold = true },
       mode_text = { padding = { left = 1, right = 1 } },
+      surround = { separator = { "", " " } },
+    }
+    opts.statusline[2] = status.component.git_branch {
+      git_branch = { icon = { kind = "NONE" } },
+      surround = { separator = { "", " " } },
     }
     opts.statusline[3] = status.component.file_info { file_icon = false, file_modified = false }
+    opts.statusline[4] = status.component.git_diff {
+      added = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
+      changed = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
+      removed = { icon = { padding = { left = 0, right = 1 } }, padding = { right = 1 } },
+      surround = { separator = { "", " " } },
+    }
+    -- Keep Git changes beside the branch, moving file information after both.
+    opts.statusline[3], opts.statusline[4] = opts.statusline[4], opts.statusline[3]
     table.insert(opts.statusline, 2, {
       condition = function() return #vim.api.nvim_list_tabpages() > 1 end,
       provider = function() return ("%d/%d "):format(vim.fn.tabpagenr(), #vim.api.nvim_list_tabpages()) end,
