@@ -5,7 +5,8 @@ local busted = require "plenary.busted"
 local describe, it = busted.describe, busted.it
 local before_each, after_each = busted.before_each, busted.after_each
 
-local highlights = dofile("lua/plugins/astroui.lua").opts.highlights.init
+-- opts is now a function that shortens mode names; supply an empty mode table to obtain highlights without AstroNvim.
+local highlights = dofile("lua/plugins/astroui.lua").opts(nil, { status = { modes = {} } }).highlights.init
 local original_get_hl, original_background, colors
 local groups = {
   "DiagnosticVirtualTextError",
