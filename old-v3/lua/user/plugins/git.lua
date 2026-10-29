@@ -1,10 +1,4 @@
 return {
-  require("user.utils").ensure_treesitter_parsers({
-    "gitcommit",
-    "gitattributes",
-    "git_rebase",
-  }),
-
   -- nicer git commit
   {
     "rhysd/committia.vim",

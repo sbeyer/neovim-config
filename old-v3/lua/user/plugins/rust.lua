@@ -1,5 +1,4 @@
 return {
-  require("user.utils").ensure_treesitter_parsers({ "rust", "toml" }),
   require("user.utils").ensure_lsps({ "rust_analyzer", "taplo" }),
 
   {

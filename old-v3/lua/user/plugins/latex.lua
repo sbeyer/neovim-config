@@ -1,5 +1,4 @@
 return {
-  require("user.utils").ensure_treesitter_parsers({ "latex", "bibtex" }),
   require("user.utils").ensure_lsps({ "texlab" }),
   require("user.utils").add_cmp_source("kdheepak/cmp-latex-symbols", {
     name = "latex_symbols",

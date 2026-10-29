@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- Customize Treesitter
 -- --------------------
 -- Treesitter customizations are handled with AstroCore
@@ -14,9 +12,17 @@ return {
       highlight = true, -- enable/disable treesitter based highlighting
       indent = true, -- enable/disable treesitter based indentation
       auto_install = true, -- enable/disable automatic installation of detected languages
+      -- General parsers not grouped with purpose-specific settings.
       ensure_installed = {
+        "bash",
+        "go",
         "lua",
+        "markdown",
+        "python",
+        "qmljs",
+        "ruby",
         "vim",
+        "vimdoc",
         -- add more arguments for adding more treesitter parsers
       },
     },
