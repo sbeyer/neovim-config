@@ -7,11 +7,75 @@ return {
     -- Tab information is shown in the statusline instead.
     opts.tabline = {}
 
+    local signs = {}
+    local function buffer_signs(bufnr)
+      if signs[bufnr] then return signs[bufnr] end
+      local git_namespaces = {}
+      for name, namespace in pairs(vim.api.nvim_get_namespaces()) do
+        if vim.startswith(name, "gitsigns_signs_") then git_namespaces[namespace] = true end
+      end
+      local columns = { git = {}, diagnostic = {} }
+      for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(bufnr, -1, 0, -1, { details = true, type = "sign" })) do
+        local sign = mark[4]
+        if sign.sign_text and vim.trim(sign.sign_text) ~= "" then
+          -- Keep non-Git signs (including breakpoints) in the diagnostic slot.
+          local column = git_namespaces[sign.ns_id] and columns.git or columns.diagnostic
+          local line = mark[2] + 1
+          if not column[line] or (sign.priority or 0) > (column[line].priority or 0) then column[line] = sign end
+        end
+      end
+      signs[bufnr] = columns
+      return columns
+    end
+
+    vim.api.nvim_set_decoration_provider(vim.api.nvim_create_namespace "user_statuscolumn", {
+      -- Collect signs once per buffer per redraw, not once per displayed line.
+      on_start = function() signs = {} end,
+      on_win = function(_, winid, bufnr)
+        if not vim.wo[winid].statuscolumn:find("eval_statuscolumn", 1, true) then return end
+        local dynamic = vim.g.dynamic_statuscolumn ~= false
+        local folds = dynamic and "auto:1" or "1"
+        if vim.wo[winid].foldcolumn ~= "0" and vim.wo[winid].foldcolumn ~= folds then
+          vim.wo[winid].foldcolumn = folds
+        end
+        if vim.wo[winid].signcolumn == "no" then return end
+        local columns = buffer_signs(bufnr)
+        -- Native width must match both dedicated slots, even on different lines.
+        local width = (not dynamic or next(columns.git) and next(columns.diagnostic)) and "yes:2" or "auto:1"
+        if vim.wo[winid].signcolumn ~= width then vim.wo[winid].signcolumn = width end
+      end,
+    })
+
+    local function signcolumn(kind)
+      local component = status.component.signcolumn {
+        condition = function(self)
+          return vim.wo.signcolumn ~= "no"
+            and (vim.g.dynamic_statuscolumn == false or next(self.gutter_signs[kind]) ~= nil)
+        end,
+      }
+      component[1] = {
+        provider = function(self)
+          local sign = vim.v.virtnum == 0 and self.gutter_signs[kind][vim.v.lnum]
+          local text = sign and sign.sign_text or ""
+          return text:gsub("%%", "%%%%") .. string.rep(" ", math.max(0, 2 - vim.fn.strdisplaywidth(text)))
+        end,
+        hl = function(self)
+          local sign = self.gutter_signs[kind][vim.v.lnum]
+          return sign and sign.sign_hl_group or "SignColumn"
+        end,
+      }
+      return component
+    end
+
     -- Left gutter: fold markers, signs, then right-aligned line numbers.
     opts.statuscolumn = {
-      init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
-      status.component.foldcolumn(),
-      status.component.signcolumn(),
+      init = function(self)
+        self.bufnr = vim.api.nvim_get_current_buf()
+        self.gutter_signs = buffer_signs(self.bufnr)
+      end,
+      status.component.foldcolumn { foldcolumn = { padding = { right = 0 } } },
+      signcolumn "git",
+      signcolumn "diagnostic",
       status.component.fill { update = false },
       status.component.numbercolumn(),
     }
@@ -117,14 +181,10 @@ return {
         status.component.breadcrumbs { prefix = true, padding = { left = 0 } },
       },
       {
-        hl = function()
-          return status.hl.get_attributes(status.condition.is_active() and "winbar" or "winbarnc", true)
-        end,
+        hl = function() return status.hl.get_attributes(status.condition.is_active() and "winbar" or "winbarnc", true) end,
         {
           provider = status.provider.file_icon { padding = { left = 1 } },
-          hl = function(self)
-            return status.condition.is_active() and status.hl.filetype_color(self) or {}
-          end,
+          hl = function(self) return status.condition.is_active() and status.hl.filetype_color(self) or {} end,
         },
         -- Use a CWD-relative path, truncating from the left when it does not fit.
         { provider = "%<" },

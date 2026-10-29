@@ -50,8 +50,9 @@ return {
         relativenumber = true, -- sets vim.opt.relativenumber
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
-        -- Allow Git and diagnostic signs to appear side by side.
-        signcolumn = "yes:2",
+        -- The statuscolumn expands sign slots only when needed.
+        signcolumn = "auto:2",
+        foldcolumn = "auto:1",
         -- keep statusline when in command mode
         cmdheight = 1,
         -- completion behavior in command mode
@@ -76,6 +77,7 @@ return {
         sidescrolloff = 8,
       },
       g = { -- vim.g.<key>
+        dynamic_statuscolumn = true,
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
@@ -103,6 +105,13 @@ return {
 
         -- Keep the v6 <Leader>q mapping: the old replacement requires vim-sayonara.
         ["<Leader>Q"] = { "<Cmd>qa<CR>", desc = "Quit all" },
+        ["<Leader>u<"] = {
+          function()
+            vim.g.dynamic_statuscolumn = vim.g.dynamic_statuscolumn == false
+            vim.cmd "redraw!"
+          end,
+          desc = "Toggle dynamic statuscolumn width",
+        },
         ["<Leader>gR"] = {
           function() vim.cmd("!git rm -f -- " .. vim.fn.shellescape(vim.fn.expand "%", true)) end,
           desc = "git rm current file",

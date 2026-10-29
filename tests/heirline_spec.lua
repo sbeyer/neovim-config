@@ -16,8 +16,14 @@ ui.config = vim.tbl_deep_extend("force", ui.config, dofile("lua/plugins/astroui.
 local status = require "astroui.status"
 local heirline = require "heirline"
 local mode, active, temporary, buffer, options
-local original_mode, original_active, original_aerial
-local sign_namespace = vim.api.nvim_create_namespace "heirline_text_tests"
+local original_mode, original_active, original_aerial, original_dynamic
+local sign_namespace = vim.api.nvim_create_namespace "gitsigns_signs_heirline_tests"
+local diagnostic_namespace = vim.api.nvim_create_namespace "heirline_diagnostic_tests"
+
+local function gutter_width()
+  vim.cmd "redraw!"
+  return vim.fn.getwininfo(vim.api.nvim_get_current_win())[1].textoff
+end
 
 local function render(kind, winid, line)
   return vim.api.nvim_eval_statusline(vim.o[kind], {
@@ -47,15 +53,24 @@ describe("Heirline", function()
     vim.api.nvim_buf_set_lines(buffer, 0, -1, false, { "int example;", "int second;", "int third;" })
     vim.bo[buffer].filetype = "cpp"
     vim.bo[buffer].modified = false
-    local core = dofile("lua/plugins/astrocore.lua").opts.options.opt
+    local core_options = dofile("lua/plugins/astrocore.lua").opts.options
+    original_dynamic = vim.g.dynamic_statuscolumn
+    vim.g.dynamic_statuscolumn = core_options.g.dynamic_statuscolumn
+    local core = core_options.opt
     vim.o.showtabline = core.showtabline
     vim.wo.signcolumn = core.signcolumn
     vim.wo.number = true
     vim.wo.relativenumber = false
-    vim.wo.foldcolumn = "1"
+    vim.wo.foldcolumn = core.foldcolumn
     vim.wo.foldmethod = "manual"
     vim.wo.fillchars = "foldopen:-,foldclose:+,foldsep:|"
     vim.api.nvim_win_set_cursor(0, { 1, 0 })
+    vim.diagnostic.config({
+      signs = { text = { [vim.diagnostic.severity.ERROR] = "D" } },
+      virtual_text = false,
+      virtual_lines = false,
+      underline = false,
+    }, diagnostic_namespace)
     original_mode, original_active, original_aerial = vim.fn.mode, status.condition.is_active, package.loaded.aerial
     mode, active = "n", vim.api.nvim_get_current_win()
     vim.fn.mode = function() return mode end
@@ -66,6 +81,8 @@ describe("Heirline", function()
 
   after_each(function()
     vim.fn.mode, status.condition.is_active, package.loaded.aerial = original_mode, original_active, original_aerial
+    vim.g.dynamic_statuscolumn = original_dynamic
+    vim.diagnostic.reset(diagnostic_namespace)
     vim.cmd "silent tabonly!"
     vim.cmd "silent only!"
     if vim.api.nvim_buf_is_valid(buffer) then vim.api.nvim_buf_delete(buffer, { force = true }) end
@@ -106,7 +123,8 @@ describe("Heirline", function()
   it("shows fold markers and two signs before the line number", function()
     vim.cmd "1,2fold"
     vim.api.nvim_buf_set_extmark(buffer, sign_namespace, 0, 0, { sign_text = "G", priority = 10 })
-    vim.api.nvim_buf_set_extmark(buffer, sign_namespace, 0, 0, { sign_text = "D", priority = 20 })
+    vim.diagnostic.set(diagnostic_namespace, buffer, { { lnum = 0, col = 0, message = "example error" } })
+    gutter_width()
     local text = render("statuscolumn", nil, 1)
     local fold = assert(text:find("+", 1, true))
     local git = assert(text:find("G", 1, true))
@@ -114,6 +132,60 @@ describe("Heirline", function()
     local number = assert(text:find("1", 1, true))
     assert(fold < git and fold < diagnostic and git < number and diagnostic < number)
     assert(text:match "1%s*$")
+  end)
+
+  it("adds and removes independent Git and diagnostic columns, even on different lines", function()
+    vim.bo[buffer].filetype = "text"
+    local numbers_only = gutter_width()
+    assert.equals(vim.wo.numberwidth, numbers_only)
+    local git = vim.api.nvim_buf_set_extmark(buffer, sign_namespace, 0, 0, { sign_text = "G", priority = 10 })
+    assert.equals(numbers_only + 2, gutter_width())
+    assert(render("statuscolumn", nil, 1):find("G", 1, true))
+    vim.diagnostic.set(diagnostic_namespace, buffer, { { lnum = 1, col = 0, message = "example error" } })
+    assert.equals(numbers_only + 4, gutter_width())
+    assert(render("statuscolumn", nil, 2):find("D", 1, true))
+    vim.api.nvim_buf_del_extmark(buffer, sign_namespace, git)
+    assert.equals(numbers_only + 2, gutter_width())
+    assert.is_nil(render("statuscolumn", nil, 1):find("G", 1, true))
+    assert(render("statuscolumn", nil, 2):find("D", 1, true))
+    vim.diagnostic.reset(diagnostic_namespace, buffer)
+    assert.equals(numbers_only, gutter_width())
+    assert(render("statuscolumn", nil, 1):match "^%s*1%s*$")
+  end)
+
+  it("adds the fold column for open or closed folds and removes it when the last fold is deleted", function()
+    local numbers_only = gutter_width()
+    vim.cmd "1,2fold"
+    assert.equals(numbers_only + 1, gutter_width())
+    assert(render("statuscolumn", nil, 1):find("+", 1, true))
+    vim.cmd "normal! zo"
+    assert.equals(numbers_only + 1, gutter_width())
+    local opened = render("statuscolumn", nil, 1)
+    assert(opened:find("|", 1, true), vim.inspect(opened))
+    vim.cmd "normal! zE"
+    assert.equals(numbers_only, gutter_width())
+    assert(render("statuscolumn", nil, 1):match "^%s*1%s*$")
+  end)
+
+  it("toggles fixed and dynamic gutter widths in all visible windows through the UI mapping", function()
+    local toggle = dofile("lua/plugins/astrocore.lua").opts.mappings.n["<Leader>u<"][1]
+    local numbers_only = gutter_width()
+    local first = vim.api.nvim_get_current_win()
+    vim.cmd "vsplit"
+    toggle()
+    assert.equals(numbers_only + 5, gutter_width())
+    assert.equals(numbers_only + 5, vim.fn.getwininfo(first)[1].textoff)
+    local git = vim.api.nvim_buf_set_extmark(buffer, sign_namespace, 0, 0, { sign_text = "G", priority = 10 })
+    assert.equals(numbers_only + 5, gutter_width())
+    assert(render("statuscolumn", nil, 1):find("G", 1, true))
+    vim.api.nvim_buf_del_extmark(buffer, sign_namespace, git)
+    assert.equals(numbers_only + 5, gutter_width())
+    toggle()
+    assert.equals(numbers_only, gutter_width())
+    assert.equals(numbers_only, vim.fn.getwininfo(first)[1].textoff)
+    vim.api.nvim_buf_set_extmark(buffer, sign_namespace, 0, 0, { sign_text = "G", priority = 10 })
+    assert.equals(numbers_only + 2, gutter_width())
+    assert(render("statuscolumn", nil, 1):find("G", 1, true))
   end)
 
   it("shows read-only and modified markers in the winbar, with only necessary filetype labels", function()
