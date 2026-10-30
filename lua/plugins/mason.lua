@@ -1,28 +1,25 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
--- Customize Mason
-
 ---@type LazySpec
 return {
-  -- use mason-tool-installer for automatically installing Mason packages
+  {
+    "mason-org/mason-lspconfig.nvim",
+    opts = function(_, opts)
+      for index, server in ipairs(opts.ensure_installed or {}) do
+        if server == "clangd" or server:match "^clangd@" then
+          opts.ensure_installed[index] = "clangd@" .. vim.g.clangd_version
+        end
+      end
+    end,
+  },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    -- overrides `require("mason-tool-installer").setup(...)`
-    opts = {
-      -- Make sure to use the names found in `:Mason`
-      ensure_installed = {
-        -- install language servers
-        "lua-language-server",
-
-        -- install formatters
-        "stylua",
-
-        -- install debuggers
-        "debugpy",
-
-        -- install any other package
-        "tree-sitter-cli",
-      },
-    },
+    opts = function(_, opts)
+      for index, tool in ipairs(opts.ensure_installed or {}) do
+        local name = type(tool) == "table" and tool[1] or tool
+        if name == "clangd" or name:match "^clangd@" then
+          opts.ensure_installed[index] =
+            vim.tbl_extend("force", type(tool) == "table" and tool or {}, { "clangd", version = vim.g.clangd_version })
+        end
+      end
+    end,
   },
 }

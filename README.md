@@ -108,6 +108,11 @@ The main additions and customizations beyond AstroNvim's defaults are:
   the choice per project for the session. Missing databases trigger a notification
   without disabling clangd's normal fallback (`lua/clangd/compile-commands.lua`).
 
+- **Pinned clangd version.** `vim.g.clangd_version` in `init.lua` selects the
+  clangd version installed by Mason. First use each session installs it if needed
+  before starting clangd; installation failures warn and fall back to an available
+  executable (`lua/clangd/version.lua`, `lua/plugins/mason.lua`).
+
 - **Diff outlines.** Diff file headers appear as symbols with their `@@` hunks
   nested underneath, including patches without `index` metadata and files with
   only rename or binary changes. Available through the symbol picker and outline,
@@ -736,6 +741,9 @@ and virtual lines, as described in the feature overview
 (Mason). `:TSUpdate` updates Treesitter parsers. `<Space>pa` runs AstroNvim's
 combined plugin/parser update and updates Mason tools when supported.
 Restart neovim after configuration or plugin changes.
+
+`:MasonInstall clangd@21.1.8` installs a specific clangd version manually.
+My automatic version selection is configured by `vim.g.clangd_version` in `init.lua`.
 
 `:checkhealth` checks the overall environment; `:checkhealth mason` checks tool
 installation prerequisites, and `<Space>li` checks the LSP setup.
