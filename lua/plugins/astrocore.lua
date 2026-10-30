@@ -11,6 +11,33 @@ local function large_buffer_folding(args)
   end
 end
 
+local diagnostic_text_options, diagnostic_line_options = {}, {}
+local function cycle_diagnostic_display()
+  local config = assert(vim.diagnostic.config())
+  if type(config.virtual_text) == "table" then diagnostic_text_options = vim.deepcopy(config.virtual_text) end
+  if type(config.virtual_lines) == "table" then diagnostic_line_options = vim.deepcopy(config.virtual_lines) end
+
+  local text, lines, mode
+  if config.virtual_text and config.virtual_lines then
+    text, lines, mode = false, true, "virtual lines"
+  elseif config.virtual_lines then
+    text, lines, mode = true, false, "virtual text"
+  elseif config.virtual_text then
+    text, lines, mode = false, false, "off"
+  else
+    text, lines, mode = true, true, "hybrid"
+  end
+
+  diagnostic_text_options.current_line = nil
+  diagnostic_line_options.current_line = text and lines
+  if text and lines then diagnostic_text_options.current_line = false end
+  vim.diagnostic.config {
+    virtual_text = text and diagnostic_text_options or false,
+    virtual_lines = lines and diagnostic_line_options or false,
+  }
+  require("astrocore").notify("Diagnostic display: " .. mode)
+end
+
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -21,13 +48,14 @@ return {
       large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
+      diagnostics = { virtual_text = true, virtual_lines = true }, -- diagnostic settings on startup
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
-      virtual_text = true,
+      virtual_text = { current_line = false },
+      virtual_lines = { current_line = true },
       underline = true,
     },
     -- passed to `vim.filetype.add`
@@ -92,6 +120,28 @@ return {
       },
     },
     autocmds = {
+      hybrid_diagnostics = {
+        {
+          event = { "TextChanged", "InsertLeave", "BufEnter" },
+          desc = "Refresh cursor-aware diagnostics after edits and buffer switches",
+          callback = function(args)
+            -- BufEnter runs before Neovim restores the window's cursor position.
+            vim.schedule(function()
+              if args.buf ~= vim.api.nvim_get_current_buf() then return end
+              local config = assert(vim.diagnostic.config())
+              if
+                type(config.virtual_text) == "table"
+                and config.virtual_text.current_line == false
+                and type(config.virtual_lines) == "table"
+                and config.virtual_lines.current_line == true
+              then
+                -- Native extmark restoration can revive inline text hidden by current_line.
+                vim.diagnostic.show(nil, args.buf)
+              end
+            end)
+          end,
+        },
+      },
       large_buffer_folding = {
         {
           event = "User",
@@ -133,6 +183,8 @@ return {
           end,
           desc = "Toggle dynamic statuscolumn width",
         },
+        ["<Leader>uv"] = { cycle_diagnostic_display, desc = "Cycle diagnostic display" },
+        ["<Leader>uV"] = false,
         ["<Leader>gR"] = {
           function() vim.cmd("!git rm -f -- " .. vim.fn.shellescape(vim.fn.expand "%", true)) end,
           desc = "git rm current file",
