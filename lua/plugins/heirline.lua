@@ -69,6 +69,10 @@ return {
 
     -- Left gutter: fold markers, signs, then right-aligned line numbers.
     opts.statuscolumn = {
+      hl = function()
+        -- Keep sign foregrounds, but use one background across all gutter components.
+        return { bg = vim.api.nvim_get_hl(0, { name = "SignColumn", link = false }).bg, force = true }
+      end,
       init = function(self)
         self.bufnr = vim.api.nvim_get_current_buf()
         self.gutter_signs = buffer_signs(self.bufnr)
