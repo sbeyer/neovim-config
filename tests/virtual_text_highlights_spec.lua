@@ -14,6 +14,11 @@ local groups = {
   "DiagnosticVirtualTextInfo",
   "DiagnosticVirtualTextHint",
   "DiagnosticVirtualTextOk",
+  "DiagnosticVirtualLinesError",
+  "DiagnosticVirtualLinesWarn",
+  "DiagnosticVirtualLinesInfo",
+  "DiagnosticVirtualLinesHint",
+  "DiagnosticVirtualLinesOk",
   "LspInlayHint",
   "LspCodeLens",
 }
