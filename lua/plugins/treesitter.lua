@@ -15,6 +15,7 @@ return {
       -- General parsers not grouped with purpose-specific settings.
       ensure_installed = {
         "bash",
+        "diff",
         "go",
         "lua",
         "markdown",
