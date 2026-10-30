@@ -114,6 +114,10 @@ The main additions and customizations beyond AstroNvim's defaults are:
   with jump targets and breadcrumb ranges (Aerial, `lua/plugins/aerial.lua` and
   `queries/diff/aerial.scm`).
 
+- **Git file removal.** `<Space>gD` offers deletion or untracking with buffer
+  and Git change warnings, then searches for filename references. Deletion also
+  closes the file's buffer (`lua/plugins/git.lua`, `lua/git/remove.lua`).
+
 - **Custom statusline and window headers.** Compact three-letter mode labels
   and tab numbers replace the separate tabline. The active window shows symbol
   breadcrumbs when available; other windows show their file paths. Headers also
@@ -639,10 +643,12 @@ selected lines, allowing partial hunks. `<Space>gS` stages the whole buffer.
 discarding those edits. `:Gitsigns reset_buffer` resets all hunks in the buffer
 (Gitsigns).
 
-**Caution:** `<Space>gR` is context-dependent. Gitsigns binds it to reset the
-buffer when attached, but my global fallback runs `git rm -f` on the current
-file. Use the explicit command above for a predictable buffer reset
-(`lua/plugins/astrocore.lua`).
+`<Space>gR` resets all hunks in the buffer (Gitsigns).
+
+`<Space>gD` offers to delete the current file or untrack it while keeping it on
+disk, showing any buffer or Git changes before removal. Afterwards, a filename
+search helps find remaining references. Deletion also closes the file's buffer
+and discards unsaved edits (`lua/plugins/git.lua`, `lua/git/remove.lua`).
 
 #### History and blame
 

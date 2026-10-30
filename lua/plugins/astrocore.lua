@@ -211,11 +211,6 @@ return {
         },
         ["<Leader>uv"] = { cycle_diagnostic_display, desc = "Cycle diagnostic display" },
         ["<Leader>uV"] = false,
-        ["<Leader>gR"] = {
-          function() vim.cmd("!git rm -f -- " .. vim.fn.shellescape(vim.fn.expand "%", true)) end,
-          desc = "git rm current file",
-        },
-
         -- navigate buffer tabs
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
