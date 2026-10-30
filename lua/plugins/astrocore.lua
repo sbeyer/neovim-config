@@ -120,6 +120,32 @@ return {
       },
     },
     autocmds = {
+      nvim_version_check = {
+        {
+          event = "VimEnter",
+          once = true,
+          desc = "Warn when running an unsupported Neovim version",
+          callback = function()
+            local supported = vim.g.supported_nvim_version
+            local major, minor, patch = supported:match "^(%d+)%.(%d+)%.(%d+)$"
+            local current = vim.version()
+            if
+              current.major ~= tonumber(major)
+              or current.minor ~= tonumber(minor)
+              or current.patch < tonumber(patch)
+            then
+              vim.schedule(function()
+                local message = ("Configuration expected Neovim version %s (same major/minor); running %s (%s)."):format(
+                  supported,
+                  tostring(current),
+                  vim.v.progpath
+                )
+                vim.notify(message, vim.log.levels.WARN, { title = "Unsupported Neovim version" })
+              end)
+            end
+          end,
+        },
+      },
       hybrid_diagnostics = {
         {
           event = { "TextChanged", "InsertLeave", "BufEnter" },
