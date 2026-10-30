@@ -1,3 +1,0 @@
-return {
-  version = "v3.*"
-}
