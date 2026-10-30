@@ -8,25 +8,6 @@ return {
     end,
   },
 
-  -- fast motion
-  {
-    "rlane/pounce.nvim",
-    keys = {
-      {
-        "s",
-        "<cmd>Pounce<CR>",
-        desc = "Jump to ...",
-        mode = { "n", "x" },
-      },
-      {
-        "S",
-        "<cmd>PounceRepeat<CR>",
-        desc = "Repeat 'Jump to'",
-        mode = { "n", "x" },
-      },
-    },
-  },
-
   -- XXX: vim-matchup is disabled because matchit is enabled since AstroNvim 3.10.3
   -- navigate on matching text using '%'
   -- {

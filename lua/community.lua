@@ -8,5 +8,6 @@ return {
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.cpp" },
   { import = "astrocommunity.pack.cmake" },
+  { import = "astrocommunity.motion.flash-nvim" },
   -- import/override with your plugins folder
 }
