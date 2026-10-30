@@ -3,6 +3,14 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local function large_buffer_folding(args)
+  if require("astrocore.buffer").is_large(args.buf) then
+    for _, win in ipairs(vim.fn.win_findbuf(args.buf)) do
+      if vim.wo[win].foldmethod ~= "manual" then vim.wo[win].foldmethod = "manual" end
+    end
+  end
+end
+
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
@@ -84,6 +92,19 @@ return {
       },
     },
     autocmds = {
+      large_buffer_folding = {
+        {
+          event = "User",
+          pattern = "AstroLargeBuf",
+          desc = "Use manual folding for large buffers",
+          callback = large_buffer_folding,
+        },
+        {
+          event = "BufWinEnter",
+          desc = "Keep large-buffer folding manual in newly opened windows",
+          callback = large_buffer_folding,
+        },
+      },
       user_formatoptions = {
         {
           event = "FileType",

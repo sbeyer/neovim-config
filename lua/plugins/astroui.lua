@@ -31,6 +31,13 @@ return {
       mode[1] = mode_names[mode[1]] or mode[1]:sub(1, 3):upper()
     end
     return vim.tbl_deep_extend("force", opts, {
+      folding = {
+        -- Avoid constructing expensive fold trees before AstroLargeBuf fires.
+        enabled = function(buf)
+          local buffer = require "astrocore.buffer"
+          return buffer.is_valid(buf) and not buffer.is_large(buf)
+        end,
+      },
       -- change colorscheme
       colorscheme = "astrodark",
       -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
