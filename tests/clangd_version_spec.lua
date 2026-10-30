@@ -2,6 +2,7 @@ local busted = require "plenary.busted"
 local describe, it = busted.describe, busted.it
 local before_each, after_each = busted.before_each, busted.after_each
 
+local settings = require "config"
 local ensure, clangd, registry, installed, installing, executable
 local installs, notifications, scheduled, closed
 local original_registry, original_version, original_notify, original_schedule, original_executable, original_exepath
@@ -15,9 +16,9 @@ end
 describe("Clangd version pin", function()
   before_each(function()
     original_registry = package.loaded["mason-registry"]
-    original_version, original_notify, original_schedule = vim.g.clangd_version, vim.notify, vim.schedule
+    original_version, original_notify, original_schedule = settings.clangd_version, vim.notify, vim.schedule
     original_executable, original_exepath = vim.fn.executable, vim.fn.exepath
-    vim.g.clangd_version = "21.1.8"
+    settings.clangd_version = "21.1.8"
     installed, installing, executable = "21.1.8", false, true
     installs, notifications, scheduled, closed = {}, {}, {}, nil
     clangd = {
@@ -59,7 +60,7 @@ describe("Clangd version pin", function()
 
   after_each(function()
     package.loaded["mason-registry"] = original_registry
-    vim.g.clangd_version, vim.notify, vim.schedule = original_version, original_notify, original_schedule
+    settings.clangd_version, vim.notify, vim.schedule = original_version, original_notify, original_schedule
     vim.fn.executable, vim.fn.exepath = original_executable, original_exepath
   end)
 
@@ -158,7 +159,7 @@ describe("Clangd version pin", function()
   end)
 
   it("refreshes a missing registry before checking and honors a changed central version", function()
-    vim.g.clangd_version = "20.1.0"
+    settings.clangd_version = "20.1.0"
     registry.has_package = function() return false end
     local refreshed = false
     registry.refresh = function(callback)
@@ -181,7 +182,7 @@ describe("Clangd version pin", function()
   end)
 
   it("pins both automatic installers while preserving other tools and clangd options", function()
-    vim.g.clangd_version = "20.1.0"
+    settings.clangd_version = "20.1.0"
     local specs = dofile "lua/plugins/mason.lua"
     local lsp = { ensure_installed = { "lua_ls", "clangd@23.1.0" } }
     local tools = { ensure_installed = { "stylua", { "clangd", auto_update = false } } }

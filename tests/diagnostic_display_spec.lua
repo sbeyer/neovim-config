@@ -10,7 +10,7 @@ require("astrocore").setup {
 }
 
 local namespace = vim.api.nvim_create_namespace "diagnostic_display_tests"
-local buffer, cycle, original_config
+local buffer, cycle, original_config, original_display
 
 local function rows(key)
   local ns = vim.diagnostic.get_namespace(namespace).user_data[key]
@@ -39,6 +39,7 @@ end
 describe("Diagnostic display", function()
   before_each(function()
     original_config = vim.deepcopy(vim.diagnostic.config())
+    original_display = require("config").diagnostic_display
     local opts = dofile("lua/plugins/astrocore.lua").opts
     cycle = opts.mappings.n["<Leader>uv"][1]
     buffer = vim.api.nvim_create_buf(false, true)
@@ -54,6 +55,7 @@ describe("Diagnostic display", function()
   end)
 
   after_each(function()
+    require("config").diagnostic_display = original_display
     vim.diagnostic.reset(namespace)
     vim.api.nvim_buf_delete(buffer, { force = true })
     vim.diagnostic.config { virtual_text = false, virtual_lines = false }
@@ -66,6 +68,33 @@ describe("Diagnostic display", function()
     assert.same({ text = { 1 }, lines = { 2 } }, display())
     move(3)
     assert.same({ text = { 1, 2 }, lines = {} }, display())
+  end)
+
+  for _, mode in ipairs { "virtual_text", "virtual_lines" } do
+    it("starts with " .. mode .. " on all diagnostic lines and still cycles without changing the default", function()
+      local settings = require "config"
+      settings.diagnostic_display = mode
+      local opts = dofile("lua/plugins/astrocore.lua").opts
+      cycle = opts.mappings.n["<Leader>uv"][1]
+      vim.diagnostic.config { virtual_text = false, virtual_lines = false }
+      vim.diagnostic.config(opts.diagnostics)
+      local expected = mode == "virtual_text" and { text = { 1, 2 }, lines = {} } or { text = {}, lines = { 1, 2 } }
+      assert.same(expected, display())
+      move(2)
+      assert.same(expected, display())
+      for _ = 1, 4 do
+        cycle()
+      end
+      assert.same(expected, display())
+      assert.equals(mode, settings.diagnostic_display)
+    end)
+  end
+
+  it("reports an invalid startup display setting instead of silently choosing another mode", function()
+    require("config").diagnostic_display = "typo"
+    local ok, err = pcall(dofile, "lua/plugins/astrocore.lua")
+    assert.is_false(ok)
+    assert(err:find("Invalid diagnostic_display in lua/config.lua", 1, true))
   end)
 
   it("keeps the cursor line free of inline diagnostics after replacing or deleting lines", function()

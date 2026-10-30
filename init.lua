@@ -1,9 +1,3 @@
--- Require the same major/minor release, with at least this patch version.
-vim.g.supported_nvim_version = "0.12.6"
-
--- Mason installs this clangd release; the first use each session checks it.
-vim.g.clangd_version = "21.1.8"
-
 -- This file simply bootstraps the installation of Lazy.nvim and then calls other files for execution
 -- This file doesn't necessarily need to be touched, BE CAUTIOUS editing this file and proceed at your own risk.
 local lazypath = vim.env.LAZY or vim.fn.stdpath "data" .. "/lazy/lazy.nvim"

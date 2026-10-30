@@ -108,7 +108,7 @@ The main additions and customizations beyond AstroNvim's defaults are:
   the choice per project for the session. Missing databases trigger a notification
   without disabling clangd's normal fallback (`lua/clangd/compile-commands.lua`).
 
-- **Pinned clangd version.** `vim.g.clangd_version` in `init.lua` selects the
+- **Pinned clangd version.** `clangd_version` in `lua/config.lua` selects the
   clangd version installed by Mason. First use each session installs it if needed
   before starting clangd; installation failures warn and fall back to an available
   executable (`lua/clangd/version.lua`, `lua/plugins/mason.lua`).
@@ -156,6 +156,11 @@ The main additions and customizations beyond AstroNvim's defaults are:
 - **Selective format-on-save.** Automatic formatting on save is enabled only
   for Rust; other filetypes can still be formatted manually when supported
   (`lua/plugins/astrolsp.lua`).
+
+My feature settings live in `lua/config.lua`: the supported neovim version,
+the clangd version, `dynamic_gutter` (`true` or `false`), and `diagnostic_display`
+(`"hybrid"`, `"virtual_text"`, or `"virtual_lines"`). Restart neovim after changing
+these defaults; UI shortcuts only change the current session.
 
 ## Usage
 
@@ -743,7 +748,7 @@ combined plugin/parser update and updates Mason tools when supported.
 Restart neovim after configuration or plugin changes.
 
 `:MasonInstall clangd@21.1.8` installs a specific clangd version manually.
-My automatic version selection is configured by `vim.g.clangd_version` in `init.lua`.
+My automatic version selection is configured by `clangd_version` in `lua/config.lua`.
 
 `:checkhealth` checks the overall environment; `:checkhealth mason` checks tool
 installation prerequisites, and `<Space>li` checks the LSP setup.
@@ -757,7 +762,7 @@ global ones.
 
 `:AstroVersion` reports the AstroNvim version. `:version` reports the running
 neovim version, and `:echo v:progpath` identifies its executable. My expected
-neovim release is defined in `init.lua`; startup warns about incompatible versions.
+neovim release is defined in `lua/config.lua`; startup warns about incompatible versions.
 
 [astro]: https://docs.astronvim.com/
 [kitty]: https://sw.kovidgoyal.net/kitty/

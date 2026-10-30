@@ -3,6 +3,15 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local settings = require "config"
+local diagnostic_display = settings.diagnostic_display
+assert(
+  vim.tbl_contains({ "hybrid", "virtual_text", "virtual_lines" }, diagnostic_display),
+  "Invalid diagnostic_display in lua/config.lua"
+)
+local diagnostic_text = diagnostic_display ~= "virtual_lines"
+local diagnostic_lines = diagnostic_display ~= "virtual_text"
+
 local function large_buffer_folding(args)
   if require("astrocore.buffer").is_large(args.buf) then
     for _, win in ipairs(vim.fn.win_findbuf(args.buf)) do
@@ -48,14 +57,14 @@ return {
       large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics = { virtual_text = true, virtual_lines = true }, -- diagnostic settings on startup
+      diagnostics = { virtual_text = diagnostic_text, virtual_lines = diagnostic_lines },
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
     -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
     diagnostics = {
-      virtual_text = { current_line = false },
-      virtual_lines = { current_line = true },
+      virtual_text = diagnostic_text and (diagnostic_display == "hybrid" and { current_line = false } or {}) or false,
+      virtual_lines = diagnostic_lines and { current_line = diagnostic_display == "hybrid" } or false,
       underline = true,
     },
     -- passed to `vim.filetype.add`
@@ -113,7 +122,7 @@ return {
         sidescrolloff = 8,
       },
       g = { -- vim.g.<key>
-        dynamic_statuscolumn = true,
+        dynamic_statuscolumn = settings.dynamic_gutter,
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
@@ -126,7 +135,7 @@ return {
           once = true,
           desc = "Warn when running an unsupported Neovim version",
           callback = function()
-            local supported = vim.g.supported_nvim_version
+            local supported = settings.supported_nvim_version
             local major, minor, patch = supported:match "^(%d+)%.(%d+)%.(%d+)$"
             local current = vim.version()
             if

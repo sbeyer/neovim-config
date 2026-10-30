@@ -6,7 +6,7 @@ function M.ensure(callback)
   table.insert(waiting, callback)
   if #waiting > 1 then return end
 
-  local requested = vim.g.clangd_version
+  local requested = require("config").clangd_version
   local registry = require "mason-registry"
 
   local function finish(err)

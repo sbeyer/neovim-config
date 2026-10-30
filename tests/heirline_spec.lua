@@ -16,7 +16,7 @@ ui.config = vim.tbl_deep_extend("force", ui.config, dofile("lua/plugins/astroui.
 local status = require "astroui.status"
 local heirline = require "heirline"
 local mode, active, temporary, buffer, options
-local original_mode, original_active, original_aerial, original_dynamic
+local original_mode, original_active, original_aerial, original_dynamic, original_gutter
 local sign_namespace = vim.api.nvim_create_namespace "gitsigns_signs_heirline_tests"
 local diagnostic_namespace = vim.api.nvim_create_namespace "heirline_diagnostic_tests"
 
@@ -43,6 +43,7 @@ end
 
 describe("Heirline", function()
   before_each(function()
+    original_gutter = require("config").dynamic_gutter
     vim.cmd "silent tabonly!"
     vim.cmd "silent only!"
     temporary = vim.fn.tempname() .. "-heirline-tests"
@@ -80,6 +81,7 @@ describe("Heirline", function()
   end)
 
   after_each(function()
+    require("config").dynamic_gutter = original_gutter
     vim.fn.mode, status.condition.is_active, package.loaded.aerial = original_mode, original_active, original_aerial
     vim.g.dynamic_statuscolumn = original_dynamic
     vim.diagnostic.reset(diagnostic_namespace)
@@ -186,6 +188,20 @@ describe("Heirline", function()
     vim.api.nvim_buf_set_extmark(buffer, sign_namespace, 0, 0, { sign_text = "G", priority = 10 })
     assert.equals(numbers_only + 2, gutter_width())
     assert(render("statuscolumn", nil, 1):find("G", 1, true))
+  end)
+
+  it("starts with fixed columns when configured and toggles without changing the startup default", function()
+    local settings = require "config"
+    settings.dynamic_gutter = false
+    local opts = dofile("lua/plugins/astrocore.lua").opts
+    vim.g.dynamic_statuscolumn = opts.options.g.dynamic_statuscolumn
+    assert.equals(vim.wo.numberwidth + 5, gutter_width())
+    local toggle = opts.mappings.n["<Leader>u<"][1]
+    toggle()
+    assert.equals(vim.wo.numberwidth, gutter_width())
+    toggle()
+    assert.equals(vim.wo.numberwidth + 5, gutter_width())
+    assert.is_false(settings.dynamic_gutter)
   end)
 
   it("shows read-only and modified markers in the winbar, with only necessary filetype labels", function()
