@@ -108,10 +108,13 @@ The main additions and customizations beyond AstroNvim's defaults are:
   the choice per project for the session. Missing databases trigger a notification
   without disabling clangd's normal fallback (`lua/clangd/compile-commands.lua`).
 
-- **Pinned clangd version.** `clangd_version` in `lua/config.lua` selects the
-  clangd version installed by Mason. First use each session installs it if needed
+- **Pinned clangd version.** Mason installs my configured clangd version.
+  First use each session installs it if needed
   before starting clangd; installation failures warn and fall back to an available
   executable (`lua/clangd/version.lua`, `lua/plugins/mason.lua`).
+
+- **QML language support.** Uses the system-installed `qmlls` for QML files,
+  including my `qmljs` filetype (`lua/plugins/astrolsp.lua`).
 
 - **Diff outlines.** Diff file headers appear as symbols with their `@@` hunks
   nested underneath, including patches without `index` metadata and files with
@@ -157,10 +160,9 @@ The main additions and customizations beyond AstroNvim's defaults are:
   for Rust; other filetypes can still be formatted manually when supported
   (`lua/plugins/astrolsp.lua`).
 
-My feature settings live in `lua/config.lua`: the supported neovim version,
-the clangd version, `dynamic_gutter` (`true` or `false`), and `diagnostic_display`
-(`"hybrid"`, `"virtual_text"`, or `"virtual_lines"`). Restart neovim after changing
-these defaults; UI shortcuts only change the current session.
+My feature settings and their documentation live in `lua/config.lua`.
+Restart neovim after changing startup defaults; UI shortcuts only change the
+current session.
 
 ## Usage
 

@@ -3,6 +3,8 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local qmlls_path = require("config").qmlls_path
+
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -36,9 +38,7 @@ return {
       -- end
     },
     -- enable servers that you already have installed without mason
-    servers = {
-      -- "pyright"
-    },
+    servers = qmlls_path ~= "" and { "qmlls" } or {},
     -- customize language server configuration passed to `vim.lsp.config`
     -- client specific configuration can also go in `lsp/` in your configuration root (see `:h lsp-config`)
     config = {
@@ -47,6 +47,7 @@ return {
         -- Query the build compiler for its system include paths.
         cmd = { "clangd", "--query-driver=/usr/bin/g++" },
       },
+      qmlls = qmlls_path ~= "" and { cmd = { qmlls_path, "--no-cmake-calls" } } or nil,
     },
     -- customize how language servers are attached
     handlers = {

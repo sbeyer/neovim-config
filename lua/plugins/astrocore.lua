@@ -129,6 +129,28 @@ return {
       },
     },
     autocmds = {
+      qmlls_path_check = {
+        {
+          event = "FileType",
+          pattern = { "qml", "qmljs" },
+          desc = "Warn when the configured QML language server is not executable",
+          callback = function()
+            local path = settings.qmlls_path
+            if path == "" or vim.fn.executable(path) == 1 then return end
+            vim.schedule(
+              function()
+                vim.notify(
+                  ('qmlls_path is not executable: %s. Check lua/config.lua or set qmlls_path to "" to disable QML LSP.'):format(
+                    path
+                  ),
+                  vim.log.levels.WARN,
+                  { title = "qmlls" }
+                )
+              end
+            )
+          end,
+        },
+      },
       nvim_version_check = {
         {
           event = "VimEnter",
