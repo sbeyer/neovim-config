@@ -126,6 +126,10 @@ The main additions and customizations beyond AstroNvim's defaults are:
   but they stop at subword boundaries as they exist for `snake_case`, `camelCase`
   `PascalCase`, etc.
 
+- **Repository-local VS Code snippets.** LuaSnip loads `.vscode/*.code-snippets`
+  from the edited file's Git repository.
+  Snippets stay isolated to that repository and follow the current buffer filetype.
+
 - **Git file removal.** `<Space>gD` offers deletion or untracking with buffer
   and Git change warnings, then searches for filename references. Deletion also
   closes the file's buffer (`lua/plugins/git.lua`, `lua/git/remove.lua`).
