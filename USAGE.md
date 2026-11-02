@@ -514,9 +514,10 @@ and discards unsaved edits (`lua/plugins/git.lua`, `lua/git/remove.lua`).
 
 ### History and blame
 
-`<Space>gl` shows blame information for the current line; `<Space>gL` includes
-the full commit details. `:Gitsigns toggle_current_line_blame` toggles a persistent
-blame annotation on the cursor line (Gitsigns).
+`<Space>gl` shows blame for the current line, including the full commit message
+and relevant diff hunk.
+`:Gitsigns toggle_current_line_blame` toggles a persistent blame annotation on
+the cursor line (Gitsigns, `lua/plugins/gitsigns.lua`).
 
 `<Space>gc` browses repository commits; `<Space>gC` shows the current file's history,
 following renames. Use the preview to inspect commits. Confirming a commit requests
