@@ -6,6 +6,7 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
+  init = function() vim.treesitter.language.register("qmljs", "qml") end,
   ---@type AstroCoreOpts
   opts = {
     treesitter = {

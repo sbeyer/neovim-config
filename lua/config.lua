@@ -8,7 +8,7 @@ return {
   clangd_version = "21.1.8",
 
   -- Path to the system-installed QML language server, not managed by Mason.
-  -- Set to "" to disable QML LSP attachment. Supports qml and qmljs filetypes.
+  -- Set to "" to disable QML LSP attachment.
   -- A missing or non-executable nonempty path warns when opening a QML file.
   --
   -- For projects using qt_add_qml_module(), run from the existing build directory:

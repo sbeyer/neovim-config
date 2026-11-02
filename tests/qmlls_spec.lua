@@ -3,12 +3,13 @@ local describe, it, pending = busted.describe, busted.it, busted.pending
 local before_each, after_each = busted.before_each, busted.after_each
 
 local lazy = vim.fs.joinpath(vim.fn.stdpath "data", "lazy")
-for _, plugin in ipairs { "astrocore", "astrolsp", "nvim-lspconfig" } do
+for _, plugin in ipairs { "astrocore", "astrolsp", "nvim-lspconfig", "nvim-treesitter" } do
   vim.opt.rtp:append(vim.fs.joinpath(lazy, plugin))
 end
 local settings = require "config"
 local astrolsp = require "astrolsp"
 local original_lsp_config = vim.deepcopy(astrolsp.config)
+dofile("lua/plugins/treesitter.lua").init()
 local core_opts = dofile("lua/plugins/astrocore.lua").opts
 require("astrocore").setup {
   features = { notifications = false },
@@ -80,12 +81,22 @@ describe("QML language server", function()
     vim.notify = original_notify
   end)
 
+  it("parses and highlights native QML buffers with the qmljs parser", function()
+    open_qml()
+    assert.equals("qml", vim.bo[buffer].filetype)
+    local parser = vim.treesitter.get_parser(buffer)
+    assert.equals("qmljs", parser:lang())
+    assert.is_false(parser:parse()[1]:root():has_error())
+    vim.treesitter.start(buffer)
+    assert.is_not_nil(vim.treesitter.highlighter.active[buffer])
+  end)
+
   it("does not enable or attach qmlls when the configured path is empty", function()
     settings.qmlls_path = ""
     configure()
     open_qml()
     flush()
-    assert.equals("qmljs", vim.bo[buffer].filetype)
+    assert.equals("qml", vim.bo[buffer].filetype)
     assert.is_false(vim.lsp.is_enabled "qmlls")
     assert.same({}, vim.lsp.get_clients { name = "qmlls", bufnr = buffer })
     assert.same({}, notifications)
@@ -107,10 +118,6 @@ describe("QML language server", function()
       assert(warning.message:find(settings.qmlls_path, 1, true))
       assert(warning.message:find("lua/config.lua", 1, true))
       assert(warning.message:find('qmlls_path to ""', 1, true))
-      vim.bo[buffer].filetype = "qml"
-      flush()
-      assert.equals(2, #notifications)
-      assert.equals(warning.message, notifications[2].message)
     end)
   end
 
@@ -135,12 +142,12 @@ describe("QML language server", function()
   local reason = integration == pending and " (skipped: qmlls_path is empty)" or ""
 
   integration(
-    "attaches to qmljs files using the configured executable and provides QtQuick completion" .. reason,
+    "attaches to QML files using the configured executable and provides QtQuick completion" .. reason,
     function()
       configure()
       open_qml()
       local client = attached_client()
-      assert.equals("qmljs", vim.bo[buffer].filetype)
+      assert.equals("qml", vim.bo[buffer].filetype)
       assert.same({ settings.qmlls_path, "--no-cmake-calls" }, client.config.cmd)
       local response = client:request_sync("textDocument/completion", {
         textDocument = { uri = vim.uri_from_bufnr(buffer) },

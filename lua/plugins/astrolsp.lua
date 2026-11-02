@@ -47,7 +47,7 @@ return {
         -- Query the build compiler for its system include paths.
         cmd = { "clangd", "--query-driver=/usr/bin/g++" },
       },
-      qmlls = qmlls_path ~= "" and { cmd = { qmlls_path, "--no-cmake-calls" } } or nil,
+      qmlls = qmlls_path ~= "" and { cmd = { qmlls_path, "--no-cmake-calls" }, filetypes = { "qml" } } or nil,
     },
     -- customize how language servers are attached
     handlers = {

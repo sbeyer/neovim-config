@@ -113,8 +113,8 @@ The main additions and customizations beyond AstroNvim's defaults are:
   before starting clangd; installation failures warn and fall back to an available
   executable (`lua/clangd/version.lua`, `lua/plugins/mason.lua`).
 
-- **QML language support.** Uses the system-installed `qmlls` for QML files,
-  including my `qmljs` filetype (`lua/plugins/astrolsp.lua`).
+- **QML language support.** Uses the system-installed `qmlls` for QML files
+  (`lua/plugins/astrolsp.lua`).
 
 - **Diff outlines.** Diff file headers appear as symbols with their `@@` hunks
   nested underneath, including patches without `index` metadata and files with

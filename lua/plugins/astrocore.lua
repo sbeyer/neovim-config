@@ -71,8 +71,6 @@ return {
     filetypes = {
       -- see `:h vim.filetype.add` for usage
       extension = {
-        -- recognize qml
-        qml = "qmljs",
         -- always ft=tex (LaTeX), never ft=plaintex (TeX)
         tex = "tex",
       },
@@ -123,7 +121,7 @@ return {
       qmlls_path_check = {
         {
           event = "FileType",
-          pattern = { "qml", "qmljs" },
+          pattern = "qml",
           desc = "Warn when the configured QML language server is not executable",
           callback = function()
             local path = settings.qmlls_path
