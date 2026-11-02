@@ -171,6 +171,10 @@ The main additions and customizations beyond AstroNvim's defaults are:
 - **Flash navigation.** Label-based jumps and enhanced character finds are
   enabled through AstroCommunity (`lua/community.lua`).
 
+- **Mouse input limited to Normal and Visual modes.** Mouse input is disabled
+  in Insert mode to avoid accidental cursor movement while typing
+  (`lua/plugins/astrocore.lua`).
+
 - **Selective format-on-save.** Automatic formatting on save is enabled only
   for Rust; other filetypes can still be formatted manually when supported
   (`lua/plugins/astrolsp.lua`).
