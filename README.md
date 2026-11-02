@@ -200,6 +200,16 @@ current session.
 See the [usage guide](USAGE.md) for editing, navigation, language tools, Git,
 and maintenance.
 
+## Tests
+
+The configuration includes automated tests. Run them from the repository root:
+
+```sh
+tests/run.sh
+```
+
+If tests fail, check the settings in `lua/config.lua`.
+
 [astro]: https://docs.astronvim.com/
 [kitty]: https://sw.kovidgoyal.net/kitty/
 [kitty-fonts]: https://sw.kovidgoyal.net/kitty/faq/#kitty-is-not-able-to-use-my-favorite-font
