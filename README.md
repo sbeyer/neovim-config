@@ -142,7 +142,8 @@ The main additions and customizations beyond AstroNvim's defaults are:
   (`lua/community.lua`, `lua/plugins/diffview.lua`).
 
 - **Custom statusline and window headers.** Compact three-letter mode labels
-  and tab numbers replace the separate tabline. The active window shows symbol
+  and tab numbers appear in the statusline. The separate tabline/bufferline and
+  its dependent shortcuts are disabled. The active window shows symbol
   breadcrumbs when available; other windows show their file paths. Headers also
   show modified/read-only state and filetype labels where useful
   (`lua/plugins/heirline.lua`, `lua/plugins/astroui.lua`).

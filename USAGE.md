@@ -261,9 +261,7 @@ list; counts work too, such as `3]b` (AstroNvim, `lua/plugins/astrocore.lua`).
 `<Space>bp` returns to the previously used buffer (AstroNvim).
 
 `<Space>fb` opens a searchable buffer picker: type to filter, then press Enter
-to select a buffer (Snacks, AstroNvim default). Prefer this over `<Space>bb`,
-AstroNvim's tabline-based picker, because my tabline is disabled
-(`lua/plugins/heirline.lua`).
+to select a buffer (Snacks, AstroNvim default).
 
 `<Space>c` closes the current buffer; `<Space>C` forces it closed, discarding
 unsaved changes. `<Space>bc` closes the other buffers in the current tab's buffer
