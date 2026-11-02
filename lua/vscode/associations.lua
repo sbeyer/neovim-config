@@ -3,9 +3,7 @@ local projects = {}
 local filetypes = require "vscode.filetypes"
 
 local function read(root)
-  local path = vim.fs.joinpath(root, ".vscode", "settings.json")
-  if vim.fn.filereadable(path) == 0 then return {} end
-  local settings = require("luasnip.util.jsonc").decode(table.concat(vim.fn.readfile(path), "\n"))
+  local settings = require("vscode.settings").read(root)
   local associations = {}
   for pattern, language in pairs(settings["files.associations"] or {}) do
     assert(type(language) == "string" and language ~= "", "Invalid language for " .. tostring(pattern))
