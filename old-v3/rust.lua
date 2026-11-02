@@ -1,5 +1,9 @@
 return {
-  require("user.utils").ensure_lsps({ "rust_analyzer", "taplo" }),
+  {
+    "williamboman/mason-lspconfig.nvim",
+    opts_extend = { "ensure_installed" },
+    opts = { ensure_installed = { "rust_analyzer", "taplo" } },
+  },
 
   {
     "AstroNvim/astrocommunity",

@@ -19,7 +19,7 @@ is a need to update. So my new configuration is made with heavy use of LLMs beca
 still do not enjoy configuring neovim or writing lua.
 
 Only unported user plugin customizations from my former AstroNvim v3.45.3
-configuration remain in `old-v3/lua/user/`, for possible later migration. The old
+configuration remain directly in `old-v3/`, for possible later migration. The old
 distribution and settings covered by the active configuration have been removed.
 These reference snippets are not loaded and may require updates before reuse.
 
