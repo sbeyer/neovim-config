@@ -480,6 +480,11 @@ Press `<Space>g` and pause to see available Git actions.
 File-level bindings appear when Gitsigns attaches to a file; repository pickers
 come from Snacks (AstroNvim defaults).
 
+`<Space>D` groups Diffview actions: `<Space>D` then Enter opens the repository
+diff, `<Space>Ds` reviews staged changes, `<Space>Dh` opens the current file's
+history, and `<Space>DH` opens repository history. See [DiffView](#diffview) below
+for navigation, staging, and conflict resolution.
+
 ### Reviewing and staging changes
 
 The gutter marks changed lines, while the statusline shows the branch and change
@@ -540,6 +545,100 @@ or pulling. These bindings are only created when the executable is available
 
 Commit messages, rebase instructions, and `.gitattributes` files also have
 Treesitter syntax support (`lua/plugins/git.lua`).
+
+### DiffView
+
+Diffview opens a separate tab with a file panel and diff panes (AstroCommunity,
+`lua/plugins/diffview.lua`). `<Space>q` or `:DiffviewClose` closes that view and
+returns to your editing tabs. Inside Diffview, `<Space>e` toggles its own file
+panel instead of the normal explorer; outside Diffview, it is unchanged.
+`<Space>b...` and `<Space>c` retain their AstroNvim buffer and close-buffer
+behavior. Other Diffview leader shortcuts live under `<Space>D`.
+`g?` shows help for the current pane.
+
+**Opening a view.** `<Space>D` then Enter runs `:DiffviewOpen`: **Changes** compares
+the index (left) with your working file (right), while **Staged changes** compares
+HEAD (left) with the index (right). `<Space>Ds` runs `:DiffviewOpen --cached` for
+staged-only review. Other useful comparisons are `:DiffviewOpen HEAD~1` (previous
+commit versus working tree), `:DiffviewOpen HEAD~1..HEAD` (last commit), and
+`:DiffviewOpen origin/main...HEAD` (branch changes since the common ancestor).
+Add `-- path/to/file` to restrict a comparison.
+
+**Moving around.** In a diff pane, `]c` / `[c` jump to the next / previous changed
+hunk in that file. `Tab` / `Shift-Tab` open the next / previous file; `[F` / `]F`
+open the first / last file. `<Space>Df` focuses the file panel, where `j` / `k`
+select entries and Enter opens their diff. `Ctrl-h`, `Ctrl-j`, `Ctrl-k`, and
+`Ctrl-l` move between panes, as elsewhere in AstroNvim. `<Space>e` toggles the
+file panel; `<Space>Dl` cycles layouts. `gf` opens the working file in your
+previous editing tab. `R` in the file panel or `:DiffviewRefresh` refreshes the
+view after external changes.
+
+**Staging and unstaging files.** Use the regular `:DiffviewOpen` overview.
+In its file panel, `-` or `s` stages an entry under **Changes**, or unstages one
+under **Staged changes** without discarding working-tree edits. On a directory
+entry, this affects its files. `S` stages all entries; `U` unstages all entries.
+These file-level toggles are not available in historical or `--cached` views.
+Save working-file edits before staging. **`X` restores file contents to the left
+side's version; it is not an unstage shortcut and can discard changes.**
+
+**Staging individual hunks.** In the regular overview, open a file under
+**Changes**, move to its left-hand **index** pane, and find the hunk with
+`]c` / `[c`. `do` pulls that hunk from the working file into the index buffer;
+`:w` saves the index, staging it. Repeat for other hunks as needed. To unstage
+one hunk, open the file under **Staged changes**, move to the right-hand **index**
+pane, use `do` to pull the HEAD version of that hunk, then `:w`. This leaves the
+working file unchanged. Index buffers can also be edited directly for finer
+control. For selected-line staging in a normal editing buffer, use Gitsigns'
+Visual-mode `<Space>gs` described above.
+
+**Resolving conflicts.** During a merge or rebase, `:DiffviewOpen` lists
+**Conflicting files** separately. Open one to see OURS, the editable working
+result, and THEIRS. Work in the result pane: `]x` / `[x` jump between conflict
+markers, rather than ordinary diff hunks. Edit the result manually, or choose
+the conflict under the cursor:
+
+| Shortcut    | Result                    |
+| ----------- | ------------------------- |
+| `<Space>Do` | Keep OURS                 |
+| `<Space>Dt` | Keep THEIRS               |
+| `<Space>Db` | Keep BASE                 |
+| `<Space>Da` | Keep all available text   |
+| `<Space>D0` | Delete conflict region    |
+
+`<Space>Db` requires a `|||||||` base section in the conflict markers; without
+one, use the four-way layout and `1do` described below instead. `<Space>Da`
+removes the markers but keeps the text from all available versions, which
+usually needs further editing. `dx` is another way to delete the conflict
+region.
+
+`<Space>DO`, `<Space>DT`, `<Space>DB`, and `<Space>DA` apply the corresponding
+choice to **every conflict in the current file**; `dX` deletes every conflict
+region. The BASE-marker requirement also applies to `<Space>DB`. These are
+bulk text edits, not automatic staging.
+
+Alternatively, `2do` / `3do` obtain the current diff hunk from OURS / THEIRS.
+They also accept a Visual selection. Cycle to the four-way layout with
+`<Space>Dl` to inspect BASE and use `1do` to obtain from it. Unlike the
+marker-based `<Space>Db`, this works without a base section in the markers.
+Ordinary `do` / `dp` are Neovim's diff-get / diff-put commands; the numbered
+forms explicitly select the source in a multi-pane conflict view.
+
+In a normal merge, OURS is your current branch and THEIRS is the incoming
+branch. **During a rebase, OURS is the branch being rebased onto and THEIRS is
+the commit being replayed**; inspect the pane labels rather than assuming
+"ours" means your feature branch.
+
+After resolving a file, `:w` the result, then stage that file with `-` in the
+file panel. A conflict-free indicator only means its markers are gone; review
+the result before staging. Repeat for the other files, close Diffview, and run
+`git merge --continue` or `git rebase --continue` in the shell. Diffview does not
+finish the merge/rebase automatically.
+
+**Browsing history.** From an ordinary file, `<Space>Dh` runs
+`:DiffviewFileHistory %`; `<Space>DH` runs `:DiffviewFileHistory` for the
+repository. In the history panel, `j` / `k` and Enter choose entries, `Tab` /
+`Shift-Tab` step through diffs, `L` shows commit details, and `g!` opens history
+filter options. Viewing a historical revision does not check it out.
 
 ## Debugging and building
 

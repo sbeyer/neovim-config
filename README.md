@@ -135,6 +135,12 @@ The main additions and customizations beyond AstroNvim's defaults are:
   the message above the diff. Normal `:wq` and `:cq` behavior is preserved
   (`lua/plugins/git.lua`, `lua/git/commit.lua`).
 
+- **Diffview.** Repository-wide diffs, staged-change review, file history, and
+  conflict resolution through AstroCommunity. `<Space>D` groups its actions
+  while preserving AstroNvim's buffer shortcuts; inside Diffview, `<Space>e`
+  toggles its file panel instead of the normal explorer
+  (`lua/community.lua`, `lua/plugins/diffview.lua`).
+
 - **Custom statusline and window headers.** Compact three-letter mode labels
   and tab numbers replace the separate tabline. The active window shows symbol
   breadcrumbs when available; other windows show their file paths. Headers also
