@@ -133,6 +133,9 @@ The main additions and customizations beyond AstroNvim's defaults are:
 - **Tab navigation.** `<Space>ft` picks an open tab through Snacks; `g<Tab>`
   returns to the most recently visited tab, skipping closed tabs.
 
+- **Calculator completion.** Arithmetic expressions offer their results as
+  completion suggestions (cmp-calc through AstroCommunity).
+
 - **Repository-local VS Code snippets.** LuaSnip loads `.vscode/*.code-snippets`
   from the edited file's Git repository.
   Snippets stay isolated to that repository and follow the current buffer filetype.

@@ -438,6 +438,9 @@ and `Ctrl-y` to accept: **n = no/next, p = previous, y = yes**.
 a selected suggestion. `Ctrl-e` dismisses completion. `Tab`/`Shift-Tab` also
 navigate suggestions or snippet fields (Blink, AstroNvim default).
 
+Arithmetic expressions such as `2+3*4` offer calculator completions: either
+the result (`14`) or the expression with its result (`2+3*4 = 14`) (cmp-calc).
+
 `K` shows documentation for the symbol under the cursor. `gK` or `<Space>lh`
 shows a function's signature and parameters; `<Space>u?` toggles automatic
 signature help (neovim and AstroLSP).

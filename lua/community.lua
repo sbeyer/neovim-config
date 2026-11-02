@@ -9,6 +9,7 @@ return {
   { import = "astrocommunity.pack.cpp" },
   { import = "astrocommunity.pack.cmake" },
   { import = "astrocommunity.pack.xml" },
+  { import = "astrocommunity.completion.cmp-calc" },
   { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.motion.flash-nvim" },
   -- import/override with your plugins folder
