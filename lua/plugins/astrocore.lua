@@ -71,7 +71,6 @@ return {
     filetypes = {
       -- see `:h vim.filetype.add` for usage
       extension = {
-        foo = "fooscript",
         -- recognize qml
         qml = "qmljs",
         -- always ft=tex (LaTeX), never ft=plaintex (TeX)
@@ -82,11 +81,7 @@ return {
         schema = "html",
       },
       filename = {
-        [".foorc"] = "fooscript",
         Jenkinsfile = "groovy",
-      },
-      pattern = {
-        [".*/etc/foo/.*"] = "fooscript",
       },
     },
     -- vim options can be configured here
