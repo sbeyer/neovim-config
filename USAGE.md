@@ -103,8 +103,9 @@ Run `fg` in the shell to resume it.
 
 These keys work in Normal mode.
 
-`h`, `j`, `k`, `l` move left, down, up, right. Without a count, `j` and `k`
-follow screen lines when text wraps (AstroNvim).
+`h`, `j`, `k`, `l` move left, down, up, right. `j` and `k` move by actual lines,
+even when text wraps; `gj` and `gk` move by wrapped screen lines. This restores
+Neovim's native behavior in Normal and Visual modes (`lua/plugins/astrocore.lua`).
 
 `w` moves to the next word's beginning, `b` moves back to a word's beginning,
 and `e` moves to a word's end. `W`, `B`, `E` treat everything between whitespace

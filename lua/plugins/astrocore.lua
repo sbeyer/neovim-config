@@ -231,6 +231,8 @@ return {
       n = {
         -- second key is the lefthand side of the map
 
+        ["j"] = false,
+        ["k"] = false,
         -- Keep the v6 <Leader>q mapping: the old replacement requires vim-sayonara.
         ["<Leader>Q"] = { "<Cmd>qa<CR>", desc = "Quit all" },
         ["<Leader>u<"] = {
@@ -262,6 +264,10 @@ return {
 
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
+      },
+      x = {
+        ["j"] = false,
+        ["k"] = false,
       },
     },
   },
