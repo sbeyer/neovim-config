@@ -320,6 +320,12 @@ new tab, leaving the original window in place.
 directly to tab 2. Tab numbers appear in my statusline rather than a tabline
 (`lua/plugins/heirline.lua`).
 
+`<Space>ft` opens a searchable tab picker showing tab numbers and their files.
+Enter switches to the selected tab; `Ctrl-c` cancels (Snacks).
+`g<Tab>` switches to the most recently visited tab. Repeating it alternates
+between the last two tabs; closed tabs are skipped in favor of older visits
+(`lua/tabs.lua`).
+
 `Ctrl-w T` extracts the current window into a new tab. This requires at least
 two windows in the source tab.
 

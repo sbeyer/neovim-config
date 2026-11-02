@@ -13,5 +13,8 @@ return {
       mappings[new] = mappings[old]
       mappings[old] = false
     end
+    require("tabs").setup()
+    mappings["<Leader>ft"] = { function() require("tabs").pick() end, desc = "Find tabs" }
+    mappings["g<Tab>"] = { function() require("tabs").previous() end, desc = "Go to recent tab" }
   end,
 }

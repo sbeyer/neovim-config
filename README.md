@@ -130,6 +130,9 @@ The main additions and customizations beyond AstroNvim's defaults are:
 - **Smart increment/decrement.** `<Space>` + `Ctrl-a` / `Ctrl-x` toggle booleans,
   cycle identifier cases, and change numbers, dates, and versions (dial.nvim).
 
+- **Tab navigation.** `<Space>ft` picks an open tab through Snacks; `g<Tab>`
+  returns to the most recently visited tab, skipping closed tabs.
+
 - **Repository-local VS Code snippets.** LuaSnip loads `.vscode/*.code-snippets`
   from the edited file's Git repository.
   Snippets stay isolated to that repository and follow the current buffer filetype.
