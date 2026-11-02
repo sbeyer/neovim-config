@@ -693,8 +693,8 @@ edit `relativenumber` in `lua/plugins/astrocore.lua`.
 
 `<Space>uw` toggles line wrapping; `<Space>us` toggles spell checking, and
 `<Space>uS` toggles concealment of text such as markup syntax (AstroNvim).
-`<Space>u|` toggles indentation guides; `<Space>ft` opens the colorscheme picker
-(Snacks, AstroNvim defaults).
+`<Space>u|` toggles indentation guides (Snacks, AstroNvim default).
+`<Space>fT` opens the theme/colorscheme picker (Snacks, `lua/plugins/mappings.lua`).
 
 My whitespace and wrapped-line markers make tabs, trailing spaces, and
 continuation lines visible (`lua/plugins/astrocore.lua`).
