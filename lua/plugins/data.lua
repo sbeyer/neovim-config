@@ -2,6 +2,6 @@
 return {
   "AstroNvim/astrocore",
   opts = {
-    treesitter = { ensure_installed = { "json", "yaml" } },
+    treesitter = { ensure_installed = { "dtd", "json", "xml", "yaml" } },
   },
 }
