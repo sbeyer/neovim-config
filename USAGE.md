@@ -150,6 +150,10 @@ Use these to retrace searches and jumps, including jumps to other files.
 `[d` and `]d` jump to the previous and next diagnostic. `[e` and `]e` visit
 only errors; `[w` and `]w` visit only warnings (AstroNvim).
 
+`]x` and `[x` jump to the next and previous `TODO:`, `XXX:`, `WARN:`, `NOTE:`,
+and other todo-comments markers in the current file. `<Space>fx` opens their
+project-wide picker (Snacks). In Diffview, `]x` / `[x` navigate conflicts instead.
+
 `[g` and `]g` jump to the previous and next Git change hunk (Gitsigns,
 AstroNvim default).
 
