@@ -216,6 +216,25 @@ the commenting commands.
 `:%s/old/new/gc` replaces matches throughout the buffer, asking for confirmation
 at each match. The search part is a regular expression.
 
+### Increment and decrement
+
+`Ctrl-a` adds one to the number under or after the cursor; `Ctrl-x` subtracts
+one. A count sets the amount: `5 Ctrl-a` adds five. `.` repeats the change.
+
+On a Visual selection, these keys change numbers on each selected line by the
+same amount. Prefix them with `g` for progressively larger changes on successive
+lines: selecting three lines containing `1` and pressing `g` then `Ctrl-a`
+produces `2`, `3`, `4` (neovim).
+
+Prefix `Ctrl-a` / `Ctrl-x` with `<Space>` to also change dates (`YYYY/MM/DD`)
+and semantic versions, toggle `false` / `true`, or cycle identifier cases:
+`snake_case` -> `camelCase` -> `PascalCase` -> `SCREAMING_SNAKE_CASE`
+(dial.nvim). These bindings work in Normal and Visual modes, with counts and
+`.` repeat.
+
+For progressive changes on a Visual selection with these additional types,
+use `g<Space>` followed by `Ctrl-a` / `Ctrl-x`.
+
 ### Undo history picker
 
 `<Space>fu` opens the current buffer's undo history (Snacks, AstroNvim default).

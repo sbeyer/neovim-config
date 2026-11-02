@@ -1,44 +1,39 @@
+---@type LazySpec
 return {
   "monaqa/dial.nvim",
   keys = {
     {
       "<leader><C-a>",
       mode = { "v" },
-      function() return require("dial.map").inc_visual() end,
-      expr = true,
+      function() require("dial.map").manipulate("increment", "visual") end,
       desc = "Increment",
     },
     {
       "<leader><C-x>",
       mode = { "v" },
-      function() return require("dial.map").dec_visual() end,
-      expr = true,
+      function() require("dial.map").manipulate("decrement", "visual") end,
       desc = "Decrement",
     },
     {
       "g<leader><C-a>",
       mode = { "v" },
-      function() return require("dial.map").inc_gvisual() end,
-      expr = true,
+      function() require("dial.map").manipulate("increment", "gvisual") end,
       desc = "Increment",
     },
     {
       "g<leader><C-x>",
       mode = { "v" },
-      function() return require("dial.map").dec_gvisual() end,
-      expr = true,
+      function() require("dial.map").manipulate("decrement", "gvisual") end,
       desc = "Decrement",
     },
     {
       "<leader><C-a>",
-      function() return require("dial.map").inc_normal() end,
-      expr = true,
+      function() require("dial.map").manipulate("increment", "normal") end,
       desc = "Increment",
     },
     {
       "<leader><C-x>",
-      function() return require("dial.map").dec_normal() end,
-      expr = true,
+      function() require("dial.map").manipulate("decrement", "normal") end,
       desc = "Decrement",
     },
   },
@@ -52,7 +47,7 @@ return {
         augend.constant.alias.bool,
         augend.semver.alias.semver,
         augend.case.new {
-          types = { "camelCase", "PascalCase", "snake_case", "SCREAMING_SNAKE_CASE" },
+          types = { "snake_case", "camelCase", "PascalCase", "SCREAMING_SNAKE_CASE" },
         },
       },
     }
