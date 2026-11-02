@@ -109,13 +109,21 @@ follow screen lines when text wraps (AstroNvim).
 `w` moves to the next word's beginning, `b` moves back to a word's beginning,
 and `e` moves to a word's end. `W`, `B`, `E` treat everything between whitespace
 as one word, ignoring punctuation.
+`_w`, `_b`, and `_e` are the corresponding **subword** motions, stopping at parts
+of `snake_case`, `camelCase`, and `PascalCase` identifiers (nvim-spider,
+`lua/plugins/motion.lua`).
 
 Prefix a motion with a count: `5j` moves five actual lines down, `3w` moves three
 words forward. Read the relative line numbers to choose the count instead of
 counting lines yourself (relative numbers: `lua/plugins/astrocore.lua`).
 
-`0` goes to the line's beginning, `^` to its first non-blank character, `$` to its
-end. `gg` goes to the first line, `G` to the last, and `42G` to line 42.
+`0` goes to the line's beginning, `^` to its first non-blank character.
+`__` goes to the same place, but accepts a line count: `3__` moves two lines down,
+then to the first non-blank character, whereas `^` ignores counts.
+With operators, `__` is linewise (`d__` deletes the whole line), while `^` is
+characterwise (`d^` deletes back to the first non-blank character).
+`$` goes to the line's end. `gg` goes to the first line, `G` to the last, and
+`42G` to line 42.
 
 `f` followed by a character finds it forward; `F` finds it backward. `t` and `T`
 stop one character short of the target. `;` repeats the find, `,` reverses it.

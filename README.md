@@ -122,6 +122,10 @@ The main additions and customizations beyond AstroNvim's defaults are:
   with jump targets and breadcrumb ranges (Aerial, `lua/plugins/aerial.lua` and
   `queries/diff/aerial.scm`).
 
+- **Subword motions.** `_w`, `_b`, `_e` behave like the usual word motions
+  but they stop at subword boundaries as they exist for `snake_case`, `camelCase`
+  `PascalCase`, etc.
+
 - **Git file removal.** `<Space>gD` offers deletion or untracking with buffer
   and Git change warnings, then searches for filename references. Deletion also
   closes the file's buffer (`lua/plugins/git.lua`, `lua/git/remove.lua`).
