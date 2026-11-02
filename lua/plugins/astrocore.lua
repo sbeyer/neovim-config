@@ -78,7 +78,6 @@ return {
         -- html support is much better than XML, so this is a workaround
         xml = "html",
         xsd = "html",
-        schema = "html",
       },
       filename = {
         Jenkinsfile = "groovy",

@@ -129,6 +129,7 @@ The main additions and customizations beyond AstroNvim's defaults are:
 - **Repository-local VS Code snippets.** LuaSnip loads `.vscode/*.code-snippets`
   from the edited file's Git repository.
   Snippets stay isolated to that repository and follow the current buffer filetype.
+  File associations in `.vscode/settings.json` select filetypes automatically.
 
 - **Git file removal.** `<Space>gD` offers deletion or untracking with buffer
   and Git change warnings, then searches for filename references. Deletion also

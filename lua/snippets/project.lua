@@ -1,8 +1,6 @@
 local M = {}
 local loaded = {}
-local vscode_filetypes = {
-  ["django-txt"] = "django",
-}
+local vscode_filetypes = require "vscode.filetypes"
 
 local function namespace(root, filetype) return "project-snippets:" .. root .. ":" .. filetype end
 

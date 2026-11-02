@@ -1,0 +1,3 @@
+return {
+  ["django-txt"] = "django",
+}
