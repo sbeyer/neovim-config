@@ -18,9 +18,10 @@ running system! However, with more modern stuff coming to neovim and via plugins
 is a need to update. So my new configuration is made with heavy use of LLMs because I
 still do not enjoy configuring neovim or writing lua.
 
-The unported parts of my former AstroNvim v3.45.3 configuration are kept in `old-v3/`
-as a reference, e.g., to later port them if I still think it is useful. The contents
-of this directory are not loaded.
+Only unported user plugin customizations from my former AstroNvim v3.45.3
+configuration remain in `old-v3/lua/user/`, for possible later migration. The old
+distribution and settings covered by the active configuration have been removed.
+These reference snippets are not loaded and may require updates before reuse.
 
 ## Installation
 
