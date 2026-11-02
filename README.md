@@ -130,6 +130,11 @@ The main additions and customizations beyond AstroNvim's defaults are:
   and Git change warnings, then searches for filename references. Deletion also
   closes the file's buffer (`lua/plugins/git.lua`, `lua/git/remove.lua`).
 
+- **Git commit layout.** When neovim starts with a Git commit or merge message,
+  read-only status and staged-diff panes open alongside it. Narrow terminals show
+  the message above the diff. Normal `:wq` and `:cq` behavior is preserved
+  (`lua/plugins/git.lua`, `lua/git/commit.lua`).
+
 - **Custom statusline and window headers.** Compact three-letter mode labels
   and tab numbers replace the separate tabline. The active window shows symbol
   breadcrumbs when available; other windows show their file paths. Headers also
