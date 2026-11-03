@@ -28,8 +28,10 @@
 ## Git and diffs
 
 - **Git commit layout.** When neovim starts with a Git commit or merge message,
-  read-only status and staged-diff panes open alongside it. Narrow terminals show
-  the message above the diff. Normal `:wq` and `:cq` behavior is preserved
+  the editing pane shows only the supplied message, without Git's generated
+  status footer. Read-only status appears below it, with staged changes beside
+  it in wide terminals or below the status in narrow ones. Normal `:wq` and
+  `:cq` behavior is preserved
   (`lua/plugins/git.lua`, `lua/git/commit.lua`).
 
 - **Git file removal.** `<Space>gD` offers deletion or untracking with buffer
