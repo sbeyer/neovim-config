@@ -457,6 +457,10 @@ searching for matching text (Snacks, `lua/plugins/astrolsp.lua`).
 `<Space>ur` toggles that highlighting (Snacks words, AstroNvim default).
 
 `<Space>lr` renames a symbol and updates its uses through the language server.
+In the name prompt, press `<Esc>` once to leave insert mode and edit the name
+with normal-mode motions (e.g. `c_w`, `p`, `~`, `d$`); `<CR>` confirms, and
+`<Esc>` in normal mode cancels.
+
 `<Space>la` offers code actions, such as fixes or refactorings, and also works
 on a Visual selection. `<Space>lA` requests file-level source actions, such as
 organizing imports, when the server provides them (AstroLSP).
