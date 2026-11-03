@@ -220,6 +220,45 @@ the commenting commands.
 `:%s/old/new/gc` replaces matches throughout the buffer, asking for confirmation
 at each match. The search part is a regular expression.
 
+### Surround editing
+
+Surround editing adds, deletes, or replaces pairs of quotes, brackets, and
+other delimiters without changing the enclosed text. The general shortcut
+prefix for this feature is `gz`.
+
+Normal-mode commands are `gza{motion}{pair}` to add, `gzd{pair}` to delete,
+and `gzr{old}{new}` to replace. Delete and replace work with the cursor inside
+the pair or on its opening delimiter; they keep the enclosed text.
+In Visual mode, select the text first, then type `gza{pair}`.
+
+| Action                                         | Keys                |
+|------------------------------------------------|---------------------|
+| Change `"text"` to `'text'`                    | `gzr"'`             |
+| Change `(text)` to `{text}`                    | `gzr)}`             |
+| Surround a Visual selection with double quotes | Select, then `gza"` |
+| Surround a Visual selection with braces        | Select, then `gza}` |
+| Delete braces, keeping their contents          | `gzd}`              |
+| Surround the current word with parentheses     | `gzaiw)`            |
+
+For brackets, the closing character adds an unpadded pair: `}` produces
+`{text}`, while `{` produces `{ text }`. When deleting or replacing, the
+closing character preserves inner whitespace; the opening character removes
+padding too. For example, `gzd}` changes `{ text }` to ` text `, whereas
+`gzd{` produces `text`.
+
+`gzf{pair}` jumps to the right delimiter, `gzF{pair}` to the left, and
+`gzh{pair}` briefly highlights the pair. For example, `gzh}` highlights the
+surrounding braces. `.` repeats a surround edit.
+
+By default, matching searches for a pair covering the cursor, within 20 lines
+above and below it. `gzn` changes that search radius. Surround matching is
+pattern-based, not syntax-aware; brackets inside strings or comments can
+affect which pair is found.
+
+`%` jumps between matching brackets, `vi{` selects their
+contents, and `va{` includes the braces. **`da{` deletes the contents too**;
+it is not equivalent to `gzd}`.
+
 ### Increment and decrement
 
 `Ctrl-a` adds one to the number under or after the cursor; `Ctrl-x` subtracts

@@ -12,5 +12,5 @@ return {
   { import = "astrocommunity.completion.cmp-calc" },
   { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.motion.flash-nvim" },
-  -- import/override with your plugins folder
+  { import = "astrocommunity.motion.mini-surround" },
 }

@@ -127,6 +127,10 @@ The main additions and customizations beyond AstroNvim's defaults are:
   but they stop at subword boundaries as they exist for `snake_case`, `camelCase`
   `PascalCase`, etc.
 
+- **Surround editing.** `gza`, `gzd`, and `gzr` add, delete, and replace quotes,
+  brackets, and other surrounding pairs, including around Visual selections
+  (mini.surround through AstroCommunity).
+
 - **Smart increment/decrement.** `<Space>` + `Ctrl-a` / `Ctrl-x` toggle booleans,
   cycle identifier cases, and change numbers, dates, and versions (dial.nvim).
 
