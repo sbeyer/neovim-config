@@ -4,6 +4,13 @@
 
 The main additions and customizations beyond AstroNvim's defaults are:
 
+- **Repository-local VS Code snippets.** LuaSnip loads `.vscode/*.code-snippets`
+  from the edited file's Git repository.
+  Snippets stay isolated to that repository and follow the current buffer filetype.
+  File associations in `.vscode/settings.json` select filetypes automatically.
+  Also repository-local `xml.fileAssociations` for XSD-backed validation, completion,
+  and hover documentation is used by the XML LSP server.
+
 - **Clangd compilation database discovery.** Finds `compile_commands.json` in
   the project root and its `build*/` directories, deduplicating symlinks.
   Uses a single database automatically, asks when several exist, and remembers
@@ -18,11 +25,43 @@ The main additions and customizations beyond AstroNvim's defaults are:
 - **QML language support.** Uses the system-installed `qmlls` for QML files
   (`lua/plugins/astrolsp.lua`).
 
+- **Git commit layout.** When neovim starts with a Git commit or merge message,
+  read-only status and staged-diff panes open alongside it. Narrow terminals show
+  the message above the diff. Normal `:wq` and `:cq` behavior is preserved
+  (`lua/plugins/git.lua`, `lua/git/commit.lua`).
+
+- **Git file removal.** `<Space>gD` offers deletion or untracking with buffer
+  and Git change warnings, then searches for filename references. Deletion also
+  closes the file's buffer (`lua/plugins/git.lua`, `lua/git/remove.lua`).
+
+- **Diffview.** Repository-wide diffs, staged-change review, file history, and
+  conflict resolution through AstroCommunity. `<Space>D` groups its actions
+  while preserving AstroNvim's buffer shortcuts; inside Diffview, `<Space>e`
+  toggles its file panel instead of the normal explorer
+  (`lua/community.lua`, `lua/plugins/diffview.lua`).
+
 - **Diff outlines.** Diff file headers appear as symbols with their `@@` hunks
   nested underneath, including patches without `index` metadata and files with
   only rename or binary changes. Available through the symbol picker and outline,
   with jump targets and breadcrumb ranges (Aerial, `lua/plugins/aerial.lua` and
   `queries/diff/aerial.scm`).
+
+- **Hybrid diagnostics.** Inline messages appear everywhere except the cursor
+  line, where virtual lines show the diagnostics below the code instead.
+  `<Space>uv` cycles through hybrid, virtual lines only, inline text only, and
+  neither, without hiding signs or underlines. Refreshes after edits and buffer
+  switches keep the cursor-line filtering correct (`lua/plugins/astrocore.lua`).
+
+- **Large-file folding protection.** Large buffers use manual folding rather
+  than constructing expensive automatic fold trees, keeping generated files
+  responsive when opening them or switching windows. Manual folds remain available
+  (`lua/plugins/astrocore.lua`, `lua/plugins/astroui.lua`).
+
+- **Smart increment/decrement.** `<Space>` + `Ctrl-a` / `Ctrl-x` toggle booleans,
+  cycle identifier cases, and change numbers, dates, and versions (dial.nvim).
+
+- **Calculator completion.** Arithmetic expressions offer their results as
+  completion suggestions (cmp-calc through AstroCommunity).
 
 - **Subword motions.** `_w`, `_b`, `_e` behave like the usual word motions
   but they stop at subword boundaries as they exist for `snake_case`, `camelCase`
@@ -32,36 +71,16 @@ The main additions and customizations beyond AstroNvim's defaults are:
   brackets, and other surrounding pairs, including around Visual selections
   (mini.surround through AstroCommunity).
 
-- **Smart increment/decrement.** `<Space>` + `Ctrl-a` / `Ctrl-x` toggle booleans,
-  cycle identifier cases, and change numbers, dates, and versions (dial.nvim).
+- **Flash navigation.** Label-based jumps and enhanced character finds are
+  enabled through AstroCommunity (`lua/community.lua`).
 
 - **Tab navigation.** `<Space>ft` picks an open tab through Snacks; `g<Tab>`
   returns to the most recently visited tab, skipping closed tabs.
 
-- **Calculator completion.** Arithmetic expressions offer their results as
-  completion suggestions (cmp-calc through AstroCommunity).
-
-- **Repository-local VS Code snippets.** LuaSnip loads `.vscode/*.code-snippets`
-  from the edited file's Git repository.
-  Snippets stay isolated to that repository and follow the current buffer filetype.
-  File associations in `.vscode/settings.json` select filetypes automatically.
-  Also repository-local `xml.fileAssociations` for XSD-backed validation, completion,
-  and hover documentation is used by the XML LSP server.
-
-- **Git file removal.** `<Space>gD` offers deletion or untracking with buffer
-  and Git change warnings, then searches for filename references. Deletion also
-  closes the file's buffer (`lua/plugins/git.lua`, `lua/git/remove.lua`).
-
-- **Git commit layout.** When neovim starts with a Git commit or merge message,
-  read-only status and staged-diff panes open alongside it. Narrow terminals show
-  the message above the diff. Normal `:wq` and `:cq` behavior is preserved
-  (`lua/plugins/git.lua`, `lua/git/commit.lua`).
-
-- **Diffview.** Repository-wide diffs, staged-change review, file history, and
-  conflict resolution through AstroCommunity. `<Space>D` groups its actions
-  while preserving AstroNvim's buffer shortcuts; inside Diffview, `<Space>e`
-  toggles its file panel instead of the normal explorer
-  (`lua/community.lua`, `lua/plugins/diffview.lua`).
+- **Consistent annotation backgrounds.** Inline diagnostics, diagnostic virtual
+  lines, inlay hints, and CodeLens use matching subtle backgrounds while retaining
+  their foreground colors and text styles. Backgrounds adapt to colorscheme changes
+  (`lua/plugins/astroui.lua`).
 
 - **Custom statusline and window headers.** Compact three-letter mode labels
   and tab numbers appear in the statusline. The separate tabline/bufferline and
@@ -75,29 +94,10 @@ The main additions and customizations beyond AstroNvim's defaults are:
   `<Space>u<` switches between dynamic and fixed column widths
   (`lua/plugins/heirline.lua`, `lua/plugins/astroui.lua`, `lua/plugins/astrocore.lua`).
 
-- **Hybrid diagnostics.** Inline messages appear everywhere except the cursor
-  line, where virtual lines show the diagnostics below the code instead.
-  `<Space>uv` cycles through hybrid, virtual lines only, inline text only, and
-  neither, without hiding signs or underlines. Refreshes after edits and buffer
-  switches keep the cursor-line filtering correct (`lua/plugins/astrocore.lua`).
-
-- **Consistent annotation backgrounds.** Inline diagnostics, diagnostic virtual
-  lines, inlay hints, and CodeLens use matching subtle backgrounds while retaining
-  their foreground colors and text styles. Backgrounds adapt to colorscheme changes
-  (`lua/plugins/astroui.lua`).
-
-- **Large-file folding protection.** Large buffers use manual folding rather
-  than constructing expensive automatic fold trees, keeping generated files
-  responsive when opening them or switching windows. Manual folds remain available
-  (`lua/plugins/astrocore.lua`, `lua/plugins/astroui.lua`).
-
-- **Flash navigation.** Label-based jumps and enhanced character finds are
-  enabled through AstroCommunity (`lua/community.lua`).
+- **Selective format-on-save.** Automatic formatting on save is enabled only
+  for Rust; other filetypes can still be formatted manually when supported
+  (`lua/plugins/astrolsp.lua`).
 
 - **Mouse input limited to Normal and Visual modes.** Mouse input is disabled
   in Insert mode to avoid accidental cursor movement while typing
   (`lua/plugins/astrocore.lua`).
-
-- **Selective format-on-save.** Automatic formatting on save is enabled only
-  for Rust; other filetypes can still be formatted manually when supported
-  (`lua/plugins/astrolsp.lua`).
