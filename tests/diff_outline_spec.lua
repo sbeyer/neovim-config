@@ -9,6 +9,7 @@ for _, plugin in ipairs { "astrocore", "aerial.nvim" } do
 end
 local aerial = require "aerial"
 local opts = dofile("lua/plugins/aerial.lua").opts
+dofile("lua/plugins/treesitter.lua").init()
 aerial.setup(vim.tbl_deep_extend("force", opts, { backends = { "treesitter" }, filter_kind = false }))
 aerial.sync_load()
 
@@ -35,9 +36,9 @@ local patch = {
   "+new",
 }
 
-local function symbols(lines)
+local function symbols(lines, filetype)
   vim.api.nvim_buf_set_lines(buffer, 0, -1, false, lines)
-  vim.bo[buffer].filetype = "diff"
+  vim.bo[buffer].filetype = filetype or "diff"
   require("aerial.backends.treesitter").fetch_symbols_sync(buffer)
   return require("aerial.data").get_or_create(buffer).items
 end
@@ -69,6 +70,32 @@ describe("Diff outline", function()
     for index, line in ipairs { 1, 5, 9, 13, 17 } do
       aerial.select { index = index }
       assert.equals(buffer, vim.api.nvim_get_current_buf())
+      assert.same({ line, 0 }, vim.api.nvim_win_get_cursor(0))
+    end
+  end)
+
+  it("outlines and navigates patches after commit metadata in Git buffers", function()
+    local lines = {
+      "commit 0123456789abcdef0123456789abcdef01234567",
+      "Author: Test <test@example.invalid>",
+      "Date:   Tue Nov 3 12:00:00 2026 +0000",
+      "",
+      "    Commit subject",
+      "",
+    }
+    vim.list_extend(lines, patch)
+    local items = symbols(lines, "git")
+    assert.equals("git", vim.bo[buffer].filetype)
+    assert.equals(2, #items)
+    assert.equals(patch[1], items[1].name)
+    assert.equals(patch[13], items[2].name)
+    assert.equals(2, #items[1].children)
+    assert.equals(1, #items[2].children)
+    assert.equals(items[1], items[1].children[1].parent)
+    assert.equals(18, items[1].end_lnum)
+    assert.equals(14, items[1].children[1].end_lnum)
+    for index, line in ipairs { 7, 11, 15, 19, 23 } do
+      aerial.select { index = index }
       assert.same({ line, 0 }, vim.api.nvim_win_get_cursor(0))
     end
   end)

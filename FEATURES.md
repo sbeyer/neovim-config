@@ -44,11 +44,10 @@
   toggles its file panel instead of the normal explorer
   (`lua/community.lua`, `lua/plugins/diffview.lua`).
 
-- **Diff outlines.** Diff file headers appear as symbols with their `@@` hunks
-  nested underneath, including patches without `index` metadata and files with
-  only rename or binary changes. Available through the symbol picker and outline,
-  with jump targets and breadcrumb ranges (Aerial, `lua/plugins/aerial.lua` and
-  `queries/diff/aerial.scm`).
+- **Diff outlines.** Jump between changed files and their `@@` hunks through
+  the symbol picker or outline in `diff` and `git` buffers. Breadcrumbs show
+  the current file and hunk; renamed and binary files also appear (Aerial,
+  `lua/plugins/aerial.lua` and `queries/diff/aerial.scm`).
 
 ## Editing and navigation
 
