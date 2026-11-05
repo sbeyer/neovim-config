@@ -439,6 +439,27 @@ Inside a file picker, `Ctrl-s` opens the selection in a horizontal split,
 `Ctrl-v` in a vertical split, and `Ctrl-t` in a new tab.
 `<Space>f<Enter>` resumes the previous picker with its search intact.
 
+### Refining a picker search
+
+In a live text search (`<Space>fw`, `<Space>fW`, or `<Space>fc`), press
+`Ctrl-g` in the input to switch from searching files to filtering the search
+results. This is the equivalent of the old Telescope `Ctrl-Space` workflow.
+The input switches to a separate filter, initially empty; the original search
+stays active and appears beside the prompt.
+
+For example, open `<Space>fw`, search for `connect`, then press `Ctrl-g` and
+type `file:src` to narrow those matches to file paths matching `src`.
+Press `Ctrl-g` again to edit the original search; the extra filter is retained,
+so both constraints still apply. Clear the filter before switching back if
+you no longer want it.
+
+File and buffer pickers already filter their results as you type. In these
+pickers, and when refining live-search results, separate terms with spaces
+to require all of them: `foo bar` matches both terms, in any order.
+Use `'foo` for an exact substring rather than a fuzzy match, `!test` to exclude
+that substring, and `file:src` to match only the file path. These are picker
+filters, not ripgrep regex syntax.
+
 ## Quickfix and picker selections
 
 Quickfix is a list of file locations to work through, such as search matches
