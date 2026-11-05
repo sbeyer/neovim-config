@@ -412,6 +412,9 @@ These pickers and their bindings come from AstroNvim's defaults (Snacks).
 Type to filter results, use `Ctrl-n` and `Ctrl-p` to move through them,
 and press Enter to open the selection.
 
+Inside a picker, to show available keybindings, press Esc to leave Insert mode,
+then `?`.
+
 `<Space>ff` finds files by name under the current working directory, respecting
 ignore rules. `<Space>fF` includes hidden and ignored files too.
 
