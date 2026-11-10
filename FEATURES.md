@@ -27,6 +27,12 @@
 
 ## Git and diffs
 
+- **Readable inline diffs.** Stronger, theme-aware backgrounds make inline
+  changes visible in `nvim -d`. Two-way diffs show removed text in red on the
+  left and added text in green on the right, while replacements stay amber.
+  Colors persist across colorscheme changes; multi-way diffs keep neutral
+  pane semantics (`lua/plugins/astroui.lua`, `lua/diff_highlights.lua`).
+
 - **Git commit layout.** When neovim starts with a Git commit or merge message,
   the editing pane shows only the supplied message, without Git's generated
   status footer. Read-only status appears below it, with staged changes beside

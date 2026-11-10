@@ -118,6 +118,22 @@ return {
       },
     },
     autocmds = {
+      directional_inline_diff = {
+        {
+          event = { "VimEnter", "WinEnter", "WinClosed", "DiffUpdated" },
+          desc = "Show removed inline text in red in the left pane of two-way diffs",
+          callback = function()
+            vim.schedule(function() require("diff_highlights").update() end)
+          end,
+        },
+        {
+          event = "OptionSet",
+          pattern = "diff",
+          callback = function()
+            vim.schedule(function() require("diff_highlights").update() end)
+          end,
+        },
+      },
       qmlls_path_check = {
         {
           event = "FileType",
