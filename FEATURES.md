@@ -57,6 +57,12 @@
 
 ## Editing and navigation
 
+- **Ancestor-aware file lookup.** `gf` checks beside the current file, then
+  the working directory, then the file's parent directories up to root.
+  This also resolves references with overlapping directory prefixes, without
+  recursive directory scans. Uses native `'path'` lookup
+  (`lua/plugins/astrocore.lua`).
+
 - **Smart increment/decrement.** `<Space>` + `Ctrl-a` / `Ctrl-x` toggle booleans,
   cycle identifier cases, and change numbers, dates, and versions (dial.nvim).
 

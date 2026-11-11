@@ -95,6 +95,8 @@ return {
         showtabline = 0,
         -- disable weird completion behavior regarding suffixes
         suffixes = "",
+        -- Keep file-local and cwd lookup first, then search the file's ancestors.
+        path = ".,,./;",
         -- enable mouse only for Normal and Visual mode only
         mouse = "nv",
         -- make whitespace visible

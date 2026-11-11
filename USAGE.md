@@ -318,6 +318,14 @@ into a layout. The same buffer can appear in several windows or tabs.
 `<Space>n` creates an empty buffer (AstroNvim). `:edit path/to/file` opens a file
 in the current window.
 
+`gf` opens the filename under the cursor. My configuration searches beside the
+current file first, then in neovim's working directory, then in the file's parent
+directories, nearest first, up to root. It does not recursively scan subdirectories.
+For example, from `/a/b/c/d/e/foo`, `e/bar` and `d/e/bar` can both resolve to
+`/a/b/c/d/e/bar`. The first match wins without prompting; `2gf` or `3gf` opens
+the second or third match. `Ctrl-o` returns to the reference
+(native neovim, `'path'` in `lua/plugins/astrocore.lua`).
+
 `[b` and `]b` switch to the previous and next buffer in the current tab's buffer
 list; counts work too, such as `3]b` (AstroNvim, `lua/plugins/astrocore.lua`).
 `<Space>bp` returns to the previously used buffer (AstroNvim).
