@@ -4,6 +4,17 @@
 
 ## Project and language support
 
+- **Lua formatting and linting.** The AstroCommunity Lua pack adds StyLua
+  formatting and Selene diagnostics for projects with a `selene.toml`.
+  Formatting is available manually; format-on-save remains Rust-only
+  (`lua/community.lua`, `lua/plugins/astrolsp.lua`).
+
+- **C/C++ project tooling.** Beyond clangd and parsers, the AstroCommunity
+  C++ pack adds source/header switching with `<Space>lw`, AST inspection, and
+  type hierarchy views through clangd extensions. It also adds CMake generation,
+  builds, running targets, and preset/target selection through cmake-tools.nvim,
+  plus the CodeLLDB debug adapter (`lua/community.lua`).
+
 - **Repository-local VS Code snippets.** LuaSnip loads `.vscode/*.code-snippets`
   from the edited file's Git repository.
   Snippets stay isolated to that repository and follow the current buffer filetype.
