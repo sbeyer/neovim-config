@@ -27,6 +27,17 @@ return {
           vim.schedule(function() require("aerial").snacks_picker() end)
         end,
       })
+      table.insert(opts.dashboard.preset.keys, {
+        key = "g",
+        icon = " ",
+        desc = "Git Changes  ",
+        action = "<Leader>gt",
+        enabled = function()
+          if vim.fn.executable "git" ~= 1 then return false end
+          local result = vim.system({ "git", "status", "--porcelain" }, { text = true }):wait()
+          return result.code == 0 and result.stdout ~= ""
+        end,
+      })
       table.insert(opts.dashboard.preset.keys, { key = "q", icon = " ", desc = "Quit  ", action = ":qa" })
     end,
   },
