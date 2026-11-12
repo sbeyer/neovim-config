@@ -42,7 +42,7 @@ return {
       colorscheme = "astrodark",
       -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
       highlights = {
-        -- Recompute annotation and gutter backgrounds after every colorscheme change.
+        -- Recompute annotation, gutter, and inline diff backgrounds after every colorscheme change.
         init = function()
           local normal = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
           local dark = vim.o.background == "dark"
@@ -59,6 +59,18 @@ return {
           local highlights = {
             -- Normal = { bg = "#000000" },
           }
+          for group, palette in pairs {
+            DiffText = { dark = 0x684800, light = 0xFFD080, cterm_dark = 94, cterm_light = 222 },
+            DiffTextAdd = { dark = 0x285A38, light = 0xA8E0B0, cterm_dark = 22, cterm_light = 151 },
+            DiffTextDelete = { dark = 0x7A3038, light = 0xFFB0B8, cterm_dark = 88, cterm_light = 217 },
+          } do
+            highlights[group] = vim.api.nvim_get_hl(0, { name = group, link = false })
+            highlights[group].bg = dark and palette.dark or palette.light
+            highlights[group].fg = dark and 0xFFFFFF or 0x000000
+            highlights[group].ctermbg = dark and palette.cterm_dark or palette.cterm_light
+            highlights[group].ctermfg = dark and 231 or 16
+            highlights[group].bold = true
+          end
           for _, group in ipairs {
             "SignColumn",
             "CursorLineSign",

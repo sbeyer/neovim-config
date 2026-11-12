@@ -11,6 +11,40 @@ end
 
 local function path(name) return vim.uv.fs_realpath(name) or vim.fs.normalize(name) end
 
+local function trim_message(root, buf)
+  local config = git(root, { "config", "--get-regexp", "^core\\.comment(char|string)$" }):wait()
+  local char = config.stdout:match "core%.commentchar ([^\n]+)" or "#"
+  local comment = config.stdout:match "core%.commentstring ([^\n]+)" or char
+  local prefixes = comment == "auto" and { "#", ";", "@", "!", "$", "%", "^", "&", "|", ":" } or { comment }
+  local status = git(root, { "status", "--long", "--branch" }):wait()
+  local header = status.code == 0 and status.stdout:match "^[^\n]+" or nil
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  local scissors = " ------------------------ >8 ------------------------"
+  for i, line in ipairs(lines) do
+    for _, prefix in ipairs(prefixes) do
+      if line == prefix .. scissors or (header and line == prefix .. " " .. header) then
+        local first, last = i, i
+        while first > 1 and vim.startswith(lines[first - 1], prefix) do
+          first = first - 1
+        end
+        while last < #lines and vim.startswith(lines[last + 1], prefix) do
+          last = last + 1
+        end
+        -- Git's verbose diff is below the scissors line, outside the message.
+        for n = first, last do
+          if lines[n] == prefix .. scissors then
+            last = #lines
+            break
+          end
+        end
+        if first > 1 and lines[first - 1] == "" then first = first - 1 end
+        vim.api.nvim_buf_set_lines(buf, first - 1, last, false, {})
+        return
+      end
+    end
+  end
+end
+
 local function scratch(message, name, filetype)
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_name(buf, ("git-commit://%d/%s"):format(message, name))
@@ -77,6 +111,7 @@ function M.open(buf)
   if target.code ~= 0 or path(target.stdout:gsub("\n$", "")) ~= path(name) then return end
 
   local edit = vim.api.nvim_get_current_win()
+  trim_message(root, buf)
   local state = { active = true, root = root, buffers = {}, windows = {}, jobs = {} }
   layouts[buf] = state
   local group = vim.api.nvim_create_augroup("GitCommitLayout" .. buf, { clear = true })
@@ -114,24 +149,22 @@ function M.open(buf)
     "(No staged changes.)"
   )
 
-  if wide then
-    local status = scratch(buf, "status", "git")
-    state.buffers[#state.buffers + 1] = status
-    local status_win = vim.api.nvim_open_win(status, false, {
-      split = "below",
-      win = edit,
-      height = math.min(10, math.floor(vim.api.nvim_win_get_height(edit) / 3)),
-    })
-    state.windows[#state.windows + 1] = status_win
-    display(status_win)
-    populate(
-      state,
-      status,
-      "Git status (staged and unstaged)",
-      { "status", "--short", "--branch" },
-      "(Clean working tree.)"
-    )
-  end
+  local status = scratch(buf, "status", "git")
+  state.buffers[#state.buffers + 1] = status
+  local status_win = vim.api.nvim_open_win(status, false, {
+    split = "below",
+    win = edit,
+    height = math.min(10, math.floor(vim.api.nvim_win_get_height(edit) / 3)),
+  })
+  state.windows[#state.windows + 1] = status_win
+  display(status_win)
+  populate(
+    state,
+    status,
+    "Git status (staged and unstaged)",
+    { "status", "--long", "--branch" },
+    "(Clean working tree.)"
+  )
 
   -- Remove helper windows before :wq decides whether this is the last window.
   vim.api.nvim_create_autocmd({ "QuitPre", "BufWinLeave", "BufWipeout" }, {

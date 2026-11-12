@@ -5,7 +5,7 @@ return {
 
   -- Mason installs this exact clangd version. First use each session checks it;
   -- failed installations warn and use an available executable for that session.
-  clangd_version = "21.1.8",
+  clangd_version = "20.1.8",
 
   -- Path to the system-installed QML language server, not managed by Mason.
   -- Set to "" to disable QML LSP attachment.

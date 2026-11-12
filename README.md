@@ -23,6 +23,14 @@ configuration remain directly in `old-v3/`, for possible later migration. The ol
 distribution and settings covered by the active configuration have been removed.
 These reference snippets are not loaded and may require updates before reuse.
 
+## Features and usage
+
+See the [features overview](FEATURES.md) for additions and customizations beyond
+AstroNvim's defaults.
+
+The [usage guide](USAGE.md) is a general write-up on how to use the whole thing,
+i.e. an attempted reference for how to use the resulting configuration.
+
 ## Installation
 
 I did not write a fancy shell script, so you have to do all these steps manually. This
@@ -99,112 +107,11 @@ nvim
 
 Allow the initial downloads and installations to finish.
 
-## Features on top of AstroNvim
-
-The main additions and customizations beyond AstroNvim's defaults are:
-
-- **Clangd compilation database discovery.** Finds `compile_commands.json` in
-  the project root and its `build*/` directories, deduplicating symlinks.
-  Uses a single database automatically, asks when several exist, and remembers
-  the choice per project for the session. Missing databases trigger a notification
-  without disabling clangd's normal fallback (`lua/clangd/compile-commands.lua`).
-
-- **Pinned clangd version.** Mason installs my configured clangd version.
-  First use each session installs it if needed
-  before starting clangd; installation failures warn and fall back to an available
-  executable (`lua/clangd/version.lua`, `lua/plugins/mason.lua`).
-
-- **QML language support.** Uses the system-installed `qmlls` for QML files
-  (`lua/plugins/astrolsp.lua`).
-
-- **Diff outlines.** Diff file headers appear as symbols with their `@@` hunks
-  nested underneath, including patches without `index` metadata and files with
-  only rename or binary changes. Available through the symbol picker and outline,
-  with jump targets and breadcrumb ranges (Aerial, `lua/plugins/aerial.lua` and
-  `queries/diff/aerial.scm`).
-
-- **Subword motions.** `_w`, `_b`, `_e` behave like the usual word motions
-  but they stop at subword boundaries as they exist for `snake_case`, `camelCase`
-  `PascalCase`, etc.
-
-- **Smart increment/decrement.** `<Space>` + `Ctrl-a` / `Ctrl-x` toggle booleans,
-  cycle identifier cases, and change numbers, dates, and versions (dial.nvim).
-
-- **Tab navigation.** `<Space>ft` picks an open tab through Snacks; `g<Tab>`
-  returns to the most recently visited tab, skipping closed tabs.
-
-- **Calculator completion.** Arithmetic expressions offer their results as
-  completion suggestions (cmp-calc through AstroCommunity).
-
-- **Repository-local VS Code snippets.** LuaSnip loads `.vscode/*.code-snippets`
-  from the edited file's Git repository.
-  Snippets stay isolated to that repository and follow the current buffer filetype.
-  File associations in `.vscode/settings.json` select filetypes automatically.
-  Also repository-local `xml.fileAssociations` for XSD-backed validation, completion,
-  and hover documentation is used by the XML LSP server.
-
-- **Git file removal.** `<Space>gD` offers deletion or untracking with buffer
-  and Git change warnings, then searches for filename references. Deletion also
-  closes the file's buffer (`lua/plugins/git.lua`, `lua/git/remove.lua`).
-
-- **Git commit layout.** When neovim starts with a Git commit or merge message,
-  read-only status and staged-diff panes open alongside it. Narrow terminals show
-  the message above the diff. Normal `:wq` and `:cq` behavior is preserved
-  (`lua/plugins/git.lua`, `lua/git/commit.lua`).
-
-- **Diffview.** Repository-wide diffs, staged-change review, file history, and
-  conflict resolution through AstroCommunity. `<Space>D` groups its actions
-  while preserving AstroNvim's buffer shortcuts; inside Diffview, `<Space>e`
-  toggles its file panel instead of the normal explorer
-  (`lua/community.lua`, `lua/plugins/diffview.lua`).
-
-- **Custom statusline and window headers.** Compact three-letter mode labels
-  and tab numbers appear in the statusline. The separate tabline/bufferline and
-  its dependent shortcuts are disabled. The active window shows symbol
-  breadcrumbs when available; other windows show their file paths. Headers also
-  show modified/read-only state and filetype labels where useful
-  (`lua/plugins/heirline.lua`, `lua/plugins/astroui.lua`).
-
-- **Dynamic, darker gutter.** Separate Git and diagnostic sign columns and a
-  fold column appear only when needed, alongside relative line numbers.
-  `<Space>u<` switches between dynamic and fixed column widths
-  (`lua/plugins/heirline.lua`, `lua/plugins/astroui.lua`, `lua/plugins/astrocore.lua`).
-
-- **Hybrid diagnostics.** Inline messages appear everywhere except the cursor
-  line, where virtual lines show the diagnostics below the code instead.
-  `<Space>uv` cycles through hybrid, virtual lines only, inline text only, and
-  neither, without hiding signs or underlines. Refreshes after edits and buffer
-  switches keep the cursor-line filtering correct (`lua/plugins/astrocore.lua`).
-
-- **Consistent annotation backgrounds.** Inline diagnostics, diagnostic virtual
-  lines, inlay hints, and CodeLens use matching subtle backgrounds while retaining
-  their foreground colors and text styles. Backgrounds adapt to colorscheme changes
-  (`lua/plugins/astroui.lua`).
-
-- **Large-file folding protection.** Large buffers use manual folding rather
-  than constructing expensive automatic fold trees, keeping generated files
-  responsive when opening them or switching windows. Manual folds remain available
-  (`lua/plugins/astrocore.lua`, `lua/plugins/astroui.lua`).
-
-- **Flash navigation.** Label-based jumps and enhanced character finds are
-  enabled through AstroCommunity (`lua/community.lua`).
-
-- **Mouse input limited to Normal and Visual modes.** Mouse input is disabled
-  in Insert mode to avoid accidental cursor movement while typing
-  (`lua/plugins/astrocore.lua`).
-
-- **Selective format-on-save.** Automatic formatting on save is enabled only
-  for Rust; other filetypes can still be formatted manually when supported
-  (`lua/plugins/astrolsp.lua`).
+### Step 5: configure features
 
 My feature settings and their documentation live in `lua/config.lua`.
 Restart neovim after changing startup defaults; UI shortcuts only change the
 current session.
-
-## Usage
-
-See the [usage guide](USAGE.md) for editing, navigation, language tools, Git,
-and maintenance.
 
 ## Tests
 

@@ -25,9 +25,9 @@ local function stage(name, text)
   git("add", "--", name)
 end
 
-local function open(name)
+local function open(name, lines)
   local target = git("rev-parse", "--path-format=absolute", "--git-path", name or "COMMIT_EDITMSG"):gsub("\n$", "")
-  vim.fn.writefile({ "", "# Commit message fixture" }, target)
+  vim.fn.writefile(lines or { "", "# Commit message fixture" }, target)
   vim.cmd.edit(vim.fn.fnameescape(target))
   message = vim.api.nvim_get_current_buf()
   commit.open(message)
@@ -70,6 +70,8 @@ vim.api.nvim_create_autocmd("VimEnter", {
       local ok, err = pcall(function()
         assert(#vim.api.nvim_tabpage_list_wins(0) == 3, "Commit layout did not open")
         assert(vim.fs.basename(vim.api.nvim_buf_get_name(0)) == "COMMIT_EDITMSG")
+        assert(table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n") == "",
+          "Git-generated footer remained in the message")
         vim.api.nvim_buf_set_lines(0, 0, -1, false, { "Commit from editor fixture" })
         %s
       end)
@@ -138,16 +140,74 @@ describe("Git commit editor layout", function()
     assert.equals(index, git "write-tree")
   end)
 
-  it("uses only a diff below the message in a narrow terminal", function()
+  it("stacks status and diff below the message in a narrow terminal", function()
     vim.o.columns = 100
     stage("file.txt", "content")
     open "MERGE_MSG"
     loaded()
-    assert.equals(2, #vim.api.nvim_tabpage_list_wins(0))
-    assert.is_nil(helpers().status)
+    assert.equals(3, #vim.api.nvim_tabpage_list_wins(0))
+    local status_win = vim.fn.bufwinid(helpers().status)
     local diff_win = vim.fn.bufwinid(helpers()["staged.diff"])
-    assert(vim.api.nvim_win_get_position(diff_win)[1] > vim.api.nvim_win_get_position(0)[1])
+    assert(vim.api.nvim_win_get_position(status_win)[1] > vim.api.nvim_win_get_position(0)[1])
+    assert(vim.api.nvim_win_get_position(diff_win)[1] > vim.api.nvim_win_get_position(status_win)[1])
   end)
+
+  it("removes the generated footer while preserving a supplied message and template hints", function()
+    stage("file.txt", "content")
+    local header = git("status", "--long", "--branch"):match "^[^\n]+"
+    open(nil, {
+      "Hook-provided subject",
+      "",
+      "Message body",
+      "# Template hint",
+      "",
+      "# Please enter the commit message for your changes.",
+      "#",
+      "# " .. header,
+      "# Changes to be committed:",
+      "#\tnew file: file.txt",
+    })
+    loaded()
+    assert.same(
+      { "Hook-provided subject", "", "Message body", "# Template hint" },
+      vim.api.nvim_buf_get_lines(message, 0, -1, false)
+    )
+    assert(contents(helpers().status):find("Changes to be committed:", 1, true))
+    assert(contents(helpers().status):find("file.txt", 1, true))
+    vim.cmd "undo"
+    assert(contents(message):find("# " .. header, 1, true))
+  end)
+
+  it("preserves message text appended by a hook after the commented status block", function()
+    stage("file.txt", "content")
+    local header = git("status", "--long", "--branch"):match "^[^\n]+"
+    open(nil, { "", "# Please enter a commit message.", "#", "# " .. header, "#", "Hook-provided subject" })
+    assert.same({ "Hook-provided subject" }, vim.api.nvim_buf_get_lines(message, 0, -1, false))
+  end)
+
+  for _, case in ipairs {
+    { config = "core.commentChar", value = "auto", prefix = ";" },
+    { config = "core.commentString", value = "//", prefix = "//" },
+  } do
+    it("removes a verbose footer with " .. case.config .. "=" .. case.value, function()
+      stage("file.txt", "content")
+      git("config", case.config, case.value)
+      local prefix = case.prefix
+      local header = git("status", "--long", "--branch"):match "^[^\n]+"
+      open(nil, {
+        "# Supplied subject",
+        "",
+        prefix .. " Please enter a commit message.",
+        prefix,
+        prefix .. " " .. header,
+        prefix .. " ------------------------ >8 ------------------------",
+        prefix .. " Everything below this line will be ignored.",
+        "diff --git a/file.txt b/file.txt",
+        "+content",
+      })
+      assert.same({ "# Supplied subject" }, vim.api.nvim_buf_get_lines(message, 0, -1, false))
+    end)
+  end
 
   it("distinguishes staged changes from unstaged changes and handles an empty index diff", function()
     stage("file.txt", "original")
@@ -219,7 +279,17 @@ describe("Git commit editor layout", function()
     stage("file.txt", "staged")
     vim.fn.writefile({ "unstaged" }, vim.fs.joinpath(temporary, "file.txt"))
     local result = vim
-      .system({ "git", "-C", temporary, "-c", "user.name=Test", "-c", "user.email=test@example.invalid", "commit" }, {
+      .system({
+        "git",
+        "-C",
+        temporary,
+        "-c",
+        "user.name=Test",
+        "-c",
+        "user.email=test@example.invalid",
+        "commit",
+        "--verbose",
+      }, {
         text = true,
         timeout = 10000,
         env = { GIT_EDITOR = editor 'vim.cmd "wq"' },

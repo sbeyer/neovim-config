@@ -95,6 +95,8 @@ return {
         showtabline = 0,
         -- disable weird completion behavior regarding suffixes
         suffixes = "",
+        -- Keep file-local and cwd lookup first, then search the file's ancestors.
+        path = ".,,./;",
         -- enable mouse only for Normal and Visual mode only
         mouse = "nv",
         -- make whitespace visible
@@ -118,6 +120,22 @@ return {
       },
     },
     autocmds = {
+      directional_inline_diff = {
+        {
+          event = { "VimEnter", "WinEnter", "WinClosed", "DiffUpdated" },
+          desc = "Show removed inline text in red in the left pane of two-way diffs",
+          callback = function()
+            vim.schedule(function() require("diff_highlights").update() end)
+          end,
+        },
+        {
+          event = "OptionSet",
+          pattern = "diff",
+          callback = function()
+            vim.schedule(function() require("diff_highlights").update() end)
+          end,
+        },
+      },
       qmlls_path_check = {
         {
           event = "FileType",

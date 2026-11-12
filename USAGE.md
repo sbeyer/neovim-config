@@ -220,6 +220,45 @@ the commenting commands.
 `:%s/old/new/gc` replaces matches throughout the buffer, asking for confirmation
 at each match. The search part is a regular expression.
 
+### Surround editing
+
+Surround editing adds, deletes, or replaces pairs of quotes, brackets, and
+other delimiters without changing the enclosed text. The general shortcut
+prefix for this feature is `gz`.
+
+Normal-mode commands are `gza{motion}{pair}` to add, `gzd{pair}` to delete,
+and `gzr{old}{new}` to replace. Delete and replace work with the cursor inside
+the pair or on its opening delimiter; they keep the enclosed text.
+In Visual mode, select the text first, then type `gza{pair}`.
+
+| Action                                         | Keys                |
+|------------------------------------------------|---------------------|
+| Change `"text"` to `'text'`                    | `gzr"'`             |
+| Change `(text)` to `{text}`                    | `gzr)}`             |
+| Surround a Visual selection with double quotes | Select, then `gza"` |
+| Surround a Visual selection with braces        | Select, then `gza}` |
+| Delete braces, keeping their contents          | `gzd}`              |
+| Surround the current word with parentheses     | `gzaiw)`            |
+
+For brackets, the closing character adds an unpadded pair: `}` produces
+`{text}`, while `{` produces `{ text }`. When deleting or replacing, the
+closing character preserves inner whitespace; the opening character removes
+padding too. For example, `gzd}` changes `{ text }` to ` text `, whereas
+`gzd{` produces `text`.
+
+`gzf{pair}` jumps to the right delimiter, `gzF{pair}` to the left, and
+`gzh{pair}` briefly highlights the pair. For example, `gzh}` highlights the
+surrounding braces. `.` repeats a surround edit.
+
+By default, matching searches for a pair covering the cursor, within 20 lines
+above and below it. `gzn` changes that search radius. Surround matching is
+pattern-based, not syntax-aware; brackets inside strings or comments can
+affect which pair is found.
+
+`%` jumps between matching brackets, `vi{` selects their
+contents, and `va{` includes the braces. **`da{` deletes the contents too**;
+it is not equivalent to `gzd}`.
+
 ### Increment and decrement
 
 `Ctrl-a` adds one to the number under or after the cursor; `Ctrl-x` subtracts
@@ -278,6 +317,14 @@ into a layout. The same buffer can appear in several windows or tabs.
 
 `<Space>n` creates an empty buffer (AstroNvim). `:edit path/to/file` opens a file
 in the current window.
+
+`gf` opens the filename under the cursor. My configuration searches beside the
+current file first, then in neovim's working directory, then in the file's parent
+directories, nearest first, up to root. It does not recursively scan subdirectories.
+For example, from `/a/b/c/d/e/foo`, `e/bar` and `d/e/bar` can both resolve to
+`/a/b/c/d/e/bar`. The first match wins without prompting; `2gf` or `3gf` opens
+the second or third match. `Ctrl-o` returns to the reference
+(native neovim, `'path'` in `lua/plugins/astrocore.lua`).
 
 `[b` and `]b` switch to the previous and next buffer in the current tab's buffer
 list; counts work too, such as `3]b` (AstroNvim, `lua/plugins/astrocore.lua`).
@@ -373,6 +420,9 @@ These pickers and their bindings come from AstroNvim's defaults (Snacks).
 Type to filter results, use `Ctrl-n` and `Ctrl-p` to move through them,
 and press Enter to open the selection.
 
+Inside a picker, to show available keybindings, press Esc to leave Insert mode,
+then `?`.
+
 `<Space>ff` finds files by name under the current working directory, respecting
 ignore rules. `<Space>fF` includes hidden and ignored files too.
 
@@ -399,6 +449,27 @@ to type it again. Unlike `*`, this is not limited to the current buffer.
 Inside a file picker, `Ctrl-s` opens the selection in a horizontal split,
 `Ctrl-v` in a vertical split, and `Ctrl-t` in a new tab.
 `<Space>f<Enter>` resumes the previous picker with its search intact.
+
+### Refining a picker search
+
+In a live text search (`<Space>fw`, `<Space>fW`, or `<Space>fc`), press
+`Ctrl-g` in the input to switch from searching files to filtering the search
+results. This is the equivalent of the old Telescope `Ctrl-Space` workflow.
+The input switches to a separate filter, initially empty; the original search
+stays active and appears beside the prompt.
+
+For example, open `<Space>fw`, search for `connect`, then press `Ctrl-g` and
+type `file:src` to narrow those matches to file paths matching `src`.
+Press `Ctrl-g` again to edit the original search; the extra filter is retained,
+so both constraints still apply. Clear the filter before switching back if
+you no longer want it.
+
+File and buffer pickers already filter their results as you type. In these
+pickers, and when refining live-search results, separate terms with spaces
+to require all of them: `foo bar` matches both terms, in any order.
+Use `'foo` for an exact substring rather than a fuzzy match, `!test` to exclude
+that substring, and `file:src` to match only the file path. These are picker
+filters, not ripgrep regex syntax.
 
 ## Quickfix and picker selections
 
@@ -457,6 +528,10 @@ searching for matching text (Snacks, `lua/plugins/astrolsp.lua`).
 `<Space>ur` toggles that highlighting (Snacks words, AstroNvim default).
 
 `<Space>lr` renames a symbol and updates its uses through the language server.
+In the name prompt, press `<Esc>` once to leave insert mode and edit the name
+with normal-mode motions (e.g. `c_w`, `p`, `~`, `d$`); `<CR>` confirms, and
+`<Esc>` in normal mode cancels.
+
 `<Space>la` offers code actions, such as fixes or refactorings, and also works
 on a Visual selection. `<Space>lA` requests file-level source actions, such as
 organizing imports, when the server provides them (AstroLSP).
@@ -712,6 +787,27 @@ continuation lines visible (`lua/plugins/astrocore.lua`).
 `<Space>u<` toggles dynamic gutter widths; `<Space>uv` cycles diagnostic text
 and virtual lines, as described in the [feature overview](README.md#features-on-top-of-astronvim)
 (`lua/plugins/astrocore.lua`, `lua/plugins/heirline.lua`).
+
+## Customizing settings
+
+Personal startup defaults live in `lua/config.lua`; editor options and plugin
+overrides live in `lua/plugins/`. Restart neovim after changing them.
+Language tools can also have their own user-wide or project-local settings.
+
+### CMake line-length warnings
+
+To raise neocmakelsp's default 80-character warning threshold to 120 for your user,
+run this in a shell:
+
+```sh
+mkdir -p ~/.config/neocmakelsp
+echo 'line_max_words = 120' >> ~/.config/neocmakelsp/config.toml
+```
+
+If the file already has settings, edit it instead in a similar fashion.
+For one project, set it in `.neocmake.toml` at the project root instead;
+project configuration takes precedence over the user-wide file.
+Despite its name, `line_max_words` controls line length, not word count or wrapping.
 
 ## Maintenance and troubleshooting
 
