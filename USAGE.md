@@ -788,6 +788,27 @@ continuation lines visible (`lua/plugins/astrocore.lua`).
 and virtual lines, as described in the [feature overview](README.md#features-on-top-of-astronvim)
 (`lua/plugins/astrocore.lua`, `lua/plugins/heirline.lua`).
 
+## Customizing settings
+
+Personal startup defaults live in `lua/config.lua`; editor options and plugin
+overrides live in `lua/plugins/`. Restart neovim after changing them.
+Language tools can also have their own user-wide or project-local settings.
+
+### CMake line-length warnings
+
+To raise neocmakelsp's default 80-character warning threshold to 120 for your user,
+run this in a shell:
+
+```sh
+mkdir -p ~/.config/neocmakelsp
+echo 'line_max_words = 120' >> ~/.config/neocmakelsp/config.toml
+```
+
+If the file already has settings, edit it instead in a similar fashion.
+For one project, set it in `.neocmake.toml` at the project root instead;
+project configuration takes precedence over the user-wide file.
+Despite its name, `line_max_words` controls line length, not word count or wrapping.
+
 ## Maintenance and troubleshooting
 
 `:Lazy` or `<Space>ps` shows installed plugins. `<Space>pu` checks for updates;
